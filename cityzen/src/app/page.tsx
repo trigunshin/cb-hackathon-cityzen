@@ -14,9 +14,26 @@ export default function Home() {
     setInputValue(event.target.value);
   };
 
-  const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
-    console.log('Submitted:', inputValue);
-  };
+  const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault()
+      try {
+        const res = await fetch('/api/pinecone', {
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ input: "Hello" })
+        });
+        const data = await res.json();
+        if (!res.ok) {
+          throw new Error('Network response was not ok');
+        }
+        console.log("data",data)
+        return data
+      } catch (error) {
+        console.error('Error during fetch:', error);
+      } 
+    };
 
   return (
     <>
