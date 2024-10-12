@@ -7,3 +7,6 @@ requests
 tqdm
 langchain-community
 pinecone-client
+pydub
+tqdm
+argparse
