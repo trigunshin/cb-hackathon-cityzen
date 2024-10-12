@@ -165,3 +165,9 @@ oai_llm_api_key.txt
 etl/woven-sensor-438423-c6-9ef29061aceb.json
 etl/encoded_key.base64
 
+
+# SQLite Test Database
+*.db
+
+# VSCode settings
+.vscode/
