@@ -19,7 +19,7 @@ query_embedding = embedding_model.embed_query(user_query)
 pinecone_index = PineconeVectorStore.from_existing_index(index_name=PINECONE_INDEX_NAME, embedding=embedding_model)
 
 # Step 5: Perform a similarity search on the Pinecone index using the text query
-search_results = pinecone_index.similarity_search(user_query)
+search_results = pinecone_index.similarity_search(user_query, k=3)
 
 # Step 6: Display the search results
 for i, result in enumerate(search_results, 1):
