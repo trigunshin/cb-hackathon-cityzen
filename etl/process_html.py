@@ -1,56 +1,36 @@
 import os
 from bs4 import BeautifulSoup
-from langchain.document_loaders import BSHTMLLoader
+from langchain_openai import OpenAIEmbeddings
+from langchain_community.vectorstores import Pinecone as PineconeVectorStore
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.embeddings import OpenAIEmbeddings
-from langchain.vectorstores import FAISS  # Using FAISS as an example
-from langchain.llms import OpenAI
-from langchain.chains import RetrievalQA
+from langchain.docstore.document import Document
+from pinecone import Pinecone
 
-# Set your OpenAI API key
-# Path to the API key file inside the container
-api_key_file = "llm_api_key.txt"
+OPENAI_API_KEY=os.getenv("openai_api_key")
+PINECONE_API_KEY=os.getenv("pinecone_api_key")
+PINECONE_INDEX_NAME=os.getenv("pinecone_api_key")
 
-OPENAI_API_KEY = None
-# Read the API key
-with open(api_key_file, 'r') as file:
-    OPENAI_API_KEY = file.read().strip()
+# Initialize Pinecone instance with your API key
+pc = Pinecone(api_key=PINECONE_API_KEY)
+index = pc.Index(PINECONE_INDEX_NAME)
 
-# Use the API key as needed
-print("API Key loaded successfully.")
-if not OPENAI_API_KEY:
-    print("Please set the OPENAI_API_KEY environment variable.")
-    exit(1)
+# Step 1: Load and parse the HTML file with BeautifulSoup
+with open("/Users/pcrane/src/cb-hackathon-cityzen/etl/data/03032021_jou.html", "r", errors='ignore') as file:
+    soup = BeautifulSoup(file, "html.parser")
+    text_content = soup.get_text()  # Extract the raw text
 
-# Path to the HTML file
-html_file_path = 'data/03032021_jou.html'
+chunk_size = 1000  # Adjust based on needs and size constraints
+text_splitter = RecursiveCharacterTextSplitter(chunk_size=chunk_size, chunk_overlap=100)
+chunks = text_splitter.split_text(text_content)
 
-# Load and parse the HTML file
-loader = BSHTMLLoader(html_file_path)
-documents = loader.load()
+# Step 2: Convert text to Document format for LangChain
+documents = [
+    Document(page_content=chunk, metadata={"source": "03032021_jou.html", "chunk": i, "total_chunks": len(chunks)})
+    for i, chunk in enumerate(chunks)
+]
 
-# Split documents into chunks
-text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=100)
-docs = text_splitter.split_documents(documents)
+# Step 4: Embed and store each chunk in Pinecone
+embedding_model = OpenAIEmbeddings(api_key=OPENAI_API_KEY, model="text-embedding-3-large")
 
-# Generate embeddings
-embeddings = OpenAIEmbeddings(openai_api_key=OPENAI_API_KEY)
-
-# Use FAISS as the vector store (you can use Pinecone or others)
-vectorstore = FAISS.from_documents(docs, embeddings)
-
-# Create a retriever
-retriever = vectorstore.as_retriever(search_kwargs={'k': 5})
-
-# Set up the language model
-llm = OpenAI(openai_api_key=OPENAI_API_KEY)
-
-# Create the QA chain
-qa_chain = RetrievalQA.from_chain_type(llm=llm, chain_type='stuff', retriever=retriever)
-
-# Run a test query
-query = "What were the main topics discussed in the council meeting on March 3, 2021?"
-response = qa_chain.run(query)
-print("Response:")
-print(response)
-
+# Use the updated class method from the new langchain-pinecone package
+pinecone_index = PineconeVectorStore.from_documents(documents, embedding_model, index_name=PINECONE_INDEX_NAME)
