@@ -13,8 +13,8 @@ const FlexibleChipContainer = styled(Box)(({ theme }) => ({
 const SpeechBubbleChip = styled(Box)(({ theme }) => ({
   background: 'white',
   borderRadius: '20px',
-  padding: theme.spacing(2, 3),
-  maxWidth: '300px',
+  padding: theme.spacing(1.5, 2),
+  maxWidth: '250px',
   position: 'relative',
   '&::after': {
     content: '""',
@@ -42,7 +42,7 @@ const FlexibleChipStack: React.FC<FlexibleChipStackProps> = ({ initialChips = []
     <FlexibleChipContainer>
       {chips.map((chip, index) => (
         <SpeechBubbleChip key={index} textAlign={'center'} alignContent={'center'}>
-          <Typography variant="body1">{chip}</Typography>
+          <Typography variant="body1" fontSize={'12px'}>{chip}</Typography>
         </SpeechBubbleChip>
       ))}
     </FlexibleChipContainer>
