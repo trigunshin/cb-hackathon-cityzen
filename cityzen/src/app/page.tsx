@@ -1,101 +1,68 @@
-import Image from "next/image";
+"use client"
+import { Box, Button, Paper, TextField, Typography } from '@mui/material';
+import { Container, Grid, Stack } from '@mui/system';
+import React, { useState } from 'react';
+import FlexibleChipStack from './components/flexibleChips';
+import ModernButton from './components/modernButton';
+import './globals.css'
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [inputValue, setInputValue] = useState('');
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+  const handleInputChange = (event: any) => {
+    setInputValue(event.target.value);
+  };
+
+  const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
+    console.log('Submitted:', inputValue);
+  };
+
+  return (
+    <>
+    <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', color: "#868686"}}>
+      <Box flex={1} sx={{background: 'radial-gradient(circle, #CBD6DD 37%, #72BAE3 100%)'}}>
+        <Container sx={{ height: '100%', py: 4, minHeight: '90vh', alignContent: 'center' }}>
+          <Stack spacing={2} alignItems="center" justifyContent="center" height="100%">
+            <Typography paddingTop={4} variant="h2" className='jaro' gutterBottom>
+              Cityzen
+            </Typography>
+            <TextField
+              label="Ask a question about your neighborhood"
+              value={inputValue}
+              variant="outlined"
+              onChange={handleInputChange}
+              fullWidth
+              sx={{width: "75%"}}
             />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+            <Box width="100%">
+              <FlexibleChipStack />
+            </Box>
+            <ModernButton onClick={handleSubmit}>
+              Submit
+            </ModernButton>
+          </Stack>
+        </Container>
+      </Box>
+      <Box sx={{ width: '100%', bgcolor: 'white' }}>
+        <Container sx={{ py: 4 }}>
+        <Typography paddingY={4} variant="h4" textAlign={'center'} color='#72BAE3'>
+          Simplifying civic engagement in LA. Your city's pulse, at your fingertips. Empowering informed communities through AI-driven insights.
+        </Typography>
+        <Grid container spacing={3} columns={16} alignContent={'center'} textAlign={'center'} direction={{lg: 'row', md: 'column'}} display={'flex'} flexWrap='wrap' flexDirection={'column'}>
+          <Grid size={8} >
+            <Paper variant='outlined' sx={{p: 3}}>
+              <Typography textAlign={'center'}>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.            
+              </Typography>
+            </Paper>
+          </Grid>
+          <Grid size={8}>
+            <Paper variant='outlined' sx={{p: 3}}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</Paper>
+          </Grid>
+        </Grid>
+        </Container>
+      </Box>
+    </Box>
+    </>
   );
 }
