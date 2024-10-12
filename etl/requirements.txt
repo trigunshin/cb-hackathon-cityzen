@@ -1,0 +1,6 @@
+langchain
+openai
+beautifulsoup4
+requests
+tqdm
+
