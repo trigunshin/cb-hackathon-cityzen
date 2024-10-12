@@ -1,6 +1,9 @@
 langchain
 openai
+langchain-openai
+langchain-pinecone
 beautifulsoup4
 requests
 tqdm
-
+langchain-community
+pinecone-client
