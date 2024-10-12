@@ -1,7 +1,6 @@
 import os
 from langchain_openai import OpenAIEmbeddings
 from langchain_community.vectorstores import Pinecone as PineconeVectorStore
-# from langchain_pinecone import Pinecone
 
 OPENAI_API_KEY=os.getenv("OPENAI_API_KEY")
 PINECONE_API_KEY=os.getenv("PINECONE_API_KEY")
@@ -19,9 +18,6 @@ query_embedding = embedding_model.embed_query(user_query)
 # step4:
 pinecone_index = PineconeVectorStore.from_existing_index(index_name=PINECONE_INDEX_NAME, embedding=embedding_model)
 
-# Step 5: Perform a similarity search on the Pinecone index
-
-# search_results = pinecone_index.similarity_search_by_vector(query_embedding, top_k=5)
 # Step 5: Perform a similarity search on the Pinecone index using the text query
 search_results = pinecone_index.similarity_search(user_query)
 
