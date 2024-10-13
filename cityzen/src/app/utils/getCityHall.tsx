@@ -9,8 +9,8 @@ interface ExtractedArticleData {
     [key: string]: any;
 }
 
-export function getCityVideoData(jsonData: ExtractedArticleData[], numberOfVideos: number): Pick<ExtractedArticleData, 'videoUrl' | 'title' | 'id' | 'dateTime' | 'date' | 'time' | 'response'>[] {
-    return jsonData.slice(0, numberOfVideos).map(item => ({
+export function getCityVideoData(data: ExtractedArticleData[], numberOfVideos: number): Pick<ExtractedArticleData, 'videoUrl' | 'title' | 'id' | 'dateTime' | 'date' | 'time' | 'response'>[] {
+    return data.slice(0, numberOfVideos).map(item => ({
         videoUrl: item.videoUrl,
         title: item.title,
         id: item.id,
