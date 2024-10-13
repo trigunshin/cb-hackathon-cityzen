@@ -39,12 +39,12 @@ const EventsResults = () => {
         {events.map((event) => (
           <Grid size={{xs: 12, md: 6, sm: 4}} key={event.id}>
             <Card variant="outlined" sx={{ height: '100%', width: '100%', overflow: 'visible'}}>
-              <CardMedia
+              {/* <CardMedia
                 component="img"
                 height="140"
                 image={event.image || '/api/placeholder/400/200'}
                 alt={event.title}
-              />
+              /> */}
               <Divider />
               <CardContent>
                 <Link href="#" underline="hover">

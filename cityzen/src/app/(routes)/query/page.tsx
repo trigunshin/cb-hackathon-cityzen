@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation';
 import NewsArticles from '@/app/components/NewsArticles';
 import EventsResults from '@/app/components/EventsResults';
 import CityHallResults from '@/app/components/CityHallResults';
+import MainContentResult from '@/app/components/MainContentResult';
 
 const drawerWidth = 240;
 
@@ -29,7 +30,7 @@ export default function ContentPage() {
   const renderContent = () => {
     switch (selectedItem) {
       case 'Main Content':
-        return <Typography>This is the Main Content area.</Typography>;
+        return <MainContentResult />
       case 'News Articles':
         return <NewsArticles />
       case 'Events':

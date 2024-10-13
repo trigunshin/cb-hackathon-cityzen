@@ -31,9 +31,17 @@ export interface JsonData {
     };
 }
 
-export interface ExtractedArticleData extends Partial<ArticleMetadata> {
-    text?: string;
-    author?: string;
-    word_count?: number;
+export interface ExtractedArticleData {
     [key: string]: any;
+    text?: string;
+    videoUrl?: string;
+    title?: string;
+    id?: number;
+    meetingTypeId?: number;
+    committeeId?: number;
+    dateTime?: string;
+    date?: string;
+    time?: string;
+    allowPublicComment?: boolean;
+    generation?: number;
 }
