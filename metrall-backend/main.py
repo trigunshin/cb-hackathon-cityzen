@@ -13,8 +13,23 @@ app = FastAPI()
 def get_query(
     query: Annotated[str, Query(title="User query")]
 ):
-    return query_pinecone(query, 'transcripts_youtube')['response']
+    result = query_pinecone(query, 'news').source_nodes
+    json_response = transform_node_to_json(result)
+    return json_response
 
+def transform_node_to_json(result):
+    output_list = []
+    for source_node in result:
+        node_info = source_node.node
+        output = {}
+        output["title"] = node_info.extra_info["title"]
+        output["source"] = node_info.extra_info["source"]
+        output["date"] = node_info.extra_info["date"]
+        output["sentiment"] = node_info.extra_info["sentiment"]
+        output["image"] = node_info.extra_info["image"]
+        output["text"] = node_info.text
+        output_list.append(output)
+    return output_list
 
 # Run app
 if __name__ == "__main__":
