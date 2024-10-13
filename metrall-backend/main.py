@@ -13,7 +13,7 @@ app = FastAPI()
 def get_query(
     query: Annotated[str, Query(title="User query")]
 ):
-    result = query_pinecone(query, 'news').source_nodes
+    result = query_pinecone(query).source_nodes
     json_response = transform_node_to_json(result)
     return json_response
 
@@ -22,12 +22,8 @@ def transform_node_to_json(result):
     for source_node in result:
         node_info = source_node.node
         output = {}
-        output["title"] = node_info.extra_info["title"]
-        output["source"] = node_info.extra_info["source"]
-        output["date"] = node_info.extra_info["date"]
-        output["sentiment"] = node_info.extra_info["sentiment"]
-        output["image"] = node_info.extra_info["image"]
-        output["text"] = node_info.text
+        output["data"] = node_info.extra_info
+        output["text"] = node_info.text if node_info.text else ""
         output_list.append(output)
     return output_list
 
