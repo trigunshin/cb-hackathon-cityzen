@@ -4,6 +4,10 @@ import { Grid } from '@mui/system';
 import { getArticleData } from '../utils/getArticles';
 import { JsonData, ExtractedArticleData } from '../utils/types';
 
+interface NewsArticlesProps {
+  data: ExtractedArticleData[];
+}
+
 const jsonData: JsonData = {
   "response": "The documents contain information about recent news articles.",
   "source_nodes": [
@@ -81,7 +85,7 @@ const fetchArticleData = async (): Promise<JsonData> => {
   return jsonData;
 };
 
-const NewsArticles: React.FC = () => {
+const NewsArticles: React.FC<NewsArticlesProps> = ({ data }) => {
   const [articles, setArticles] = useState<ExtractedArticleData[]>([]);
   const [loading, setLoading] = useState(false);
 
