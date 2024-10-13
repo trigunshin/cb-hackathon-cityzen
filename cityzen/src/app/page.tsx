@@ -21,11 +21,10 @@ export default function Home() {
   return (
     <>
     <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', color: "#868686"}}>
-      <Box flex={1} minHeight={'100vh'} sx={{background: 'radial-gradient(circle, #CBD6DD 37%, #72BAE3 100%)'}}>
-      <EventCarousel />
-        <Container sx={{ height: '100%', py: 4, alignContent: 'center' }}>
+      <Box flex={1} sx={{background: 'radial-gradient(circle, #CBD6DD 37%, #72BAE3 100%)'}}>
+        <Container sx={{ height: '100%', py: {lg: 10, md: 4, sm: 4, xs: 4}, alignContent: 'center' }}>
           <Stack spacing={2} alignItems="center" justifyContent="center" height="100%">
-            <Typography variant="h2" className='jaro' gutterBottom>
+            <Typography variant="h2" paddingTop={3} className='jaro' gutterBottom>
               Cityzen
             </Typography>
             <TextField
@@ -45,6 +44,8 @@ export default function Home() {
           </Stack>
         </Container>
       </Box>
+      <EventCarousel />
+
       <Box sx={{ width: '100%', bgcolor: 'white' }}>
         <Container sx={{ py: 4 }}>
         <Typography paddingY={4} variant="h4" textAlign={'center'} color='#72BAE3'>

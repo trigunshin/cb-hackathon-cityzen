@@ -1,32 +1,59 @@
 "use client"
 import React, { useState } from 'react';
-import { Box, Drawer, IconButton, List, ListItem, ListItemText, Button, Typography, Stack, Container } from '@mui/material';
+import { Box, Drawer, IconButton, List, ListItem, ListItemText, Button, Typography, Stack, Container, Paper } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { useRouter } from 'next/navigation';
+import NewsArticles from '@/app/components/NewsArticles';
+import EventsResults from '@/app/components/EventsResults';
+import VotingPolls from '@/app/components/VotingPolls';
 
 const drawerWidth = 240;
 
+const menuItems = ['Main Content', 'News Articles', 'Events', 'Voting Places', 'City Hall'];
+
 export default function ContentPage() {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
+  const [selectedItem, setSelectedItem] = useState('Main Content');
   const router = useRouter();
 
   const handleDrawerToggle = () => {
     setOpen(!open);
   };
 
+  const handleDrawerItem = (item: string) => {
+    setSelectedItem(item);
+  };
+
+  const renderContent = () => {
+    switch (selectedItem) {
+      case 'Main Content':
+        return <Typography>This is the Main Content area.</Typography>;
+      case 'News Articles':
+        return <NewsArticles />
+      case 'Events':
+        return <EventsResults />
+      case 'Voting Places':
+        return <VotingPolls />
+      case 'City Hall':
+        return <Typography>Information about City Hall and local government.</Typography>;
+      default:
+        return <Typography>Select an item from the menu to view content.</Typography>;
+    }
+  };
+
   return (
-    <Box sx={{ display: 'flex', height: '100vh' }}>
+    <Box sx={{ display: 'flex', height: '100vh', overflow: 'hidden' }}>
       <IconButton
         color="inherit"
         aria-label="toggle drawer"
         edge="end"
         onClick={handleDrawerToggle}
-        sx={{ 
-          position: 'absolute', 
-          left: open ? drawerWidth : 0, 
-          top: 0, 
+        sx={{
+          position: 'absolute',
+          left: open ? drawerWidth : 0,
+          top: 0,
           p: 2,
           transition: 'left 0.3s'
         }}
@@ -40,8 +67,8 @@ export default function ContentPage() {
         sx={{
           width: drawerWidth,
           flexShrink: 0,
-          '& .MuiDrawer-paper': { 
-            width: drawerWidth, 
+          '& .MuiDrawer-paper': {
+            width: drawerWidth,
             boxSizing: 'border-box',
             position: 'relative'
           }
@@ -72,9 +99,17 @@ export default function ContentPage() {
         </Stack>
         <Box sx={{ overflow: 'auto', height: '100%', backgroundColor: '#ffffff' }}>
           <List sx={{ alignContent: 'space-around', height: '100%' }}>
-            {['Main Content', 'News Articles', 'Events', 'Voting Places', 'City Hall', ].map((text, index) => (
+            {menuItems.map((text, index) => (
               <ListItem key={index} disablePadding>
-                <Button fullWidth sx={{ justifyContent: 'flex-start', color: '#B0B0B0' }}>
+                <Button
+                  fullWidth
+                  sx={{
+                    justifyContent: 'flex-start',
+                    color: selectedItem === text ? 'primary.main' : '#B0B0B0',
+                    backgroundColor: selectedItem === text ? 'rgba(0, 0, 0, 0.04)' : 'transparent',
+                  }}
+                  onClick={() => handleDrawerItem(text)}
+                >
                   <ListItemText>
                     {text}
                   </ListItemText>
@@ -89,15 +124,25 @@ export default function ContentPage() {
         sx={{
           flexGrow: 1,
           p: 3,
+          backgroundColor: '#B0B0B0',
           transition: 'margin-left 0.3s',
           marginLeft: open ? 0 : `-${drawerWidth}px`,
           width: `calc(100% - ${open ? drawerWidth : 0}px)`,
         }}
       >
-        <Container sx={{backgroundColor: '#B0B0B0', width: '100%', height: '100%'}}>
-          <Typography variant="h6">
-            Main content area
-          </Typography>
+        <Container sx={{width: '100%', height: '100%', alignContent: 'center'}}>
+        <Paper
+            elevation={3}
+            sx={{
+                backgroundColor: '#ffffff',
+                width: '100%',
+                alignContent: 'center',
+                p: 4,
+                boxSizing: 'border-box', // Ensures padding is included in the height calculation
+            }}
+        >            
+            {renderContent()}
+          </Paper>
         </Container>
       </Box>
     </Box>
