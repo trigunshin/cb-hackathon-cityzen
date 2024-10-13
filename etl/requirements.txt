@@ -9,3 +9,4 @@ langchain-community
 pinecone-client
 pydub
 tqdm
+requests

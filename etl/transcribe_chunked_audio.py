@@ -7,6 +7,8 @@ import argparse
 import time  # For sleep in retries
 from pinecone import Pinecone
 import uuid
+from llama_index.core import Document
+from llamacone.indexer import index_documents
 
 # ----------------------------
 # Configuration
@@ -30,10 +32,6 @@ if not pinecone_api_key or not pinecone_environment:
 pinecone = Pinecone(api_key=pinecone_api_key, environment=pinecone_environment)
 # Create or connect to an index
 index_name = os.getenv('PINECONE_INDEX_NAME')
-print(f"pinecone index ${index_name}: ${pinecone.list_indexes()}")
-# if index_name not in pinecone.list_indexes():
-#     # Replace 1536 with the dimension of your embedding model
-#     raise ValueError("Pinecone Index not found!")
 index = pinecone.Index(index_name)
 
 
@@ -77,36 +75,6 @@ def get_embedding(text, model="text-embedding-3-large"):
     embedding = response['data'][0]['embedding']
     return embedding
 
-
-def upsert_transcription_segments(segments, index):
-    """
-    Upserts transcription segments into Pinecone.
-
-    :param segments: List of parsed segments with metadata.
-    :param index: Pinecone index object.
-    """
-    upsert_data = []
-    for segment in segments:
-        embedding = get_embedding(segment['text'])
-        # Generate a unique ID for each segment
-        id = str(uuid.uuid4())
-        # Prepare metadata
-        metadata = {
-            "text": segment['text'],
-            "start_time": segment['start_time'],
-            "end_time": segment['end_time'],
-            "speaker": segment['speaker']
-        }
-        upsert_data.append((id, embedding, metadata))
-
-    # Upsert in batches (recommended for performance)
-    batch_size = 100  # Adjust based on your needs
-    for i in range(0, len(upsert_data), batch_size):
-        batch = upsert_data[i:i + batch_size]
-        index.upsert(vectors=batch)
-        print(f"Upserted batch {i // batch_size + 1}")
-
-
 def parse_transcription(transcription_data):
     """
     Parses transcription data to extract text and metadata segments.
@@ -127,7 +95,7 @@ def parse_transcription(transcription_data):
     return parsed_segments
 
 
-def transcribe_audio_chunk(chunk_path, model="whisper-1", language=None, max_retries=5, verbose=True):
+def transcribe_audio_chunk(chunk_path, model="whisper-1", language=None, max_retries=5, verbose=False):
     """
     Transcribes a single audio chunk using OpenAI's Whisper API with retry logic and verbose output.
 
@@ -163,6 +131,10 @@ def transcribe_audio_chunk(chunk_path, model="whisper-1", language=None, max_ret
             return {"text": "", "segments": []}
     print(f"Failed to transcribe {chunk_path} after {max_retries} attempts.")
     return {"text": "", "segments": []}
+
+
+def upsert_transcript(transcripts, index):
+    [text for text in transcripts if text]
 
 
 def transcribe_large_audio(input_file_path, output_file_path, segments_output_path, chunk_length_ms=5 * 60 * 1000,
@@ -212,6 +184,10 @@ def transcribe_large_audio(input_file_path, output_file_path, segments_output_pa
             f.write(combined_transcript)
         print(f"Transcription successful! Combined transcript saved to {output_file_path}")
 
+        if index and transcripts:
+            print("upserting text to pinecone")
+            upsert_transcript(transcripts, index)
+
     finally:
         # Clean up temporary chunk files
         for chunk in chunks:
@@ -225,7 +201,9 @@ def transcribe_large_audio(input_file_path, output_file_path, segments_output_pa
 # ----------------------------
 # Main Execution
 # ----------------------------
-
+# GET
+# 	https://lacity.primegov.com/api/v2/PublicPortal/ListArchivedMeetings?year=2024
+# [results].filter(item => item.videoUrl && !item.title.includes('- SAP'))
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description="Transcribe large MP3 files using OpenAI's Whisper API and store in Pinecone.")
@@ -252,3 +230,11 @@ if __name__ == "__main__":
         language=args.language,
         index=index
     )
+"""
+    # Upsert in batches (recommended for performance)
+    batch_size = 100  # Adjust based on your needs
+    for i in range(0, len(upsert_data), batch_size):
+        batch = upsert_data[i:i + batch_size]
+        index.upsert(vectors=batch)
+        print(f"Upserted batch {i // batch_size + 1}")
+"""
