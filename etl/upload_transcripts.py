@@ -13,6 +13,7 @@ from llamacone.indexer import index_documents  # Ensure this is the correct impo
 PINECONE_API_KEY = os.getenv('PINECONE_API_KEY')
 PINECONE_ENVIRONMENT = os.getenv('PINECONE_ENVIRONMENT')
 PINECONE_INDEX_NAME = os.getenv('PINECONE_INDEX_NAME')
+pinecone_namespace = "youtube_city_council_la"
 
 TRANSCRIPTS_DIR = Path('transcripts')
 FETCHABLE_VIDEOS_FILE = Path('fetchable_videos/2024.json')
@@ -71,13 +72,16 @@ def get_video_time_stats(metadata):
     Modify this function based on the actual structure of your metadata.
     """
     return {
+        'id': metadata.get('id'),
+        'videoUrl': metadata.get('videoUrl'),
         'duration_seconds': metadata.get('duration_seconds'),  # e.g., total duration
         'dateTime': metadata.get('dateTime'),  # e.g., transcript start time
         'view_count': metadata.get('view_count'),
         'like_count': metadata.get('like_count'),
         'title': metadata.get('title'),
         'meetingTypeId': metadata.get('meetingTypeId'),
-        'committeeId': metadata.get('committeeId')
+        'committeeId': metadata.get('committeeId'),
+        'generation': 1,
     }
 
 
@@ -121,11 +125,11 @@ def main():
 
         # Upsert Document to Pinecone using llama_index
         try:
-            # index_documents([doc], namespace=PINECONE_INDEX_NAME)
+            index_documents([doc], namespace=pinecone_namespace)
             print(f"Successfully uploaded VIDEO_ID {video_id} to Pinecone.")
 
             # Mark as uploaded by creating an empty JSON file
-            # pineconed_file.touch()
+            pineconed_file.touch()
         except Exception as e:
             print(f"Failed to upload VIDEO_ID {video_id}: {e}")
 
