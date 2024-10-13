@@ -9,4 +9,14 @@ langchain-community
 pinecone-client
 pydub
 tqdm
+<<<<<<< HEAD
 argparse
+=======
+requests
+pytube
+pytubefix
+ffmpeg-python
+llama-index-core
+llama-index-llms-openai
+llama-index-vector-stores-pinecone
+>>>>>>> main
