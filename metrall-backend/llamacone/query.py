@@ -51,7 +51,7 @@ def query_pinecone(query):
     news_query_engine = gen_query_eng("news")
     city_council_la_query_engine = gen_query_eng("youtube_city_council_la")
     #transcripts_query_engine = gen_query_eng("transcripts")
-    transcript_youtube_query_engine = gen_query_eng("transcripts_youtube")
+    #transcript_youtube_query_engine = gen_query_eng("transcripts_youtube")
     #events_engine = gen_query_eng("events")
 
     query_engine_tools = [
@@ -79,12 +79,12 @@ def query_pinecone(query):
         #        description="Provides information about transcripts"
         #    ),
         #),
-        QueryEngineTool(
-            query_engine=transcript_youtube_query_engine,
-            metadata=ToolMetadata(
-                description="Provides information about transcripts from youtube"
-            ),
-        ),
+        #QueryEngineTool(
+        #    query_engine=transcript_youtube_query_engine,
+        #    metadata=ToolMetadata(
+        #        description="Provides information about transcripts from youtube"
+        #    ),
+        #),
     ]
     query_engine = RouterQueryEngine(
         selector=LLMMultiSelector.from_defaults(),
