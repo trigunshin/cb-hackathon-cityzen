@@ -9,4 +9,3 @@ langchain-community
 pinecone-client
 pydub
 tqdm
-google-cloud-speech
