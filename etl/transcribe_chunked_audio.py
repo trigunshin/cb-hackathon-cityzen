@@ -1,4 +1,5 @@
 import openai
+from openai import OpenAI
 import os
 from pydub import AudioSegment
 import tempfile
@@ -9,10 +10,10 @@ import argparse
 # Configuration
 # ----------------------------
 
+client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
 # Ensure your OpenAI API key is set as an environment variable for security
-openai.api_key = os.getenv('OPENAI_API_KEY')
-if not openai.api_key:
-    raise ValueError("OpenAI API key not found. Please set the OPENAI_API_KEY environment variable.")
+# if not openai.api_key:
+#     raise ValueError("OpenAI API key not found. Please set the OPENAI_API_KEY environment variable.")
 
 
 # ----------------------------
@@ -54,9 +55,9 @@ def transcribe_audio_chunk(chunk_path, model="whisper-1", language=None):
             print(f"Uploading {chunk_path} for transcription...")
             # The model name should be the first positional argument
             if language:
-                transcript = openai.Audio.transcribe(model, audio_file, language=language)
+                transcript = client.audio.transcribe(model, audio_file, language=language)
             else:
-                transcript = openai.Audio.transcribe(model, audio_file)
+                transcript = client.audio.transcribe(model, audio_file)
         text = transcript.get('text', '')
         if text:
             print(f"Transcription successful for {chunk_path}")
@@ -64,7 +65,7 @@ def transcribe_audio_chunk(chunk_path, model="whisper-1", language=None):
         else:
             print(f"No text returned for {chunk_path}")
             return ""
-    except openai.error.OpenAIError as e:
+    except openai.OpenAIError as e:
         print(f"OpenAI API error for {chunk_path}: {e}")
         return ""
     except Exception as e:
