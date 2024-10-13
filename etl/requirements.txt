@@ -10,3 +10,5 @@ pinecone-client
 pydub
 tqdm
 requests
+pytube
+pytubefix
