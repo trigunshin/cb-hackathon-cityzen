@@ -1,7 +1,7 @@
 "use client";
 import * as dotenv from "dotenv";
 dotenv.config();
-import { Box, Button, Divider, Paper, TextField, Typography } from "@mui/material";
+import { Box, Button, Paper, TextField, Typography } from "@mui/material";
 import { Container, Grid, Stack } from "@mui/system";
 import React, { useState } from "react";
 import FlexibleChipStack from "./components/flexibleChips";
@@ -19,7 +19,7 @@ export default function Home() {
   const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}query?${inputValue}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}query?query=${inputValue}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
