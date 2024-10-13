@@ -171,3 +171,6 @@ etl/encoded_key.base64
 
 # VSCode settings
 .vscode/
+etl/data/*
+etl/transcripts/*
+etl/pineconed/*
