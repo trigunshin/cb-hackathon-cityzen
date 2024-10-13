@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Query
+from fastapi import FastAPI, Query, HTTPException
 from llamacone.query import query_pinecone
 from typing import Annotated
 import uvicorn
@@ -22,19 +22,26 @@ app.add_middleware(
 def get_query(
     query: Annotated[str, Query(title="User query")]
 ):
-    result = query_pinecone(query).source_nodes
+    result = query_pinecone(query)
     json_response = transform_node_to_json(result)
     return json_response
 
 def transform_node_to_json(result):
-    output_list = []
-    for source_node in result:
-        node_info = source_node.node
-        output = {}
-        output["data"] = node_info.extra_info
-        output["text"] = node_info.text if node_info.text else ""
-        output_list.append(output)
-    return output_list
+    if result:
+        output = {
+            "response": result.response
+        }
+        node_list = []
+        for source_node in result.source_nodes:
+            node_info = source_node.node
+            node_output = {}
+            node_output["data"] = node_info.extra_info
+            node_output["text"] = node_info.text if node_info.text else ""
+            node_list.append(node_output)
+        output["nodes"] = node_list
+        return output
+    else:
+        return HTTPException(status_code=404, detail="Nothing found in documents")
 
 # Run app
 if __name__ == "__main__":
