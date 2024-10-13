@@ -1,56 +1,69 @@
 import React, { useEffect, useState } from 'react';
-import { Typography, Card, CardContent, Box } from '@mui/material';
+import { Typography, Card, CardContent, CircularProgress } from '@mui/material';
 import { Grid } from '@mui/system';
-import Link from 'next/link';
 
-interface PollPlace {
-  name: string;
-  link: string;
+interface DataItem {
+  id: number;
+  title: string;
+  description: string;
 }
 
 const CityHallResults = () => {
-  const [pollPlaces, setPollPlaces] = useState<PollPlace[]>([]);
+  // State to hold the data from the API and loading state
+  const [data, setData] = useState<DataItem[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    const fetchData = async () => {
+      // Simulate fetch delay
+      setTimeout(() => {
+        // Mocked data as if it was fetched from an API
+        const mockData = [
+          {
+            id: 1,
+            title: 'City Hall Event A',
+            description: 'Description of City Hall Event A'
+          },
+          {
+            id: 2,
+            title: 'City Hall Event B',
+            description: 'Description of City Hall Event B'
+          },
+          {
+            id: 3,
+            title: 'City Hall Event C',
+            description: 'Description of City Hall Event C'
+          }
+        ];
 
-    const fetchPollPlaces = async () => {
-      try {
-        // Simulating API call
-        setTimeout(() => {
-          const mockPollPlaces = [
-            { name: 'Poll Place A', link: 'https://example.com/poll-a' },
-            { name: 'Poll Place B', link: 'https://example.com/poll-b' },
-            { name: 'Poll Place C', link: 'https://example.com/poll-c' }
-          ];
-          setPollPlaces(mockPollPlaces);
-        }, 1000);
-      } catch (error) {
-        console.error('Failed to fetch poll places:', error);
-      }
+        setData(mockData);
+        setIsLoading(false);
+      }, 1000);
     };
 
-    fetchPollPlaces();
+    fetchData();
   }, []);
 
   return (
     <Grid container spacing={2} alignItems={'center'}>
-      <Grid size={{xs: 12, sm: 6, md: 4}}>
-          <Typography variant="h6" gutterBottom>
-            City Hall
-          </Typography>
-          {pollPlaces.map((place, index) => (
-            <Card key={index} variant="outlined" sx={{ mb: 2 }}>
+      {isLoading ? (
+        <CircularProgress />
+      ) : (
+        data.map((item, index) => (
+          <Grid size={{xs: 12, sm: 6, md: 4 }} key={index}>
+            <Card>
               <CardContent>
-                <Typography variant="body1" gutterBottom>
-                  {place.name}
+                <Typography variant="h5" gutterBottom>
+                  {item.title}
                 </Typography>
-                <Link href={place.link} target="_blank" rel="noopener">
-                  More Details
-                </Link>
+                <Typography variant="body2">
+                  {item.description}
+                </Typography>
               </CardContent>
             </Card>
-          ))}
-      </Grid>
+          </Grid>
+        ))
+      )}
     </Grid>
   );
 };
