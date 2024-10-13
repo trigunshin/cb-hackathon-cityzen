@@ -74,10 +74,7 @@ def get_video_time_stats(metadata):
     return {
         'id': metadata.get('id'),
         'videoUrl': metadata.get('videoUrl'),
-        'duration_seconds': metadata.get('duration_seconds'),  # e.g., total duration
-        'dateTime': metadata.get('dateTime'),  # e.g., transcript start time
-        'view_count': metadata.get('view_count'),
-        'like_count': metadata.get('like_count'),
+        'dateTime': metadata.get('dateTime'),
         'title': metadata.get('title'),
         'meetingTypeId': metadata.get('meetingTypeId'),
         'committeeId': metadata.get('committeeId'),
