@@ -2,7 +2,7 @@ from llama_index.core import VectorStoreIndex, StorageContext, get_response_synt
 from llama_index.core.query_engine import RouterQueryEngine
 from llama_index.core.tools import QueryEngineTool, ToolMetadata
 from llama_index.embeddings.openai import OpenAIEmbedding
-from llama_index.core.selectors import LLMSingleSelector
+from llama_index.core.selectors import LLMSingleSelector, LLMMultiSelector
 from .utils import return_pinecone_vectorstore
 from enum import Enum
 from llama_index.core.retrievers import VectorIndexRetriever
@@ -87,7 +87,7 @@ def query_pinecone(query):
         ),
     ]
     query_engine = RouterQueryEngine(
-        selector=LLMSingleSelector.from_defaults(),
+        selector=LLMMultiSelector.from_defaults(),
         query_engine_tools=query_engine_tools,
         verbose=True
     )
