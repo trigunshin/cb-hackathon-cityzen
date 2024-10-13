@@ -1,9 +1,15 @@
-from llama_index.core import VectorStoreIndex, StorageContext, ServiceContext
+from llama_index.core import VectorStoreIndex, StorageContext, ServiceContext, Document
 from llama_index.embeddings.openai import OpenAIEmbedding
 from llamacone.utils import return_pinecone_index, return_pinecone_vectorstore
+from typing import List
+from enum import Enum
+
+class namespaces(str, Enum):
+    news = 'news'
+    transcript_youtube = 'transcript_youtube'
 
 
-def index_documents(documents, namespace):
+def index_documents(documents:List[Document], namespace:namespaces):
 
     embed_model = OpenAIEmbedding(model="text-embedding-3-large")
     vector_store = return_pinecone_vectorstore(namespace)
