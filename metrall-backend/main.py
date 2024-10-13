@@ -13,7 +13,7 @@ app = FastAPI()
 def get_query(
     query: Annotated[str, Query(title="User query")]
 ):
-    query_pinecone(query, 'news')
+    return query_pinecone(query, 'transcripts_youtube')['response']
 
 
 # Run app
