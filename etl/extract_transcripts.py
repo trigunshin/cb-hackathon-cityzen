@@ -21,6 +21,7 @@ def fetch_meetings_data(year, committee="City Council Meeting"):
 
 
 def fetch_transcript(video_id):
+    print(f"Fetching transcript {meeting['id']}")
     return ' '.join([i['text'] for i in YouTubeTranscriptApi.get_transcript(video_id)])
 
 
@@ -39,16 +40,11 @@ def fetch_agenda_by_template_id(template_id):
 
 
 if __name__ == '__main__':
+    session = Session()
+
+    print("Fetching meeting data")
     year = 2024
     meetings_data = fetch_meetings_data(year)
-    if meetings_data:
-        pp(meetings_data)
-    pp(fetch_transcript(meetings_data[1]['videoUrl'].split('v=', True)[1]))
-
-    #import pdb
-    #pdb.set_trace()
-
-    session = Session()
 
     for meeting in meetings_data:
         transcript_text = fetch_transcript(meeting['videoUrl'].split('v=', True)[1])
@@ -58,6 +54,7 @@ if __name__ == '__main__':
             transcript_text = transcript_text,
             source = 'city_council_transcript'
         )
+        print(f"Writing transcript {meeting['id']} to database")
         session.add(new_transcript_record)
         session.commit()
     session.close()

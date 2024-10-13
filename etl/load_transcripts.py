@@ -1,10 +1,11 @@
 from db import Session
 from llama_index.core import Document
 from models.transcript_data import RawTranscriptData
+from llamacone.indexer import index_documents
 
 def load_transcripts():
     session = Session()
-    transcripts = session.query(RawTranscriptData).limit(10).all()
+    transcripts = session.query(RawTranscriptData).all()
 
     documents = []
     for row in [i for i in transcripts]:
@@ -20,4 +21,5 @@ def load_transcripts():
     return documents
 
 if __name__ == '__main__':
-    load_transcripts()
+    docs = load_transcripts()
+    index_documents(docs, "transcripts_youtube")

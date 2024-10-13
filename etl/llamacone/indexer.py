@@ -1,6 +1,6 @@
 from llama_index.core import VectorStoreIndex, StorageContext, ServiceContext
 from llama_index.embeddings.openai import OpenAIEmbedding
-from etl.llamacone.utils import return_pinecone_index, return_pinecone_vectorstore
+from llamacone.utils import return_pinecone_index, return_pinecone_vectorstore
 
 
 def index_documents(documents, namespace):
