@@ -1,14 +1,14 @@
 import openai
 import os
+import shutil
 from pydub import AudioSegment
 import tempfile
 from tqdm import tqdm  # For progress bars
 import argparse
 import time  # For sleep in retries
 from pinecone import Pinecone
+import ffmpeg
 import uuid
-from llama_index.core import Document
-from llamacone.indexer import index_documents
 
 # ----------------------------
 # Configuration
@@ -38,8 +38,34 @@ index = pinecone.Index(index_name)
 # ----------------------------
 # Function Definitions
 # ----------------------------
+def split_audio_ffmpeg_python(input_file, output_pattern, segment_time):
+    """
+    Splits the input audio file into segments using ffmpeg-python.
 
-def split_audio(file_path, chunk_length_ms=5 * 60 * 1000, overlap_ms=1000):
+    :param input_file: Path to the input audio file.
+    :param output_pattern: Output file pattern (e.g., 'output%03d.webm').
+    :param segment_time: Duration of each segment in seconds.
+    """
+    try:
+        (
+            ffmpeg
+            .input(input_file)
+            .output(output_pattern, f='segment', segment_time=segment_time, c='copy')
+            .run()
+        )
+        print("Audio successfully split into segments.")
+    except ffmpeg.Error as e:
+        print(f"An error occurred: {e.stderr.decode()}")
+
+# # Usage
+# input_file_path = 'path/to/input.webm'
+# output_file_pattern = 'path/to/output%03d.webm'
+# segment_duration_seconds = 600  # 10 minutes
+#
+# split_audio_ffmpeg_python(input_file_path, output_file_pattern, segment_duration_seconds)
+
+
+def split_audio(file_path, chunk_length_ms=5 * 60 * 1000, overlap_ms=1000, format: str="webm"):
     """
     Splits the audio file into chunks of specified length in milliseconds with overlap.
 
@@ -48,13 +74,14 @@ def split_audio(file_path, chunk_length_ms=5 * 60 * 1000, overlap_ms=1000):
     :param overlap_ms: Overlap between chunks in milliseconds (default: 1 second).
     :return: List of file paths to the audio chunks.
     """
-    audio = AudioSegment.from_file(file_path)
+
+    audio = AudioSegment.from_file(file_path, format=format)
     total_length_ms = len(audio)
     chunks = []
     for i in range(0, total_length_ms, chunk_length_ms - overlap_ms):
         chunk = audio[i:i + chunk_length_ms]
-        temp_file = tempfile.NamedTemporaryFile(delete=False, suffix=".mp3")
-        chunk.export(temp_file.name, format="mp3")
+        temp_file = tempfile.NamedTemporaryFile(delete=False, suffix=".webm")
+        chunk.export(temp_file.name, format="webm")
         chunks.append(temp_file.name)
         print(f"Created chunk: {temp_file.name}")
     return chunks
@@ -74,26 +101,6 @@ def get_embedding(text, model="text-embedding-3-large"):
     )
     embedding = response['data'][0]['embedding']
     return embedding
-
-def parse_transcription(transcription_data):
-    """
-    Parses transcription data to extract text and metadata segments.
-
-    :param transcription_data: Dictionary containing 'text' and 'segments'.
-    :return: List of segments with metadata.
-    """
-    segments = transcription_data.get("segments", [])
-    parsed_segments = []
-    for segment in segments:
-        parsed_segment = {
-            "text": segment.text if hasattr(segment, 'text') else '',
-            "start_time": segment.start if hasattr(segment, 'start') else 0.0,
-            "end_time": segment.end if hasattr(segment, 'end') else 0.0,
-            "speaker": segment.speaker if hasattr(segment, 'speaker') else 'Unknown'  # Default to 'Unknown' if not provided
-        }
-        parsed_segments.append(parsed_segment)
-    return parsed_segments
-
 
 def transcribe_audio_chunk(chunk_path, model="whisper-1", language=None, max_retries=5, verbose=False):
     """
@@ -115,36 +122,42 @@ def transcribe_audio_chunk(chunk_path, model="whisper-1", language=None, max_ret
                     model=model,
                     file=audio_file,
                     language=language,
-                    response_format="verbose_json" if verbose else "text"
+                    response_format="verbose_json" if verbose else "json"
                 )
             # Access attributes directly
             text = transcript.text
-            segments = transcript.segments if hasattr(transcript, 'segments') else []
             if text:
                 print(f"Transcription successful for {chunk_path}")
-                return {"text": text, "segments": segments}
+                return {"text": text}
             else:
                 print(f"No text returned for {chunk_path}")
-                return {"text": "", "segments": []}
+                return {"text": ""}
         except Exception as e:
             print(f"Unexpected error for {chunk_path}: {e}")
-            return {"text": "", "segments": []}
+            return {"text": ""}
     print(f"Failed to transcribe {chunk_path} after {max_retries} attempts.")
-    return {"text": "", "segments": []}
+    return {"text": ""}
 
 
 def upsert_transcript(transcripts, index):
-    [text for text in transcripts if text]
+    # [text for text in transcripts if text]
+    """
+        # Upsert in batches (recommended for performance)
+        batch_size = 100  # Adjust based on your needs
+        for i in range(0, len(upsert_data), batch_size):
+            batch = upsert_data[i:i + batch_size]
+            index.upsert(vectors=batch)
+            print(f"Upserted batch {i // batch_size + 1}")
+    """
+    pass
 
-
-def transcribe_large_audio(input_file_path, output_file_path, segments_output_path, chunk_length_ms=5 * 60 * 1000,
+def transcribe_large_audio(input_file_path, output_file_path, chunk_length_ms=5 * 60 * 1000,
                            overlap_ms=1000, model="whisper-1", language=None, index=None):
     """
-    Splits a large audio file into chunks, transcribes each chunk, upserts into Pinecone, writes the combined transcript to a file, and saves segments as JSON.
+    Splits a large audio file into chunks, transcribes each chunk, upserts into Pinecone, and writes the combined transcript to a file.
 
     :param input_file_path: Path to the input audio file.
     :param output_file_path: Path to the output transcript text file.
-    :param segments_output_path: Path to the output segments JSON file.
     :param chunk_length_ms: Length of each chunk in milliseconds (default: 5 minutes).
     :param overlap_ms: Overlap between chunks in milliseconds (default: 1 second).
     :param model: Whisper model to use.
@@ -152,29 +165,20 @@ def transcribe_large_audio(input_file_path, output_file_path, segments_output_pa
     :param index: Pinecone index object.
     """
     try:
-        # Step 1: Split the audio into chunks
+        # Step 1: Split the audio into chunks using ffmpeg
         print("Splitting audio into chunks...")
-        chunks = split_audio(input_file_path, chunk_length_ms, overlap_ms)
+        temp_dir = tempfile.mkdtemp()
+        output_pattern = os.path.join(temp_dir, "chunk%03d.webm")
+        split_audio_ffmpeg_python(input_file_path, output_pattern, chunk_length_ms / 1000)
+
+        # Collect the generated chunk files
+        chunks = sorted([os.path.join(temp_dir, f) for f in os.listdir(temp_dir) if f.endswith('.webm')])
 
         # Step 2: Transcribe each chunk with progress bar
         transcripts = []
-        all_segments = []
         for chunk in tqdm(chunks, desc="Transcribing chunks"):
             transcription_data = transcribe_audio_chunk(chunk, model, language)
             transcripts.append(transcription_data['text'])
-            segments = parse_transcription(transcription_data)
-            all_segments.extend(segments)
-
-        # Step 3: Save segments to JSON file for review
-        with open(segments_output_path, 'w', encoding='utf-8') as f:
-            import json
-            json.dump(all_segments, f, ensure_ascii=False, indent=4)
-        print(f"Segments saved to {segments_output_path}")
-
-        # Step 4: Upsert segments into Pinecone
-        if index and all_segments:
-            print("Upserting segments into Pinecone...")
-            # upsert_transcription_segments(all_segments, index)
 
         # Step 5: Combine transcripts
         combined_transcript = "\n".join(transcripts)
@@ -186,30 +190,22 @@ def transcribe_large_audio(input_file_path, output_file_path, segments_output_pa
 
         if index and transcripts:
             print("upserting text to pinecone")
-            upsert_transcript(transcripts, index)
-
+            # upsert_transcript(transcripts, index)
     finally:
-        # Clean up temporary chunk files
-        for chunk in chunks:
-            try:
-                os.remove(chunk)
-                print(f"Deleted temporary file: {chunk}")
-            except OSError as e:
-                print(f"Error deleting temporary file {chunk}: {e}")
+        # Clean up the temporary directory and its contents
+        try:
+            shutil.rmtree(temp_dir)
+            print(f"Deleted temporary directory: {temp_dir}")
+        except OSError as e:
+            print(f"Error deleting temporary directory {temp_dir}: {e}")
 
 
-# ----------------------------
-# Main Execution
-# ----------------------------
-# GET
-# 	https://lacity.primegov.com/api/v2/PublicPortal/ListArchivedMeetings?year=2024
-# [results].filter(item => item.videoUrl && !item.title.includes('- SAP'))
-if __name__ == "__main__":
+def main():
     parser = argparse.ArgumentParser(
-        description="Transcribe large MP3 files using OpenAI's Whisper API and store in Pinecone.")
-    parser.add_argument("input_mp3", help="Path to the input MP3 file.")
-    parser.add_argument("output_txt", help="Path to the output transcript text file.")
-    parser.add_argument("segments_output_json", help="Path to the output segments JSON file.")
+        description="Transcribe large audio files using OpenAI's Whisper API and store in Pinecone.")
+    parser.add_argument("--data-dir", type=str, default="data", help="Directory containing the input audio files.")
+    parser.add_argument("--transcripts-dir", type=str, default="transcripts",
+                        help="Directory to store the output transcripts.")
     parser.add_argument("--chunk-length-min", type=int, default=5, help="Chunk length in minutes (default: 5).")
     parser.add_argument("--overlap-sec", type=int, default=1, help="Overlap between chunks in seconds (default: 1).")
     parser.add_argument("--model", type=str, default="whisper-1", help="Whisper model to use (default: whisper-1).")
@@ -220,21 +216,29 @@ if __name__ == "__main__":
     chunk_length_ms = args.chunk_length_min * 60 * 1000
     overlap_ms = args.overlap_sec * 1000
 
-    transcribe_large_audio(
-        input_file_path=args.input_mp3,
-        output_file_path=args.output_txt,
-        segments_output_path=args.segments_output_json,
-        chunk_length_ms=chunk_length_ms,
-        overlap_ms=overlap_ms,
-        model=args.model,
-        language=args.language,
-        index=index
-    )
-"""
-    # Upsert in batches (recommended for performance)
-    batch_size = 100  # Adjust based on your needs
-    for i in range(0, len(upsert_data), batch_size):
-        batch = upsert_data[i:i + batch_size]
-        index.upsert(vectors=batch)
-        print(f"Upserted batch {i // batch_size + 1}")
-"""
+    data_dir = args.data_dir
+    transcripts_dir = args.transcripts_dir
+
+    for filename in os.listdir(data_dir):
+        if filename.endswith('.webm'):
+            video_id = os.path.splitext(filename)[0]
+            transcript_path = os.path.join(transcripts_dir, f"{video_id}.txt")
+
+            if not os.path.exists(transcript_path):
+                input_file_path = os.path.join(data_dir, filename)
+                output_file_path = transcript_path
+                print(f"Transcription starting for {filename}")
+                transcribe_large_audio(
+                    input_file_path=input_file_path,
+                    output_file_path=output_file_path,
+                    chunk_length_ms=chunk_length_ms,
+                    overlap_ms=overlap_ms,
+                    model=args.model,
+                    language=args.language,
+                    index=index
+                )
+                print(f"Transcription completed for {filename}")
+
+
+if __name__ == "__main__":
+    main()
