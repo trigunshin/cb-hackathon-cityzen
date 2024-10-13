@@ -25,7 +25,7 @@ export default function Home() {
         <Container sx={{ height: '100%', py: {lg: 10, md: 4, sm: 4, xs: 4}, alignContent: 'center' }}>
           <Stack spacing={2} alignItems="center" justifyContent="center" height="100%">
             <Typography variant="h2" paddingTop={3} className='jaro' gutterBottom>
-              Cityzen
+              Metrall
             </Typography>
             <TextField
               label="Ask a question about your neighborhood"

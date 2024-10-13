@@ -5,8 +5,8 @@ import { Metadata } from "next";
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: "Cityzen",
-  description: "Cityzen Description",
+  title: "Metrall",
+  description: "Metrall Description",
 };
 
 export default function RootLayout({

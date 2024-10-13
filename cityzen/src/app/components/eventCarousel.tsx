@@ -1,8 +1,6 @@
 "use client"
 import React, { useRef, useState } from 'react'
-import { Card, CardContent, Typography, Button, CardMedia, CardActions } from '@mui/material'
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import { Card, CardContent, Typography, CardActions } from '@mui/material'
 import Link from 'next/link';
 
 export default function EventCarousel() {

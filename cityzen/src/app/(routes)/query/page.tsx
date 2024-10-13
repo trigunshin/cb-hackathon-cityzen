@@ -7,11 +7,11 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { useRouter } from 'next/navigation';
 import NewsArticles from '@/app/components/NewsArticles';
 import EventsResults from '@/app/components/EventsResults';
-import VotingPolls from '@/app/components/VotingPolls';
+import CityHallResults from '@/app/components/CityHallResults';
 
 const drawerWidth = 240;
 
-const menuItems = ['Main Content', 'News Articles', 'Events', 'Voting Places', 'City Hall'];
+const menuItems = ['Main Content', 'News Articles', 'Events', 'City Hall'];
 
 export default function ContentPage() {
   const [open, setOpen] = useState(true);
@@ -34,10 +34,8 @@ export default function ContentPage() {
         return <NewsArticles />
       case 'Events':
         return <EventsResults />
-      case 'Voting Places':
-        return <VotingPolls />
       case 'City Hall':
-        return <Typography>Information about City Hall and local government.</Typography>;
+        return <CityHallResults />
       default:
         return <Typography>Select an item from the menu to view content.</Typography>;
     }
