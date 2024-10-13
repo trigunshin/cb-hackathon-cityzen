@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "cityzen-etl"
+version = "0.1.0"
+description = ""
+authors = ["Your Name <you@example.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "<3.13,>=3.12"
+llama-index = "^0.11.17"
+pinecone-client = "^5.0.1"
+llama-index-vector-stores-pinecone = "^0.2.1"
+python-dotenv = "^1.0.1"
+eventregistry = "^9.1"
+youtube-transcript-api = "^0.6.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

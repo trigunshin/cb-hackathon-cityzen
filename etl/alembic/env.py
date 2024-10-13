@@ -19,7 +19,9 @@ if config.config_file_name is not None:
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
 from models.transcript_data import RawTranscriptDataBase
-target_metadata = [RawTranscriptDataBase.metadata]
+from models.newsapi_data import RawNewsApiDataBase
+target_metadata = [RawTranscriptDataBase.metadata,
+                   RawNewsApiDataBase.metadata]
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:
