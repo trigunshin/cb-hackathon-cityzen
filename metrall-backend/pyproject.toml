@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "metrall-backend"
+version = "0.1.0"
+description = ""
+authors = ["Your Name <you@example.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+fastapi = "^0.115.2"
+uvicorn = "^0.31.1"
+python-dotenv = "^1.0.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
