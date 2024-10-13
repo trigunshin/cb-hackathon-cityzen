@@ -1,0 +1,58 @@
+//// Sample JSON data
+const jsonData = {
+  "response": "The documents are about the China Shipping lease...",
+  "source_nodes": [
+    {
+      "node": {
+        "extra_info": {
+          "meeting_id": 15337,
+          "videoUrl": "https://youtube.com/watch?v=8Fqy6iloyqA",
+          "date": "Apr 09, 2024"
+        }
+      }
+    }
+  ]
+};
+
+// Extracting the required information
+const youtubeVideo = jsonData.source_nodes[0].node.extra_info.videoUrl;
+const meetingDate = jsonData.source_nodes[0].node.extra_info.date;
+const meetingId = jsonData.source_nodes[0].node.extra_info.meeting_id;
+
+
+-----------------
+
+// Sample JSON data
+const jsonData = {
+    "response": "The documents are court documents related to the Baby Reindeer £92million Netflix court case, which have recently been laid bare.",
+    "source_nodes": [
+      {
+        "node": {
+          "extra_info": {
+            "title": "Baby Reindeer £92million Netflix court case takes twist as documents laid bare",
+            "source": "newsapi topic page 46792d5b-20e7-441f-b0c4-5a71415ff740",
+            "date": "2024-10-12",
+            "sentiment": 0.1294117647058823,
+            "image": "https://i2-prod.mirror.co.uk/incoming/article33876634.ece/ALTERNATES/s1200/0_Baby-Reindeer-ending-how-Netflix-show-differs-to-real-life-what-does-it-mean-and-will-there-be-a.jpg"
+            "text" : "aaaaaa"
+        }
+        }
+      }
+    ]
+  };
+  
+  // Extracting valuable variables
+  const articleTitle = jsonData.source_nodes[0].node.extra_info.title;
+  const articleSource = jsonData.source_nodes[0].node.extra_info.source;
+  const articleDate = jsonData.source_nodes[0].node.extra_info.date;
+  const articleSentiment = jsonData.source_nodes[0].node.extra_info.sentiment;
+  const articleImage = jsonData.source_nodes[0].node.extra_info.image;
+  const articleText = jsonData.source_nodes[0].node.extra_info.text;
+
+  
+  // Logging the extracted information
+  console.log("Article Title:", articleTitle);
+  console.log("Article Source:", articleSource);
+  console.log("Article Date:", articleDate);
+  console.log("Article Sentiment:", articleSentiment);
+  console.log("Article Image URL:", articleImage);
