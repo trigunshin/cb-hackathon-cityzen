@@ -1,11 +1,11 @@
 "use client"
-import { Box, Button, Paper, TextField, Typography } from '@mui/material';
+import { Box, Button, Divider, Paper, TextField, Typography } from '@mui/material';
 import { Container, Grid, Stack } from '@mui/system';
 import React, { useState } from 'react';
 import FlexibleChipStack from './components/flexibleChips';
 import ModernButton from './components/modernButton';
 import './globals.css'
-import EventCarousel from './components/eventCarousel';
+import EventCarousel from './components/EventCarousel';
 
 export default function Home() {
   const [inputValue, setInputValue] = useState('');
@@ -21,10 +21,16 @@ export default function Home() {
   return (
     <>
     <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', color: "#868686"}}>
-      <Box flex={1} sx={{background: 'radial-gradient(circle, #CBD6DD 37%, #72BAE3 100%)'}}>
+    <Box
+        flex={1}
+        bgcolor={'#eeeeee'}
+        sx={{
+          alignContent: 'center'
+        }}
+      >
         <Container sx={{ height: '100%', py: {lg: 10, md: 4, sm: 4, xs: 4}, alignContent: 'center' }}>
           <Stack spacing={2} alignItems="center" justifyContent="center" height="100%">
-            <Typography variant="h2" paddingTop={3} className='jaro' gutterBottom>
+            <Typography variant="h1" paddingY={3} className='jaro' gutterBottom>
               Metrall
             </Typography>
             <TextField
@@ -33,8 +39,33 @@ export default function Home() {
               variant="outlined"
               onChange={handleInputChange}
               fullWidth
-              sx={{width: "75%"}}
+              sx={{
+                width: "75%",
+                "& .MuiOutlinedInput-root": {
+                  "& fieldset": {
+                    borderColor: '#868686', 
+                  },
+                  "&:hover fieldset": {
+                    borderColor: '#868686',  
+                  },
+                  "&.Mui-focused fieldset": {
+                    borderColor: '#868686', 
+                  }
+                },
+                "& .MuiInputLabel-root": {
+                  color: "#868686",  // Default color of the floating label text
+                },
+                "& .MuiInputLabel-root:hover": {
+                  color: "#868686",  // Color on hover
+                },
+                "& .MuiInputLabel-root.Mui-focused": {
+                  color: "#868686", // Color when focused
+                },
+              }}
             />
+
+
+
             <Box width="100%">
               <FlexibleChipStack />
             </Box>
@@ -44,8 +75,9 @@ export default function Home() {
           </Stack>
         </Container>
       </Box>
+      <Divider />
       <EventCarousel />
-
+      <Divider />
       <Box sx={{ width: '100%', bgcolor: 'white' }}>
         <Container sx={{ py: 4 }}>
         <Typography paddingY={4} variant="h4" textAlign={'center'} color='#72BAE3'>

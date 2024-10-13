@@ -2,6 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+
+@keyframes glow {
+  from {
+    text-shadow: 0 0 20px #868686;
+  }
+  to {
+    text-shadow: 0 0 40px #72BAE3, 0 0 20px #4dbbc7;
+  }
+}
+
 :root {
   font-size: 100%;
   --foreground-rgb: 0, 0, 0;
@@ -25,4 +35,5 @@ html, body {
   font-weight: 400;
   font-style: normal;
   color: white;
+  animation: glow 2s ease-in-out infinite alternate;
 }

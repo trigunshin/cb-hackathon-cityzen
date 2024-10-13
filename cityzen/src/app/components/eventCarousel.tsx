@@ -1,6 +1,6 @@
 "use client"
 import React, { useRef, useState } from 'react'
-import { Card, CardContent, Typography, CardActions } from '@mui/material'
+import { Card, CardContent, Typography, CardActions, Chip, Stack } from '@mui/material'
 import Link from 'next/link';
 
 export default function EventCarousel() {
@@ -95,44 +95,56 @@ export default function EventCarousel() {
         onMouseMove={handleMouseMove}
       >
         {cards.map((card, index) => (
-          <Card
-            key={index}
-            className="flex-shrink-0 w-64"
-            style={{ 
-              scrollSnapAlign: 'start',
-              display: 'flex',
-              flexDirection: 'column',
-              height: '200px'
-            }}
-          >
-            <CardContent className="flex-grow overflow-hidden">
-              <Typography variant="h6" component="div" gutterBottom noWrap>
-                {card.title}
-              </Typography>
-              <Typography 
-                variant="body2" 
-                color="text.secondary" 
-                paragraph
-                style={{
-                  display: '-webkit-box',
-                  WebkitLineClamp: 3,
-                  WebkitBoxOrient: 'vertical',
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis'
-                }}
-              >
-                {card.content}
-              </Typography>
-              <Typography variant="caption" color="text.secondary" gutterBottom>
-                {new Date(card.date).toLocaleDateString()}
-              </Typography>
-            </CardContent>
-            <CardActions>
-              <Link href={card.link} passHref>
-                Read more
-              </Link>
-            </CardActions>
-          </Card>
+         <Card
+         key={index}
+         variant='outlined'
+         className="flex-shrink-0 w-64 h-64"
+         sx={{
+           scrollSnapAlign: 'start',
+           display: 'flex',
+           flexDirection: 'column',
+         }}
+       >
+         <CardContent>
+           <Link href={card.link}>
+             <Typography 
+               gutterBottom 
+               fontSize={'18px'} 
+               color='#868686' 
+               sx={{textDecoration: 'underline', wordWrap: 'break-word'}} 
+               component="div"
+             >
+               {card.title}
+             </Typography>
+           </Link>
+           <Stack gap={2} direction={'column'} alignItems={'left'}>
+             <Typography 
+               variant="body2" 
+               color="text.secondary"
+               style={{
+                 display: '-webkit-box',
+                 WebkitLineClamp: 3,
+                 WebkitBoxOrient: 'vertical',
+                 overflow: 'hidden',
+                 textOverflow: 'ellipsis'
+               }}
+             >
+               {card.content}
+             </Typography>
+             <Stack gap={1} direction={'row'} alignItems={'center'}>
+               <Chip
+                 variant="outlined"
+                 label={
+                   <Typography variant="body2" sx={{ color: 'inherit' }}>
+                     {card.date}
+                   </Typography>
+                 }
+                 sx={{ borderColor: '#B0B0B0', color: '#868686' }}
+               />
+             </Stack>
+           </Stack>
+         </CardContent>
+       </Card>
         ))}
       </div>
       <style jsx global>{`

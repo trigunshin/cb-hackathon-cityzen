@@ -2,16 +2,16 @@ import React from 'react';
 import { Button, ButtonProps, styled } from '@mui/material';
 
 const GradientButton = styled(Button)(({ theme }) => ({
-  background: 'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
-  border: 0,
-  borderRadius: 30,
-  boxShadow: '0 3px 5px 2px rgba(33, 203, 243, .3)',
-  color: 'white',
+  background: 'white',
+  borderRadius: 15,
+  border: '1px solid #868686',
+  boxShadow: '0 3px 5px 2px #a8a8a870',
+  color: 'gray',
   height: 48,
   padding: '0 30px',
   transition: 'all 0.3s ease-in-out',
   '&:hover': {
-    boxShadow: '0 6px 10px 2px rgba(33, 203, 243, .5)',
+    boxShadow: '0 6px 10px 2px rgba(85, 85, 85, 0.5)',
     transform: 'translateY(-2px)',
   },
 }));
@@ -23,7 +23,7 @@ interface ModernButtonProps extends Omit<ButtonProps, 'variant'> {
 
 const ModernButton: React.FC<ModernButtonProps> = ({ onClick, children, ...props }) => {
   return (
-    <GradientButton variant="contained" onClick={onClick} {...props}>
+    <GradientButton variant="contained" size='large' onClick={onClick} {...props}>
       {children}
     </GradientButton>
   );

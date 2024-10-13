@@ -53,7 +53,8 @@ export default function ContentPage() {
           left: open ? drawerWidth : 0,
           top: 0,
           p: 2,
-          transition: 'left 0.3s'
+          transition: 'left 0.3s',
+          visibility: open ? 'hidden' : 'visible',
         }}
       >
         <MenuIcon />
@@ -83,6 +84,7 @@ export default function ContentPage() {
             aria-label="back button"
             onClick={() => router.push('/')}
             sx={{ m: 1 }}
+            size='small'
           >
             <ArrowBackIcon /> Back
           </IconButton>
@@ -90,6 +92,7 @@ export default function ContentPage() {
             color="inherit"
             aria-label="show drawer"
             onClick={handleDrawerToggle}
+            size='small'
             sx={{ m: 1 }}
           >
             <ArrowForwardIcon />
@@ -103,7 +106,7 @@ export default function ContentPage() {
                   fullWidth
                   sx={{
                     justifyContent: 'flex-start',
-                    color: selectedItem === text ? 'primary.main' : '#B0B0B0',
+                    color: selectedItem === text ? '#72BAE3' : '#B0B0B0',
                     backgroundColor: selectedItem === text ? 'rgba(0, 0, 0, 0.04)' : 'transparent',
                   }}
                   onClick={() => handleDrawerItem(text)}
