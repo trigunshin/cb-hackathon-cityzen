@@ -9,12 +9,14 @@ import NewsArticles from '@/app/components/NewsArticles';
 import EventsResults from '@/app/components/EventsResults';
 import CityHallResults from '@/app/components/CityHallResults';
 import MainContentResult from '@/app/components/MainContentResult';
+import { getArticleData } from '@/app/utils/getArticles';
+import { JsonData } from '@/app/utils/types';
+import { getCityVideoData } from '@/app/utils/getCityHall';
 
 const drawerWidth = 240;
-
 const menuItems = ['Main Content', 'News Articles', 'Events', 'City Hall'];
 
-export default function ContentPage() {
+export default function ContentPage( data: JsonData ) {
   const [open, setOpen] = useState(true);
   const [selectedItem, setSelectedItem] = useState('Main Content');
   const router = useRouter();
@@ -30,13 +32,14 @@ export default function ContentPage() {
   const renderContent = () => {
     switch (selectedItem) {
       case 'Main Content':
-        return <MainContentResult />
+        //return <MainContentResult data={json}/>
       case 'News Articles':
-        return <NewsArticles />
+        return <NewsArticles data={getArticleData(data, 5)}/>
       case 'Events':
-        return <EventsResults />
+        //return <EventsResults data={json}/>
       case 'City Hall':
-        return <CityHallResults />
+        //@ts-ignore
+        return <CityHallResults data={getCityVideoData(data, 5)} />
       default:
         return <Typography>Select an item from the menu to view content.</Typography>;
     }
