@@ -2,12 +2,21 @@ from fastapi import FastAPI, Query
 from llamacone.query import query_pinecone
 from typing import Annotated
 import uvicorn
+from fastapi.middleware.cors import CORSMiddleware
 
 HOST = '127.0.0.1'
 PORT = '5000'
 
 # Setup app and routes
 app = FastAPI()
+# Configure CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allow all origins
+    allow_credentials=True,
+    allow_methods=["*"],  # Allow all methods
+    allow_headers=["*"],  # Allow all headers
+)
 
 @app.get('/query')
 def get_query(
