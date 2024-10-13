@@ -16,3 +16,4 @@ ffmpeg-python
 llama-index-core
 llama-index-llms-openai
 llama-index-vector-stores-pinecone
+google-cloud

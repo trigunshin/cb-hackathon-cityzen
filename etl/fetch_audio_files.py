@@ -148,7 +148,7 @@ def main():
     meetings.reverse()
     # Iterate over each meeting and download the audio
 
-    for meeting in meetings[0:10]:
+    for meeting in meetings[0:100]:
         video_url = meeting.get("videoUrl")
         if not video_url:
             logging.warning(f"Meeting ID {meeting.get('id')} does not have a video URL. Skipping.")

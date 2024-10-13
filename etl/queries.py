@@ -10,7 +10,7 @@ PINECONE_INDEX_NAME=os.getenv("PINECONE_INDEX_NAME")
 embedding_model = OpenAIEmbeddings(model="text-embedding-3-large", api_key=OPENAI_API_KEY)
 
 # Step 2: Define a user query
-user_query = "What were the agenda items discussed on March 3, 2021?"
+user_query = "?"
 
 # Step 3: Embed the query
 query_embedding = embedding_model.embed_query(user_query)

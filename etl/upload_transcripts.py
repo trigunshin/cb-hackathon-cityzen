@@ -1,5 +1,3 @@
-# upload_to_pinecone.py
-
 import os
 import json
 import re
@@ -78,7 +76,7 @@ def get_video_time_stats(metadata):
         'title': metadata.get('title'),
         'meetingTypeId': metadata.get('meetingTypeId'),
         'committeeId': metadata.get('committeeId'),
-        'generation': 1,
+        'generation': 2,
     }
 
 
@@ -116,6 +114,7 @@ def main():
         # Enhance metadata with video/time stats
         video_stats = get_video_time_stats(metadata)
         metadata.update(video_stats)
+        metadata.update({"yt_vid": video_id})
 
         # Create a llama_index Document
         doc = Document(text=transcript_text, metadata=metadata)

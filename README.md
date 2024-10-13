@@ -5,6 +5,7 @@ script pull steps:
 python3 fetch_la_video_metadata.py -o fetchable_videos/2024.json -y 2024
 python3 fetch_audio_files.py
 python3 transcribe_chunked_audio.py --chunk-length-min 5 --overlap-sec 1 --language en
+python3 upload_transcripts
 
 ## TODO List
 
