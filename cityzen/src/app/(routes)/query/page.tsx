@@ -39,31 +39,23 @@ export default function ContentPage() {
   const [content, setContent] = useState<QueryResponse | null>(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const cachedData = localStorage.getItem('cachedResults');
-    if (cachedData) {
-      setContent(JSON.parse(cachedData));
+useEffect(() => {
+  fetch(`${process.env.NEXT_PUBLIC_API_URL}query?query=${input}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      setContent(data);
       setLoading(false);
-    } else {
-      fetch(`${process.env.NEXT_PUBLIC_API_URL}query?query=${input}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          setContent(data);
-          localStorage.setItem('cachedResults', JSON.stringify(data));
-          setLoading(false);
-        })
-        .catch((error) => {
-          console.error("Error during fetch:", error);
-          setLoading(false);
-        });
-    }
-  }, []);
-  
+    })
+    .catch((error) => {
+      setLoading(false);
+      console.error("Error during fetch:", error);
+  });
+}, [input]);
 
   const handleDrawerToggle = () => {
     setOpen(!open);
