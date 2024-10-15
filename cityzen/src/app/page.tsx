@@ -3,7 +3,6 @@ import * as dotenv from "dotenv";
 dotenv.config();
 import {
   Box,
-  Button,
   Divider,
   Paper,
   TextField,
@@ -15,6 +14,7 @@ import FlexibleChipStack from "./components/flexibleChips";
 import ModernButton from "./components/modernButton";
 import "./globals.css";
 import EventCarousel from "./components/eventCarousel";
+
 
 const METRALL_INFO = {
   left: {
@@ -35,26 +35,6 @@ export default function Home() {
 
   const handleInputChange = (event: any) => {
     setInputValue(event.target.value);
-  };
-
-  const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}query?query=${inputValue}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      const data = await res.json();
-      console.log(data);
-      return data;
-    } catch (error) {
-      console.error("Error during fetch:", error);
-    }
   };
 
   return (
@@ -129,8 +109,9 @@ export default function Home() {
               <Box width="100%">
                 <FlexibleChipStack />
               </Box>
-              <ModernButton onClick={handleSubmit}>Submit</ModernButton>
+              <ModernButton query={inputValue}>Submit</ModernButton>
             </Stack>
+
           </Container>
         </Box>
         <Divider />

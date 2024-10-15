@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, ButtonProps, styled } from '@mui/material';
+import Link from 'next/link';
 
 const GradientButton = styled(Button)(({ theme }) => ({
   background: 'white',
@@ -17,14 +18,16 @@ const GradientButton = styled(Button)(({ theme }) => ({
 }));
 
 interface ModernButtonProps extends Omit<ButtonProps, 'variant'> {
-  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  query: string;
   children: React.ReactNode;
 }
 
-const ModernButton: React.FC<ModernButtonProps> = ({ onClick, children, ...props }) => {
+const ModernButton: React.FC<ModernButtonProps> = ({ children, query }) => {
+  const url = `query?question=${"HELO"}`
+  console.log(query)
   return (
-    <GradientButton variant="contained" size='large' onClick={onClick} {...props}>
-      {children}
+    <GradientButton variant="contained" size='large'>
+      <Link href={url}>{children}</Link>
     </GradientButton>
   );
 };
