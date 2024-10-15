@@ -17,12 +17,15 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import NewsArticles from "@/app/components/NewsArticles";
-import EventsResults from "@/app/components/EventsResults";
-import CityHallResults from "@/app/components/CityHallResults";
-import MainContentResult from "@/app/components/MainContentResult";
-// import { getArticleData } from "@/app/utils/getArticles";
-import { JsonData } from "@/app/utils/types";
+import {
+  NewsArticles,
+  EventsResults,
+  CityHallResults,
+  MainContentResult
+} from "@/app/components";
+import {sampleData} from "@/app/components/sample";
+import { getArticleData } from "@/app/utils/getArticles";
+import { QueryResponse } from "@/app/utils/types";
 // import { getCityVideoData } from "@/app/utils/getCityHall";
 
 const drawerWidth = 240;
@@ -31,7 +34,7 @@ const menuItems = ["Main Content", "News Articles", "Events", "City Hall"];
 export default function ContentPage() {
   const [open, setOpen] = useState(true);
   const [selectedItem, setSelectedItem] = useState("Main Content");
-
+  const queryResponse = sampleData;
   const { input } = useParams();
 
   const getData = async (input: string) => {
@@ -52,6 +55,7 @@ export default function ContentPage() {
       console.error("Error during fetch:", error);
     }
   };
+  
   const handleDrawerToggle = () => {
     setOpen(!open);
   };
@@ -62,9 +66,9 @@ export default function ContentPage() {
   const renderContent = () => {
     switch (selectedItem) {
       case "Main Content":
-      //return <MainContentResult data={json}/>
+      return <MainContentResult data={queryResponse.response}/>
       case "News Articles":
-        // return <NewsArticles data={getArticleData(data, 5)} />;
+        return <NewsArticles resposneData={queryResponse.nodes}/>;
       case "Events":
       //return <EventsResults data={json}/>
       case "City Hall":
