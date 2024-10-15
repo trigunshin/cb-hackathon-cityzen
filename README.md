@@ -49,7 +49,11 @@ ga
 
 ### Contributors
 https://github.com/trigunshin
+
 https://github.com/bootstrapt
+
 https://github.com/celinalou92
+
 https://github.com/edoda
+
 
