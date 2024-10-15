@@ -23,7 +23,7 @@ interface ModernButtonProps extends Omit<ButtonProps, 'variant'> {
 }
 
 const ModernButton: React.FC<ModernButtonProps> = ({ children, query }) => {
-  const url = `query?question=${"HELO"}`
+  const url = `query?question=${query}`
   return (
     <GradientButton variant="contained" size='large'>
       <Link href={url}>{children}</Link>

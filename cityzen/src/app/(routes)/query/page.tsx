@@ -1,6 +1,6 @@
 "use client";
-import { useParams } from "next/navigation";
-import React, { useState } from "react";
+import { useSearchParams } from "next/navigation";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Drawer,
@@ -13,6 +13,7 @@ import {
   Stack,
   Container,
   Paper,
+  CircularProgress,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
@@ -21,9 +22,9 @@ import {
   NewsArticles,
   EventsResults,
   CityHallResults,
-  MainContentResult
+  MainContentResult,
 } from "@/app/components";
-import {sampleData} from "@/app/components/sample";
+import { sampleData } from "@/app/components/sample";
 import { getArticleData } from "@/app/utils/getArticles";
 import { QueryResponse } from "@/app/utils/types";
 // import { getCityVideoData } from "@/app/utils/getCityHall";
@@ -34,28 +35,28 @@ const menuItems = ["Main Content", "News Articles", "Events", "City Hall"];
 export default function ContentPage() {
   const [open, setOpen] = useState(true);
   const [selectedItem, setSelectedItem] = useState("Main Content");
-  const queryResponse = sampleData;
-  const { input } = useParams();
+  const input = useSearchParams();
+  const [content, setContent] = useState<QueryResponse | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  const getData = async (input: string) => {
-    try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}query?query=${input}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      const data = await res.json();
-      console.log(data);
-      return data;
-    } catch (error) {
-      console.error("Error during fetch:", error);
-    }
-  };
-  
+  useEffect(() => {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}query?query=${input}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setContent(data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setLoading(false);
+        console.error("Error during fetch:", error);
+      });
+  }, []);
+
   const handleDrawerToggle = () => {
     setOpen(!open);
   };
@@ -66,14 +67,14 @@ export default function ContentPage() {
   const renderContent = () => {
     switch (selectedItem) {
       case "Main Content":
-      return <MainContentResult data={queryResponse.response}/>
+        return <MainContentResult data={content.response} />;
       case "News Articles":
-        return <NewsArticles resposneData={queryResponse.nodes}/>;
+        return <NewsArticles resposneData={content.nodes} />;
       case "Events":
       //return <EventsResults data={json}/>
       case "City Hall":
-        //@ts-ignore
-        // return <CityHallResults data={getCityVideoData(data, 5)} />;
+      //@ts-ignore
+      // return <CityHallResults data={getCityVideoData(data, 5)} />;
       default:
         return (
           <Typography>Select an item from the menu to view content.</Typography>
@@ -187,7 +188,19 @@ export default function ContentPage() {
               boxSizing: "border-box", // Ensures padding is included in the height calculation
             }}
           >
-            {renderContent()}
+            { loading || !content ? (
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <CircularProgress />
+              </Box>
+            ) : (
+              renderContent()
+            )}
           </Paper>
         </Container>
       </Box>
