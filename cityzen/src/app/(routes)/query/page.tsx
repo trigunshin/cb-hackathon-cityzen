@@ -1,6 +1,6 @@
 "use client";
-import { useSearchParams } from "next/navigation";
 import React, { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import {
   Box,
   Drawer,
@@ -24,7 +24,6 @@ import {
   CityHallResults,
   MainContentResult,
 } from "@/app/components";
-import { sampleData } from "@/app/components/sample";
 import { getArticleData } from "@/app/utils/getArticles";
 import { QueryResponse } from "@/app/utils/types";
 // import { getCityVideoData } from "@/app/utils/getCityHall";
@@ -35,27 +34,37 @@ const menuItems = ["Main Content", "News Articles", "Events", "City Hall"];
 export default function ContentPage() {
   const [open, setOpen] = useState(true);
   const [selectedItem, setSelectedItem] = useState("Main Content");
-  const input = useSearchParams();
   const [content, setContent] = useState<QueryResponse | null>(null);
   const [loading, setLoading] = useState(true);
+  const searchParams = useSearchParams();
 
-useEffect(() => {
-  fetch(`${process.env.NEXT_PUBLIC_API_URL}query?query=${input}`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      setContent(data);
+  useEffect(() => {
+    const query = searchParams.get("question");
+    if (!query) return;
+    const storedQuestion = JSON.parse(localStorage.getItem(query) || 'null');
+    if (storedQuestion) {
+      setContent(storedQuestion);
       setLoading(false);
+      return
+    }
+    setLoading(true);
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}query?query=${query}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
     })
-    .catch((error) => {
-      setLoading(false);
-      console.error("Error during fetch:", error);
-  });
-}, [input]);
+      .then((res) => res.json())
+      .then((data) => {
+        setContent(data);
+        localStorage.setItem(query, JSON.stringify(data));
+        setLoading(false);
+      })
+      .catch((error) => {
+        setLoading(false);
+        console.error("Error during fetch:", error);
+      });
+  }, []);
 
   const handleDrawerToggle = () => {
     setOpen(!open);
@@ -67,9 +76,9 @@ useEffect(() => {
   const renderContent = () => {
     switch (selectedItem) {
       case "Main Content":
-        return <MainContentResult data={content.response} />;
+        return <MainContentResult data={content?.response} />;
       case "News Articles":
-        return <NewsArticles resposneData={content.nodes} />;
+        return <NewsArticles resposneData={content?.nodes} />;
       case "Events":
       //return <EventsResults data={json}/>
       case "City Hall":
@@ -188,7 +197,7 @@ useEffect(() => {
               boxSizing: "border-box", // Ensures padding is included in the height calculation
             }}
           >
-            { loading || !content ? (
+            {loading || !content ? (
               <Box
                 sx={{
                   display: "flex",
