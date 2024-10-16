@@ -14,6 +14,7 @@ import {
   Container,
   Paper,
   CircularProgress,
+  Divider,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
@@ -133,10 +134,11 @@ export default function ContentPage() {
             color="inherit"
             aria-label="back button"
             // onClick={}
-            sx={{ m: 1 }}
+            sx={{ m: 1, gap: 1 }}
             size="small"
           >
-            <ArrowBackIcon /> Back
+            <ArrowBackIcon /> 
+            <Typography>Back</Typography>
           </IconButton>
           <IconButton
             color="inherit"
@@ -148,7 +150,8 @@ export default function ContentPage() {
             <ArrowForwardIcon />
           </IconButton>
         </Stack>
-        <Box
+        <Divider />
+        <Stack
           sx={{ overflow: "auto", height: "100%", backgroundColor: "#ffffff" }}
         >
           <List sx={{ alignContent: "space-around", height: "100%" }}>
@@ -171,7 +174,7 @@ export default function ContentPage() {
               </ListItem>
             ))}
           </List>
-        </Box>
+        </Stack>
       </Drawer>
       <Box
         component="main"
@@ -182,19 +185,23 @@ export default function ContentPage() {
           transition: "margin-left 0.3s",
           marginLeft: open ? 0 : `-${drawerWidth}px`,
           width: `calc(100% - ${open ? drawerWidth : 0}px)`,
+          height: 'max-content;',
+          minHeight: '100vh'
         }}
       >
         <Container
           sx={{ width: "100%", height: "100%", alignContent: "center" }}
         >
           <Paper
+            variant="outlined"
             elevation={3}
             sx={{
               backgroundColor: "#ffffff",
               width: "100%",
               alignContent: "center",
-              p: 4,
-              boxSizing: "border-box", // Ensures padding is included in the height calculation
+              boxSizing: "border-box",
+              display: 'flex',
+              flexDirection: 'column',
             }}
           >
             {loading || !content ? (
@@ -203,12 +210,15 @@ export default function ContentPage() {
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
+                  flexGrow: 1,
                 }}
               >
                 <CircularProgress />
               </Box>
             ) : (
-              renderContent()
+              <Box sx={{ flexGrow: 1, overflow: 'hidden' }}>
+                {renderContent()}
+              </Box>
             )}
           </Paper>
         </Container>

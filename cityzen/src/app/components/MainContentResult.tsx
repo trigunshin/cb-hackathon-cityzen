@@ -6,10 +6,10 @@ const MainContentResult = ({ data }: any) => {
 
   return (
     <>
+      <Box padding={{lg: 2, xl: 2, md: 2, sm: 0, xs: 0}}>
       <Typography fontSize={"18px"} paddingY={2} color="#868686" gutterBottom>
-        A summary of the information we analyzed relating to your question...
+        Here's a summary of the information we analyzed regarding your question...
       </Typography>
-      <Box sx={{ padding: 1 }}>
         <Typography
           key={1}
           variant="body1"
