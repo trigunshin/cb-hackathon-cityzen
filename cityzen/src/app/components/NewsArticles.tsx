@@ -4,7 +4,7 @@ import { Grid } from '@mui/system';
 import { ArticleMetadata } from '../utils/types';
 
 
-const NewsArticles: React.FC<ArticleMetadata> = ({resposneData}) => {
+const NewsArticles: React.FC<ArticleMetadata> = ({responseData}) => {
   const [articles, setArticles] = useState();
   const [loading, setLoading] = useState(false);
   
@@ -27,26 +27,37 @@ const NewsArticles: React.FC<ArticleMetadata> = ({resposneData}) => {
     );
   }
 
+  // function removeDuplicates(responseData: ArticleMetadata[]) {
+  //   const uniqueArticles = new Map();
+  //   responseData.forEach(article => {
+  //       if (!uniqueArticles.has(article.data.source)) {
+  //           uniqueArticles.set(article.data.source, article);
+  //       }
+  //   });
+  //   return Array.from(uniqueArticles.values());
+  // }
+  // const uniqueResponseData = removeDuplicates(responseData);
+
   return (
     <Box>
       <Typography fontSize={'18px'} paddingY={2} color='#868686' gutterBottom>
         Here are some articles related to your search...
       </Typography>
       <Grid container spacing={2}>
-        {resposneData.map((article, index) => (
+        {responseData.map((article, index) => (
           <Grid size={{xs: 12, md: 6, sm: 6}} key={index}>
             <Card variant='outlined' sx={{ height: '100%', width: '100%' }}>
               <CardMedia
                 component="img"
                 height="140"
-                image={article.image || '/api/placeholder/400/200'}
+                image={article.data.image || 'https://placehold.co/600x400.png' }
                 alt={article.title}
               />
               <Divider />
               <CardContent>
-                <Link href={article.url} underline="hover">
+                <Link href={article.data.url} underline="hover">
                   <Typography gutterBottom fontSize={'18px'} color='#868686' sx={{textDecoration: 'underline'}} component="div">
-                    {article.title}
+                    {article.data.title}
                   </Typography>
                 </Link>
                 <Stack gap={2} direction={'column'} alignItems={'left'}>
@@ -58,7 +69,7 @@ const NewsArticles: React.FC<ArticleMetadata> = ({resposneData}) => {
                   variant="outlined" 
                   label={
                     <Typography variant="body2" sx={{ color: 'inherit' }}>
-                      {article.date}
+                      {article.data.date}
                     </Typography>
                   } 
                   sx={{ borderColor: '#B0B0B0', color: '#868686' }}
@@ -68,7 +79,7 @@ const NewsArticles: React.FC<ArticleMetadata> = ({resposneData}) => {
                   variant="outlined" 
                   label={
                     <Typography variant="body2" sx={{ color: 'inherit' }}>
-                      {article.author}
+                      {article.data.author || article.data.time || '06:30 PM'}
                     </Typography>
                   } 
                   sx={{ borderColor: '#B0B0B0', color: '#868686' }}

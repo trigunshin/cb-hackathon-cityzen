@@ -78,7 +78,7 @@ export default function ContentPage() {
       case "Main Content":
         return <MainContentResult data={content?.response} />;
       case "News Articles":
-        return <NewsArticles resposneData={content?.nodes} />;
+        return <NewsArticles responseData={content?.nodes} />;
       case "Events":
       //return <EventsResults data={json}/>
       case "City Hall":
@@ -92,7 +92,7 @@ export default function ContentPage() {
   };
 
   return (
-    <Box sx={{ display: "flex", height: "100vh", overflow: "hidden" }}>
+    <Box sx={{ display: "flex", height: "100vh", overflow: "scroll" }}>
       <IconButton
         color="inherit"
         aria-label="toggle drawer"
