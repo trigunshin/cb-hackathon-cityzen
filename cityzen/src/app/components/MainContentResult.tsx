@@ -6,8 +6,8 @@ const MainContentResult = ({ data }: any) => {
 
   return (
     <>
-      <Box padding={{lg: 2, xl: 2, md: 2, sm: 0, xs: 0}}>
-      <Typography fontSize={"18px"} paddingY={2} color="#868686" gutterBottom>
+      <Box padding={{lg: 4, xl: 4, md: 3, sm: 3, xs: 3}}>
+      <Typography fontSize={"18px"} padding={2} color="#868686" gutterBottom>
         Here's a summary of the information we analyzed regarding your question...
       </Typography>
         <Typography

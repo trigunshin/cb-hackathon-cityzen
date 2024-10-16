@@ -81,19 +81,19 @@ export default function ContentPage() {
       case "News Articles":
         return <NewsArticles responseData={content?.nodes} />;
       case "Events":
-      //return <EventsResults data={json}/>
+        return <EventsResults/>
       case "City Hall":
       //@ts-ignore
       // return <CityHallResults data={getCityVideoData(data, 5)} />;
       default:
         return (
-          <Typography>Select an item from the menu to view content.</Typography>
+          <Typography padding={2}>Select an item from the menu to view content.</Typography>
         );
     }
   };
 
   return (
-    <Box sx={{ display: "flex", height: "100vh", overflow: "scroll" }}>
+    <Box sx={{ display: "flex", height: "100%", overflowY: 'hidden' }}>
       <IconButton
         color="inherit"
         aria-label="toggle drawer"
@@ -120,7 +120,7 @@ export default function ContentPage() {
           "& .MuiDrawer-paper": {
             width: drawerWidth,
             boxSizing: "border-box",
-            position: "relative",
+            position: "fixed",
           },
         }}
       >
@@ -140,7 +140,7 @@ export default function ContentPage() {
             <ArrowBackIcon /> 
             <Typography>Back</Typography>
           </IconButton>
-          <IconButton
+          <Button
             color="inherit"
             aria-label="show drawer"
             onClick={handleDrawerToggle}
@@ -148,7 +148,7 @@ export default function ContentPage() {
             sx={{ m: 1 }}
           >
             <ArrowForwardIcon />
-          </IconButton>
+          </Button>
         </Stack>
         <Divider />
         <Stack
@@ -194,14 +194,14 @@ export default function ContentPage() {
         >
           <Paper
             variant="outlined"
-            elevation={3}
             sx={{
               backgroundColor: "#ffffff",
               width: "100%",
+              //p: 2,
               alignContent: "center",
-              boxSizing: "border-box",
-              display: 'flex',
-              flexDirection: 'column',
+              height: "calc(100vh - 50px)", // Adjust this value based on your layout
+              display: "flex",
+              flexDirection: "column",
             }}
           >
             {loading || !content ? (
@@ -215,9 +215,20 @@ export default function ContentPage() {
               >
                 <CircularProgress />
               </Box>
-            ) : (
-              <Box sx={{ flexGrow: 1, overflow: 'hidden' }}>
-                {renderContent()}
+                    ) : (
+              <Box 
+                sx={{ 
+                  flexGrow: 1, 
+                  overflow: 'auto',
+                  '&::-webkit-scrollbar': {
+                    width: '0.3em'
+                  },
+                  '&::-webkit-scrollbar-thumb': {
+                    backgroundColor: 'rgba(0,0,0,.1)',
+                  }
+                }}
+              >                
+              {renderContent()}
               </Box>
             )}
           </Paper>

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Typography, Box } from '@mui/material';
+import { Typography, Box, Button } from '@mui/material';
 import { styled } from '@mui/system';
+import Link from 'next/link';
 
 const FlexibleChipContainer = styled(Box)(({ theme }) => ({
   display: 'flex',
@@ -10,7 +11,7 @@ const FlexibleChipContainer = styled(Box)(({ theme }) => ({
   padding: theme.spacing(2),
 }));
 
-const ClickableChip = styled(Box)(({ theme }) => ({
+const ClickableChip = styled(Button)(({ theme }) => ({
   background: 'white',
   borderRadius: '20px',
   alignItems: 'center',
@@ -42,12 +43,16 @@ const FlexibleChipStack: React.FC<FlexibleChipStackProps> = ({
   return (
     <FlexibleChipContainer>
       {chips.map((chip, index) => (
-        <ClickableChip 
+        <Link 
           key={index} 
-          onClick={() => onChipClick(chip)}
+          href={`/query?question=${encodeURIComponent(chip)}`}
+          passHref
+          legacyBehavior
         >
-          <Typography variant="body1" fontSize={'12px'}>{chip}</Typography>
-        </ClickableChip>
+          <ClickableChip as="a" onClick={() => onChipClick && onChipClick(chip)}>
+            <Typography variant="body1" fontSize={'12px'}>{chip}</Typography>
+          </ClickableChip>
+        </Link>
       ))}
     </FlexibleChipContainer>
   );

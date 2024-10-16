@@ -45,7 +45,7 @@ const CityHallResults = () => {
   }, []);
 
   return (
-    <Grid container spacing={2} alignItems={'center'}>
+    <Grid container spacing={2} alignItems={'center'} padding={{lg: 2, xl: 2, md: 2, sm: 0, xs: 0}}>
       {isLoading ? (
         <CircularProgress />
       ) : (

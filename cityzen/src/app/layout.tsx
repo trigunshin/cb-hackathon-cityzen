@@ -22,7 +22,7 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Jaro:opsz@6..72&display=swap" rel="stylesheet" />
       </head>
       <body className={inter.className}>
-        <main className="w-full h-[100vh]">{children}</main>
+        <main className="w-full h-full">{children}</main>
       </body>
     </html>
   );

@@ -24,15 +24,15 @@ const EventsResults = () => {
 
   if (loading){
     return(
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+      <Box padding={3} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <CircularProgress />
       </Box>
     );
   }
 
   return (
-    <Box>
-      <Typography fontSize={'18px'} paddingY={2} color='#868686' gutterBottom>
+    <Box padding={{lg: 4, xl: 4, md: 3, sm: 2, xs: 2}}>
+      <Typography fontSize={'18px'} padding={2} color='#868686' gutterBottom>
         Events we found for you based on your query:
       </Typography>
       <Grid container spacing={2}>

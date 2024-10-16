@@ -21,7 +21,7 @@ const NewsArticles: React.FC<ArticleMetadata> = ({responseData}) => {
 
   if (loading) {
     return (
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+      <Box padding={3} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <CircularProgress />
       </Box>
     );
@@ -39,15 +39,8 @@ const NewsArticles: React.FC<ArticleMetadata> = ({responseData}) => {
   // const uniqueResponseData = removeDuplicates(responseData);
 
   return (
-    <Box 
-      padding={{lg: 2, xl: 2, md: 2, sm: 0, xs: 0}}
-      sx={{ 
-        height: '100%', 
-        overflow: 'auto', 
-        maxHeight: 'calc(100vh )'  // Adjust this value based on your layout
-      }}
-    >
-      <Typography fontSize={'18px'} paddingY={2} color='#868686' gutterBottom={true}>
+    <Box padding={{lg: 4, xl: 4, md: 3, sm: 2, xs: 2}}>
+      <Typography fontSize={'18px'} padding={2} color='#868686' gutterBottom={true}>
         Here are some articles related to your search...
       </Typography>
       <Grid container spacing={2}>
