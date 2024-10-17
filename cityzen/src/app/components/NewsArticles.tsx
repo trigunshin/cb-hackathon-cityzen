@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import { Card, CardContent, Typography, CardActions, Button, CardMedia, CircularProgress, Box, Stack, Collapse, Divider, Link, Chip } from '@mui/material';
 import { Grid } from '@mui/system';
 import { ArticleMetadata } from '../utils/types';
-
+import { useTheme } from '@mui/material/styles';
 
 const NewsArticles: React.FC<ArticleMetadata> = ({responseData}) => {
   const [articles, setArticles] = useState();
   const [loading, setLoading] = useState(false);
+  const theme = useTheme();
   
   //Turning this off, untill we need to refetch the data 
   // useEffect(() => {
@@ -17,15 +18,6 @@ const NewsArticles: React.FC<ArticleMetadata> = ({responseData}) => {
   //         setLoading(false);
   //     });
   // }, []);
-  
-
-  if (loading) {
-    return (
-      <Box padding={3} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        <CircularProgress />
-      </Box>
-    );
-  }
 
   // function removeDuplicates(responseData: ArticleMetadata[]) {
   //   const uniqueArticles = new Map();
@@ -38,9 +30,17 @@ const NewsArticles: React.FC<ArticleMetadata> = ({responseData}) => {
   // }
   // const uniqueResponseData = removeDuplicates(responseData);
 
+  if (loading) {
+    return (
+      <Box padding={3} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <CircularProgress />
+      </Box>
+    );
+  }
+
   return (
     <Box padding={{lg: 4, xl: 4, md: 3, sm: 2, xs: 2}}>
-      <Typography fontSize={'18px'} padding={2} color='#868686' gutterBottom={true}>
+      <Typography variant="h3" padding={2} color={theme.palette.text.primary} gutterBottom>
         Here are some articles related to your search...
       </Typography>
       <Grid container spacing={2}>
@@ -58,39 +58,39 @@ const NewsArticles: React.FC<ArticleMetadata> = ({responseData}) => {
                     maxHeight: '150px'}}
                 />}
               <Divider />
-              <Box sx={{alignContent: 'center', padding: 2}}>
+              <Stack gap={1} sx={{alignContent: 'center', padding: 2}}>
                 <Link href={article.data.url} underline="hover">
-                  <Typography gutterBottom fontSize={'1em'} color='#868686' sx={{textDecoration: 'underline'}} component="div">
+                  <Typography variant="body1" color={theme.palette.text.primary} sx={{textDecoration: 'underline'}}>
                     {article.data.title}
                   </Typography>
                 </Link>
                 <Stack gap={2} direction={'column'} alignItems={'left'}>
-                  <Typography variant="body2" color="text.secondary">
+                  <Typography variant="caption" color={theme.palette.text.secondary}>
                   {article.text?.slice(0, 100)}...
                   </Typography>
                 <Stack gap={1} direction={'row'} alignItems={'center'}>
                 <Chip 
                   variant="outlined" 
                   label={
-                    <Typography variant="body2" sx={{ color: 'inherit' }}>
+                    <Typography variant="caption" color={theme.palette.text.secondary}>
                       {article.data.date}
                     </Typography>
                   } 
-                  sx={{ borderColor: '#B0B0B0', color: '#868686' }}
+                  sx={{ borderColor: theme.palette.text.secondary }}
                 />
-                  <Divider orientation="vertical" flexItem />
-                  <Chip 
+                <Divider orientation="vertical" flexItem />
+                <Chip 
                   variant="outlined" 
                   label={
-                    <Typography variant="body2" sx={{ color: 'inherit' }}>
+                    <Typography variant="caption" color={theme.palette.text.secondary}>
                       {article.data.author || article.data.time || '06:30 PM'}
                     </Typography>
                   } 
-                  sx={{ borderColor: '#B0B0B0', color: '#868686' }}
+                  sx={{ borderColor: theme.palette.text.secondary}}
                 />
                 </Stack>
                 </Stack>
-              </Box>
+              </Stack>
             </Card>
           </Grid>
         ))}

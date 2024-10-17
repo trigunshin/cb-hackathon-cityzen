@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Card, CardContent, Typography, CardMedia, CircularProgress, Box, Divider, Link, Stack, Chip } from '@mui/material';
-import { Grid } from '@mui/system';
+import { Grid, useTheme } from '@mui/system';
 import { AddToCalendarButton } from 'add-to-calendar-button-react';
 
 
@@ -13,6 +13,8 @@ const fetchEvents = async () => {
 const EventsResults = () => {
   const [events, setEvents] = useState<any[]>([])
   const [loading, setLoading] = useState(false);
+  const theme = useTheme();
+
   
   useEffect(() => {
     setLoading(true);
@@ -32,7 +34,7 @@ const EventsResults = () => {
 
   return (
     <Box padding={{lg: 4, xl: 4, md: 3, sm: 2, xs: 2}}>
-      <Typography fontSize={'18px'} padding={2} color='#868686' gutterBottom>
+      <Typography variant="h3" padding={2} color={theme.palette.text.primary} gutterBottom>
         Events we found for you based on your query:
       </Typography>
       <Grid container spacing={2}>
@@ -48,33 +50,33 @@ const EventsResults = () => {
               <Divider />
               <CardContent>
                 <Link href="#" underline="hover">
-                  <Typography gutterBottom fontSize="18px" color="#868686" sx={{textDecoration: 'underline'}} component="div">
+                  <Typography variant="subtitle1" color={theme.palette.text.primary} sx={{textDecoration: 'underline'}}>
                     {event.title}
                   </Typography>
                 </Link>
                 <Stack gap={2} direction="column" alignItems="left">
-                  <Typography variant="body2" color="text.secondary">
+                  <Typography variant="body1" color={theme.palette.text.secondary}>
                     {event.description?.slice(0, 100)}...
                   </Typography>
                   <Stack gap={1} direction="row" alignItems="center">
                     <Chip
                       variant="outlined"
                       label={
-                        <Typography variant="body2" sx={{ color: 'inherit' }}>
+                        <Typography variant="body2" color={theme.palette.text.secondary}>
                           {event.start.toDateString()}
                         </Typography>
                       }
-                      sx={{ borderColor: '#B0B0B0', color: '#868686' }}
+                      sx={{ borderColor: theme.palette.text.secondary}}
                     />
                     <Divider orientation="vertical" flexItem />
                     <Chip
                       variant="outlined"
                       label={
-                        <Typography variant="body2" sx={{ color: 'inherit' }}>
+                        <Typography variant="body2" color={theme.palette.text.secondary}>
                           {event.start.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                         </Typography>
                       }
-                      sx={{ borderColor: '#B0B0B0', color: '#868686' }}
+                      sx={{ borderColor: theme.palette.text.secondary}}
                     />
                   </Stack>
                   <Box alignItems={'center'} width={"100%"}>

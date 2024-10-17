@@ -1,4 +1,4 @@
-"use client";
+"use client"
 import React, { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import {
@@ -15,6 +15,10 @@ import {
   Paper,
   CircularProgress,
   Divider,
+  AppBar,
+  Toolbar,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
@@ -27,6 +31,7 @@ import {
 } from "@/app/components";
 import { getArticleData } from "@/app/utils/getArticles";
 import { QueryResponse } from "@/app/utils/types";
+
 // import { getCityVideoData } from "@/app/utils/getCityHall";
 
 const drawerWidth = 240;
@@ -38,6 +43,8 @@ export default function ContentPage() {
   const [content, setContent] = useState<QueryResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const searchParams = useSearchParams();
+  const theme = useTheme();
+  const isLargeScreen = useMediaQuery(theme.breakpoints.up('md'));
 
   useEffect(() => {
     const query = searchParams.get("question");
@@ -87,7 +94,7 @@ export default function ContentPage() {
       // return <CityHallResults data={getCityVideoData(data, 5)} />;
       default:
         return (
-          <Typography padding={2}>Select an item from the menu to view content.</Typography>
+          <Typography variant="h3" padding={2} color={theme.palette.text.primary} alignContent={'center'} height={'100%'} textAlign="center" gutterBottom>Select an item from the menu to view content.</Typography>
         );
     }
   };
@@ -110,6 +117,7 @@ export default function ContentPage() {
       >
         <MenuIcon />
       </IconButton>
+      {isLargeScreen ? (
       <Drawer
         variant="persistent"
         anchor="left"
@@ -175,7 +183,24 @@ export default function ContentPage() {
             ))}
           </List>
         </Stack>
-      </Drawer>
+        </Drawer>
+    ) : (
+      <AppBar>
+        <Toolbar back ={theme.palette.text.secondary} >
+          {menuItems.map((text, index) => (
+            <Button
+              key={index}
+              onClick={() => handleDrawerItem(text)}
+              sx={{
+                color: selectedItem === text ? "#72BAE3" : "inherit",
+              }}
+            >
+              {text}
+            </Button>
+          ))}
+        </Toolbar>
+      </AppBar>
+    )}
       <Box
         component="main"
         sx={{
