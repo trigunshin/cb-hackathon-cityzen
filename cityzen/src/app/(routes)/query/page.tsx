@@ -23,6 +23,7 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import DarkModeIcon from '@mui/icons-material/DarkMode';
 import {
   NewsArticles,
   EventsResults,
@@ -31,6 +32,7 @@ import {
 } from "@/app/components";
 import { getArticleData } from "@/app/utils/getArticles";
 import { QueryResponse } from "@/app/utils/types";
+import { useCustomTheme } from "@/app/styles/theme";
 
 // import { getCityVideoData } from "@/app/utils/getCityHall";
 
@@ -43,7 +45,7 @@ export default function ContentPage() {
   const [content, setContent] = useState<QueryResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const searchParams = useSearchParams();
-  const theme = useTheme();
+  const { theme, toggleTheme } = useCustomTheme();
   const isLargeScreen = useMediaQuery(theme.breakpoints.up('md'));
 
   useEffect(() => {
@@ -138,16 +140,16 @@ export default function ContentPage() {
           alignItems="center"
           sx={{ width: "100%" }}
         >
-          <IconButton
+          <Button
             color="inherit"
             aria-label="back button"
             // onClick={}
             sx={{ m: 1, gap: 1 }}
             size="small"
           >
-            <ArrowBackIcon /> 
+            <ArrowBackIcon />
             <Typography>Back</Typography>
-          </IconButton>
+          </Button>
           <Button
             color="inherit"
             aria-label="show drawer"
@@ -160,13 +162,14 @@ export default function ContentPage() {
         </Stack>
         <Divider />
         <Stack
-          sx={{ overflow: "auto", height: "100%", backgroundColor: "#ffffff" }}
+          sx={{ overflow: "auto", height: "100%", backgroundColor: `${theme.palette.background.default}`}}
         >
           <List sx={{ alignContent: "space-around", height: "100%" }}>
             {menuItems.map((text, index) => (
               <ListItem key={index} disablePadding>
                 <Button
                   fullWidth
+                  size="large"
                   sx={{
                     justifyContent: "flex-start",
                     color: selectedItem === text ? "#72BAE3" : "#B0B0B0",
@@ -177,54 +180,84 @@ export default function ContentPage() {
                   }}
                   onClick={() => handleDrawerItem(text)}
                 >
-                  <ListItemText>{text}</ListItemText>
+                  <ListItemText><Typography>{text}</Typography></ListItemText>
                 </Button>
               </ListItem>
             ))}
           </List>
         </Stack>
+        <Stack
+          direction="row"
+          justifyContent="space-between"
+          alignItems="center"
+          sx={{ width: "100%" }}
+        >
+          <IconButton
+            color="inherit"
+            aria-label="back button"
+            onClick={toggleTheme}
+            sx={{ m: 1, gap: 1 }}
+            size="small"
+          >
+            <DarkModeIcon /> 
+          </IconButton>
+          {/* <Button
+            color="inherit"
+            aria-label="show drawer"
+            onClick={handleDrawerToggle}
+            size="small"
+            sx={{ m: 1 }}
+          >
+            <ArrowForwardIcon />
+          </Button> */}
+        </Stack>
+        <Divider />
         </Drawer>
     ) : (
-      <AppBar>
-        <Toolbar back ={theme.palette.text.secondary} >
+      <AppBar sx={{zIndex: 100}} color={theme.palette.background.default} >
+        <Toolbar>
           {menuItems.map((text, index) => (
             <Button
               key={index}
+              size="large"
               onClick={() => handleDrawerItem(text)}
               sx={{
                 color: selectedItem === text ? "#72BAE3" : "inherit",
               }}
             >
-              {text}
+              <Typography variant="caption"> 
+                {text} 
+              </Typography>
             </Button>
           ))}
         </Toolbar>
+        <Divider />
       </AppBar>
     )}
       <Box
         component="main"
         sx={{
           flexGrow: 1,
-          p: 3,
-          backgroundColor: "#B0B0B0",
+          px: 3,
+          backgroundColor: `${theme.palette.background.paper}`,
           transition: "margin-left 0.3s",
           marginLeft: open ? 0 : `-${drawerWidth}px`,
           width: `calc(100% - ${open ? drawerWidth : 0}px)`,
-          height: 'max-content;',
+          height: '100%',
           minHeight: '100vh'
         }}
       >
-        <Container
-          sx={{ width: "100%", height: "100%", alignContent: "center" }}
+        <Container //can change to box
+          sx={{ width: "100%", height: "100vh", }}
         >
           <Paper
             variant="outlined"
             sx={{
-              backgroundColor: "#ffffff",
+              backgroundColor: `${theme.palette.background.default}`,
               width: "100%",
-              //p: 2,
+              pt: 7,
               alignContent: "center",
-              height: "calc(100vh - 50px)", // Adjust this value based on your layout
+              height: "100vh", // Adjust this value based on your layout
               display: "flex",
               flexDirection: "column",
             }}

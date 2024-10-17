@@ -170,8 +170,8 @@ const darkPalette = {
     contrastText: '#000000',
   },
   background: {
-    default: '#303030',
-    paper: '#424242',
+    default: '#424242',
+    paper: '#303030',
   },
   text: {
     primary: '#ffffff',
