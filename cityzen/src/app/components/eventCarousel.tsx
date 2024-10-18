@@ -2,12 +2,14 @@
 import React, { useRef, useState } from 'react'
 import { Card, CardContent, Typography, CardActions, Chip, Stack } from '@mui/material'
 import Link from 'next/link';
+import { useTheme } from '@mui/system';
 
 export default function EventCarousel() {
   const carouselRef = useRef<HTMLDivElement>(null)
   const [isDragging, setIsDragging] = useState(false)
   const [startX, setStartX] = useState(0)
   const [scrollLeft, setScrollLeft] = useState(0)
+  const theme = useTheme();
 
   const startDragging = (e: React.MouseEvent<HTMLDivElement>) => {
     setIsDragging(true)
@@ -96,31 +98,31 @@ export default function EventCarousel() {
       >
         {cards.map((card, index) => (
          <Card
-         key={index}
-         variant='outlined'
-         className="flex-shrink-0 w-64 h-64"
-         sx={{
-           scrollSnapAlign: 'start',
-           display: 'flex',
-           flexDirection: 'column',
-         }}
-       >
-         <CardContent>
+          key={index}
+          color={theme.palette.background.card}
+          variant='outlined'
+          className="flex-shrink-0 w-64 h-auto"
+          sx={{
+            scrollSnapAlign: 'start',
+            display: 'flex',
+            flexDirection: 'column',
+          }}
+        >
+         <CardContent  sx={{ p:2}}>
            <Link href={card.link}>
              <Typography 
                gutterBottom 
-               fontSize={'18px'} 
-               color='#868686' 
+               variant='body1' 
+               color={theme.palette.text.secondary}
                sx={{textDecoration: 'underline', wordWrap: 'break-word'}} 
-               component="div"
              >
                {card.title}
              </Typography>
            </Link>
-           <Stack gap={2} direction={'column'} alignItems={'left'}>
+           <Stack gap={1} direction={'column'} alignItems={'left'}>
              <Typography 
-               variant="body2" 
-               color="text.secondary"
+               variant="body1" 
+               color={theme.palette.text.secondary}
                style={{
                  display: '-webkit-box',
                  WebkitLineClamp: 3,
@@ -134,12 +136,13 @@ export default function EventCarousel() {
              <Stack gap={1} direction={'row'} alignItems={'center'}>
                <Chip
                  variant="outlined"
+                 size="small"
+                 sx={{ borderColor: `${theme.palette.text.secondary}` }}
                  label={
-                   <Typography variant="body2" sx={{ color: 'inherit' }}>
+                   <Typography variant="caption" color={theme.palette.text.secondary}>
                      {card.date}
                    </Typography>
                  }
-                 sx={{ borderColor: '#B0B0B0', color: '#868686' }}
                />
              </Stack>
            </Stack>

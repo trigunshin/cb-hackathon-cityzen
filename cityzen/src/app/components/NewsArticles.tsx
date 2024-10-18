@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Card, CardContent, Typography, CardActions, Button, CardMedia, CircularProgress, Box, Stack, Collapse, Divider, Link, Chip } from '@mui/material';
+import { Card, CardContent, Typography, Skeleton, CardActions, Button, CardMedia, CircularProgress, Box, Stack, Collapse, Divider, Link, Chip } from '@mui/material';
 import { Grid } from '@mui/system';
 import { ArticleMetadata } from '../utils/types';
 import { useTheme } from '@mui/material/styles';
@@ -40,13 +40,13 @@ const NewsArticles: React.FC<ArticleMetadata> = ({responseData}) => {
 
   return (
     <Box padding={{lg: 4, xl: 4, md: 3, sm: 2, xs: 2}}>
-      <Typography variant="h3" padding={2} color={theme.palette.text.primary} gutterBottom>
+      <Typography variant="subtitle1" padding={2} color={theme.palette.text.secondary} gutterBottom>
         Here are some articles related to your search...
       </Typography>
       <Grid container spacing={2}>
         {responseData.map((article, index) => (
           <Grid size={{xs: 12, md: 6, sm: 6}} key={index}>
-            <Card variant='outlined' sx={{ height: '100%', width: '100%' }}>
+            <Card variant='outlined' sx={{ height: '100%', width: '100%', border: `1px solid ${theme.palette.secondary.contrastText}`,}}>
               {
                 <CardMedia
                   component="img"
@@ -58,35 +58,34 @@ const NewsArticles: React.FC<ArticleMetadata> = ({responseData}) => {
                     maxHeight: '150px'}}
                 />}
               <Divider />
-              <Stack gap={1} sx={{alignContent: 'center', padding: 2}}>
+              <Stack gap={1} sx={{alignContent: 'center', padding: 2 }}>
                 <Link href={article.data.url} underline="hover">
-                  <Typography variant="body1" color={theme.palette.text.primary} sx={{textDecoration: 'underline'}}>
+                  <Typography variant="body1" color={theme.palette.text.secondary} sx={{textDecoration: 'underline'}}>
                     {article.data.title}
                   </Typography>
                 </Link>
-                <Stack gap={2} direction={'column'} alignItems={'left'}>
+                <Stack gap={2} direction={'column'} alignItems={'left'} alignContent={'space-between'}>
                   <Typography variant="caption" color={theme.palette.text.secondary}>
                   {article.text?.slice(0, 100)}...
                   </Typography>
-                <Stack gap={1} direction={'row'} alignItems={'center'}>
+                <Stack gap={1} direction={'row'} alignItems={'center'} divider={ <Divider orientation="vertical" flexItem />}>
                 <Chip 
                   variant="outlined" 
+                  sx={{ borderColor: theme.palette.text.secondary }}
                   label={
                     <Typography variant="caption" color={theme.palette.text.secondary}>
                       {article.data.date}
                     </Typography>
                   } 
-                  sx={{ borderColor: theme.palette.text.secondary }}
                 />
-                <Divider orientation="vertical" flexItem />
                 <Chip 
                   variant="outlined" 
+                  sx={{ borderColor: theme.palette.text.secondary}}
                   label={
                     <Typography variant="caption" color={theme.palette.text.secondary}>
                       {article.data.author || article.data.time || '06:30 PM'}
                     </Typography>
                   } 
-                  sx={{ borderColor: theme.palette.text.secondary}}
                 />
                 </Stack>
                 </Stack>

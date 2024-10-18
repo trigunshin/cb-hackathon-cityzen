@@ -84,19 +84,19 @@ const baseTheme: ThemeOptions = {
   typography: {
     fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
     h1: {
-      fontSize: '2.0rem',
-      fontWeight: 300,
+      fontSize: '5rem',
+      fontWeight: 500,
     },
     h2: {
-      fontSize: '1.5rem',
+      fontSize: '3rem',
       fontWeight: 400,
     },
     h3:{
-      fontSize: '1.3rem',
-      fontWeight: 200,
+      fontSize: '2rem',
+      fontWeight: 400,
     },
     subtitle1: {
-      fontSize: '1.2rem',
+      fontSize: '1.3rem',
     },
     body1: {
       fontSize: '1rem',
@@ -108,6 +108,8 @@ const baseTheme: ThemeOptions = {
     },
     button: {
       textTransform: 'none',
+      fontSize: '1.2rem',
+      fontWeight: 600,
     },
     caption: {
       fontSize: '.8rem',
@@ -132,23 +134,22 @@ const baseTheme: ThemeOptions = {
   },
 };
 
-// Define light palette
 const lightPalette = {
   primary: {
-    main: '#00897B',
-    light: '#4DB6AC',
-    dark: '#00695C',
-    contrastText: '#ffffff',
+    main: '#87bddd',
+    light: '#9DCFEC',
+    dark: '#4A98C1',
+    contrastText: '#565656',
   },
   secondary: {
-    main: '#26A69A',
-    light: '#80CBC4',
-    dark: '#00796B',
-    contrastText: '#ffffff',
+    main: '#4DBBC7',
+    light: '#7ECFD8',
+    dark: '#3A8F99',
+    contrastText: '#949494',
   },
   background: {
-    default: '#ffffff',
-    paper: '#f5f5f5',
+    default: '#E6F3FA',
+    paper: '#fbfbfb',
   },
   text: {
     primary: '#333333',
@@ -158,24 +159,24 @@ const lightPalette = {
 
 const darkPalette = {
   primary: {
-    main: '#4DB6AC',
-    light: '#B2DFDB',
-    dark: '#00897B',
-    contrastText: '#000000',
+    main: '#698fba',
+    light: '#7B97B8',
+    dark: '#42648c',
+    contrastText: '#FFFFFF',
   },
   secondary: {
-    main: '#80CBC4',
-    light: '#E0F2F1',
-    dark: '#26A69A',
-    contrastText: '#000000',
+    main: '#4A6B8A',
+    light: '#6B8AA6',
+    dark: '#334D6E',
+    contrastText: '#d1d1d1',
   },
   background: {
-    default: '#424242',
-    paper: '#303030',
+    default: '#1C2633',
+    paper: '#2A3847',
   },
   text: {
-    primary: '#ffffff',
-    secondary: '#b0bec5',
+    primary: '#FFFFFF',
+    secondary: '#B0BEC5',
   },
 };
 

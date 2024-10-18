@@ -19,11 +19,16 @@ import {
   Toolbar,
   useMediaQuery,
   useTheme,
+  ButtonGroup,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import DarkModeIcon from '@mui/icons-material/DarkMode';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import EventIcon from '@mui/icons-material/Event';
+import FeedIcon from '@mui/icons-material/Feed';
+import NewspaperIcon from '@mui/icons-material/Newspaper';
+import LocationCityIcon from '@mui/icons-material/LocationCity';
 import {
   NewsArticles,
   EventsResults,
@@ -37,7 +42,12 @@ import { useCustomTheme } from "@/app/styles/theme";
 // import { getCityVideoData } from "@/app/utils/getCityHall";
 
 const drawerWidth = 240;
-const menuItems = ["Main Content", "News Articles", "Events", "City Hall"];
+const menuItems = [
+  {name: "Main Content", icon: <LocationCityIcon />},
+  {name: "News Articles", icon: <NewspaperIcon />},
+  {name: "Events", icon: <EventIcon />},
+  {name: "City Hall", icon: <FeedIcon />}
+];
 
 export default function ContentPage() {
   const [open, setOpen] = useState(true);
@@ -92,19 +102,18 @@ export default function ContentPage() {
       case "Events":
         return <EventsResults/>
       case "City Hall":
-      //@ts-ignore
       // return <CityHallResults data={getCityVideoData(data, 5)} />;
       default:
         return (
-          <Typography variant="h3" padding={2} color={theme.palette.text.primary} alignContent={'center'} height={'100%'} textAlign="center" gutterBottom>Select an item from the menu to view content.</Typography>
+          <Typography variant="subtitle1" padding={2} color={theme.palette.text.secondary} height={'100%'} textAlign="center" alignContent={'center'} gutterBottom>Select an item from the menu to view content.</Typography>
         );
     }
   };
 
   return (
-    <Box sx={{ display: "flex", height: "100%", overflowY: 'hidden' }}>
+    <Box sx={{ display: "flex", height: "100%", overflowY: 'hidden'}}>
       <IconButton
-        color="inherit"
+        color='primary'
         aria-label="toggle drawer"
         edge="end"
         onClick={handleDrawerToggle}
@@ -115,6 +124,7 @@ export default function ContentPage() {
           p: 2,
           transition: "left 0.3s",
           visibility: open ? "hidden" : "visible",
+          color: `${theme.palette.primary.contrastText}`
         }}
       >
         <MenuIcon />
@@ -129,8 +139,10 @@ export default function ContentPage() {
           flexShrink: 0,
           "& .MuiDrawer-paper": {
             width: drawerWidth,
+            borderRight: `1px solid ${theme.palette.secondary.contrastText}`,
             boxSizing: "border-box",
             position: "fixed",
+            color: `${theme.palette.background.paper}`,
           },
         }}
       >
@@ -138,68 +150,70 @@ export default function ContentPage() {
           direction="row"
           justifyContent="space-between"
           alignItems="center"
-          sx={{ width: "100%" }}
+          sx={{ width: "100%", backgroundColor: `${theme.palette.primary.main}` }}
         >
           <Button
-            color="inherit"
-            aria-label="back button"
+            aria-label="back"
+            sx={{height: '100%', borderRadius: 0, color: `${theme.palette.primary.contrastText}`}}
             // onClick={}
-            sx={{ m: 1, gap: 1 }}
-            size="small"
+            startIcon={<ArrowBackIcon />}
           >
-            <ArrowBackIcon />
             <Typography>Back</Typography>
           </Button>
           <Button
-            color="inherit"
+            color={theme.palette.primary.contrastText}
+            size='small'
             aria-label="show drawer"
             onClick={handleDrawerToggle}
-            size="small"
-            sx={{ m: 1 }}
-          >
-            <ArrowForwardIcon />
-          </Button>
+            sx={{ minWidth: 0, p: 1, borderRadius: 0, color: `${theme.palette.primary.contrastText}` }}
+          ><ArrowForwardIcon /></Button>
         </Stack>
-        <Divider />
+        <Divider sx={{ bgcolor: "secondary.contrastText" }} />
         <Stack
-          sx={{ overflow: "auto", height: "100%", backgroundColor: `${theme.palette.background.default}`}}
+          sx={{ overflow: "auto", height: "100%", backgroundColor: `${theme.palette.background.paper}`}}
         >
-          <List sx={{ alignContent: "space-around", height: "100%" }}>
-            {menuItems.map((text, index) => (
-              <ListItem key={index} disablePadding>
-                <Button
-                  fullWidth
-                  size="large"
-                  sx={{
-                    justifyContent: "flex-start",
-                    color: selectedItem === text ? "#72BAE3" : "#B0B0B0",
-                    backgroundColor:
-                      selectedItem === text
-                        ? "rgba(0, 0, 0, 0.04)"
-                        : "transparent",
-                  }}
-                  onClick={() => handleDrawerItem(text)}
-                >
-                  <ListItemText><Typography>{text}</Typography></ListItemText>
-                </Button>
-              </ListItem>
+          <ButtonGroup
+            orientation="vertical"
+            fullWidth
+            variant="outlined"
+            sx={{ height: "100%", alignContent: "space-around", alignContent: 'center' }}
+          >
+            {menuItems.map((item, index) => (
+              <Button
+                key={index}
+                size="large"
+                sx={{
+                  borderRadius: 0,
+                  justifyContent: "flex-start",
+                  width: '100%',
+                  color: selectedItem === item.name ? "primary" : `${theme.palette.primary.dark}`,
+                  backgroundColor:
+                    selectedItem === item.name
+                      ? "rgba(0, 0, 0, 0.05)"
+                      : "transparent",
+                }}
+                onClick={() => handleDrawerItem(item.name)}
+                startIcon={item.icon}
+              >
+                <Typography variant='button'>{item.name}</Typography>
+              </Button>
             ))}
-          </List>
+          </ButtonGroup>
         </Stack>
+        <Divider sx={{ bgcolor: "secondary.contrastText" }}  />
         <Stack
           direction="row"
           justifyContent="space-between"
           alignItems="center"
-          sx={{ width: "100%" }}
+          sx={{ width: "100%", backgroundColor: `${theme.palette.primary.main}` }}
         >
           <IconButton
-            color="inherit"
-            aria-label="back button"
+            aria-label="switch mode"
             onClick={toggleTheme}
-            sx={{ m: 1, gap: 1 }}
+            sx={{ m: 1, gap: 1, color: `${theme.palette.primary.contrastText}` }}
             size="small"
           >
-            <DarkModeIcon /> 
+            <Brightness4Icon /> 
           </IconButton>
           {/* <Button
             color="inherit"
@@ -211,35 +225,36 @@ export default function ContentPage() {
             <ArrowForwardIcon />
           </Button> */}
         </Stack>
-        <Divider />
         </Drawer>
     ) : (
-      <AppBar sx={{zIndex: 100}} color={theme.palette.background.default} >
-        <Toolbar>
-          {menuItems.map((text, index) => (
-            <Button
-              key={index}
-              size="large"
-              onClick={() => handleDrawerItem(text)}
-              sx={{
-                color: selectedItem === text ? "#72BAE3" : "inherit",
-              }}
-            >
-              <Typography variant="caption"> 
-                {text} 
-              </Typography>
-            </Button>
-          ))}
-        </Toolbar>
-        <Divider />
-      </AppBar>
+      <AppBar elevation={0} sx={{zIndex: 100,  opacity: 1, backgroundColor: "background.paper", borderBottom: `1px solid ${theme.palette.secondary.contrastText}`,    }} >
+      <Toolbar>
+        {menuItems.map((item, index) => (
+          <Button
+            key={index}
+            size="small"
+            onClick={() => handleDrawerItem(item.name)}
+            sx={{
+              height: '100%',
+              color: selectedItem === item.name ? "primary" : `${theme.palette.primary.dark}`,
+            }}
+            startIcon={item.icon}
+          >
+            <Typography variant="caption"> 
+              {item.name} 
+            </Typography>
+          </Button>
+        ))}
+      </Toolbar>
+    </AppBar>
+
     )}
       <Box
         component="main"
         sx={{
           flexGrow: 1,
           px: 3,
-          backgroundColor: `${theme.palette.background.paper}`,
+          backgroundColor: `${theme.palette.background.default}`,
           transition: "margin-left 0.3s",
           marginLeft: open ? 0 : `-${drawerWidth}px`,
           width: `calc(100% - ${open ? drawerWidth : 0}px)`,
@@ -248,15 +263,18 @@ export default function ContentPage() {
         }}
       >
         <Container //can change to box
-          sx={{ width: "100%", height: "100vh", }}
+          sx={{ width: "100%", height: "100vh"}}
         >
           <Paper
             variant="outlined"
             sx={{
-              backgroundColor: `${theme.palette.background.default}`,
+              backgroundColor: `${theme.palette.background.paper}`,
+              borderLeft: `1px solid ${theme.palette.secondary.contrastText}`,
+              borderRight: `1px solid ${theme.palette.secondary.contrastText}`,
               width: "100%",
               pt: 7,
               alignContent: "center",
+              overflowY: 'hidden', 
               height: "100vh", // Adjust this value based on your layout
               display: "flex",
               flexDirection: "column",

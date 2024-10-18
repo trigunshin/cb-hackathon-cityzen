@@ -34,7 +34,7 @@ const EventsResults = () => {
 
   return (
     <Box padding={{lg: 4, xl: 4, md: 3, sm: 2, xs: 2}}>
-      <Typography variant="h3" padding={2} color={theme.palette.text.primary} gutterBottom>
+      <Typography variant="subtitle1" padding={2} color={theme.palette.text.secondary} gutterBottom>
         Events we found for you based on your query:
       </Typography>
       <Grid container spacing={2}>

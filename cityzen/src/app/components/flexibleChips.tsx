@@ -50,7 +50,7 @@ const FlexibleChipStack: React.FC<FlexibleChipStackProps> = ({
           legacyBehavior
         >
           <ClickableChip as="a" onClick={() => onChipClick && onChipClick(chip)}>
-            <Typography variant="body1" fontSize={'12px'}>{chip}</Typography>
+            <Typography variant="caption">{chip}</Typography>
           </ClickableChip>
         </Link>
       ))}

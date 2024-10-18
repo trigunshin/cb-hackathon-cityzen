@@ -8,7 +8,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { Container, Grid, Stack } from "@mui/system";
+import { Container, Grid, Stack, useTheme } from "@mui/system";
 import React, { useState } from "react";
 import FlexibleChipStack from "./components/flexibleChips";
 import ModernButton from "./components/modernButton";
@@ -19,12 +19,12 @@ import EventCarousel from "./components/eventCarousel";
 const METRALL_INFO = {
   left: {
     title:
-      "Simplifying civic engagement in LA. Your city's pulse, at your fingertips.",
+      "What is Metrall?",
     description:
       "Metrall empowers residents of Los Angeles by offering easy access to the latest local news, events, and civic activities. With AI-driven insights, Metrall keeps you informed on important community matters, from city council meetings to public events, all in one intuitive platform. Stay connected to the pulse of your neighborhood and make informed decisions about your city.",
   },
   right: {
-    title: "Empowering informed communities through AI-driven insights.",
+    title: "How does Metrall work?",
     description:
       "Metrall is more than just a news aggregator; it brings together real-time data from various sources, including city governance updates, local events, and social causes, offering personalized information based on your interests and location. Whether it's attending a neighborhood council meeting or learning about a new policy affecting your area, Metrall makes civic participation accessible for everyone.",
   },
@@ -32,6 +32,7 @@ const METRALL_INFO = {
 
 export default function Home() {
   const [inputValue, setInputValue] = useState("");
+  const theme = useTheme();
 
   const handleInputChange = (event: any) => {
     setInputValue(event.target.value);
@@ -117,13 +118,13 @@ export default function Home() {
         <Divider />
         <EventCarousel />
         <Divider />
-        <Box sx={{ width: "100%", bgcolor: "white" }}>
+        <Box sx={{ width: "100%", bgcolor: `${theme.palette.background.paper}` }}>
           <Container sx={{ py: 4 }}>
             <Typography
               paddingY={5}
-              variant="h4"
+              variant="h3"
               textAlign={"center"}
-              color="#72BAE3"
+              color={theme.palette.primary.main}
             >
               Simplifying civic engagement in LA. Your city's pulse, at your
               fingertips. Empowering informed communities through AI-driven
@@ -143,28 +144,27 @@ export default function Home() {
                       height: "100%",
                       display: "flex",
                       flexDirection: "column",
-                      padding: "24px",
-                      backgroundColor: "#f7f7f7",
+                      padding: '24px',
                       borderRadius: "8px",
                     }}
                   >
                     <Typography
-                      fontSize={"18px"}
+                      variant="subtitle1"
                       textAlign={"center"}
+                      color={theme.palette.text.primary}
                       gutterBottom
                       style={{
-                        color: "#868686",
                         marginBottom: "16px",
                       }}
                     >
                       {section.title}
                     </Typography>
                     <Typography
-                      variant="body1"
+                      variant="body2"
+                      color={theme.palette.text.secondary}
                       style={{
                         flexGrow: 1,
                         overflow: "auto",
-                        fontSize: "clamp(0.875rem, 2vw, 1rem)",
                       }}
                     >
                       {section.description}
