@@ -1,9 +1,18 @@
 "use client"
+import { Roboto_Slab } from 'next/font/google'
 import { createTheme, ThemeOptions } from '@mui/material/styles';
 import React, { createContext, useState, useMemo, useContext, ReactNode } from 'react';
 import { ThemeProvider, useTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import useMediaQuery from '@mui/material/useMediaQuery';
+
+const robotoSlab = Roboto_Slab({
+  subsets: ['latin'],
+  variable: '--font-roboto_slab',
+  weight: "variable",
+  style: ['normal'],
+  display: 'swap',
+});
 
 interface CustomThemeFields {
   breakpoints: {
@@ -82,7 +91,7 @@ const baseTheme: ThemeOptions = {
     },
   },
   typography: {
-    fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
+    fontFamily: robotoSlab.style.fontFamily,
     h1: {
       fontSize: '5rem',
       fontWeight: 500,
@@ -109,7 +118,7 @@ const baseTheme: ThemeOptions = {
     button: {
       textTransform: 'none',
       fontSize: '1.2rem',
-      fontWeight: 600,
+      fontWeight: 500,
     },
     caption: {
       fontSize: '.8rem',
@@ -145,27 +154,27 @@ const lightPalette = {
     main: '#4DBBC7',
     light: '#7ECFD8',
     dark: '#3A8F99',
-    contrastText: '#949494',
+    contrastText: '#a6a6a6',
   },
   background: {
-    default: '#E6F3FA',
-    paper: '#fbfbfb',
+    default: '#eef4f7',
+    paper: '#fcfcf9',
   },
   text: {
-    primary: '#333333',
+    primary: '#464646',
     secondary: '#757575',
   },
 };
 
 const darkPalette = {
   primary: {
-    main: '#698fba',
+    main: '#486383',
     light: '#7B97B8',
     dark: '#42648c',
-    contrastText: '#FFFFFF',
+    contrastText: '#c7cbcd',
   },
   secondary: {
-    main: '#4A6B8A',
+    main: '#5a8ab7',
     light: '#6B8AA6',
     dark: '#334D6E',
     contrastText: '#d1d1d1',

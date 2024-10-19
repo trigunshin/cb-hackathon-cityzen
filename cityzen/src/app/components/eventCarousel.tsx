@@ -106,6 +106,7 @@ export default function EventCarousel() {
             scrollSnapAlign: 'start',
             display: 'flex',
             flexDirection: 'column',
+            border:  `1px solid ${theme.palette.secondary.contrastText}`,
           }}
         >
          <CardContent  sx={{ p:2}}>

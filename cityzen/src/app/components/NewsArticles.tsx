@@ -58,7 +58,7 @@ const NewsArticles: React.FC<ArticleMetadata> = ({responseData}) => {
                     maxHeight: '150px'}}
                 />}
               <Divider />
-              <Stack gap={1} sx={{alignContent: 'center', padding: 2 }}>
+              <Stack gap={1} sx={{alignContent: 'center', padding: 2, backgroundColor: `${theme.palette.background.paper}`,  }}>
                 <Link href={article.data.url} underline="hover">
                   <Typography variant="body1" color={theme.palette.text.secondary} sx={{textDecoration: 'underline'}}>
                     {article.data.title}

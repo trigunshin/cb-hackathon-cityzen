@@ -39,8 +39,8 @@ const EventsResults = () => {
       </Typography>
       <Grid container spacing={2}>
         {events.map((event) => (
-          <Grid size={{xs: 12, md: 6, sm: 4}} key={event.id}>
-            <Card variant="outlined" sx={{ height: '100%', width: '100%', overflow: 'visible'}}>
+          <Grid size={{xs: 12, md: 4, sm: 4}} key={event.id}>
+            <Card variant="outlined" sx={{ height: '100%', width: '100%', overflow: 'visible', border: `1px solid ${theme.palette.secondary.contrastText}`,}}>
               {/* <CardMedia
                 component="img"
                 height="140"
@@ -58,7 +58,7 @@ const EventsResults = () => {
                   <Typography variant="body1" color={theme.palette.text.secondary}>
                     {event.description?.slice(0, 100)}...
                   </Typography>
-                  <Stack gap={1} direction="row" alignItems="center">
+                  <Stack gap={1} flexDirection={'row'} flexWrap={'wrap'}>
                     <Chip
                       variant="outlined"
                       label={

@@ -4,6 +4,7 @@ dotenv.config();
 import {
   Box,
   Divider,
+  IconButton,
   Paper,
   TextField,
   Typography,
@@ -12,9 +13,10 @@ import { Container, Grid, Stack, useTheme } from "@mui/system";
 import React, { useState } from "react";
 import FlexibleChipStack from "./components/flexibleChips";
 import ModernButton from "./components/modernButton";
-import "./globals.css";
 import EventCarousel from "./components/eventCarousel";
-
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import { useCustomTheme } from "./styles/theme";
+import "./globals.css";
 
 const METRALL_INFO = {
   left: {
@@ -32,7 +34,8 @@ const METRALL_INFO = {
 
 export default function Home() {
   const [inputValue, setInputValue] = useState("");
-  const theme = useTheme();
+  const { theme, toggleTheme } = useCustomTheme();
+
 
   const handleInputChange = (event: any) => {
     setInputValue(event.target.value);
@@ -50,11 +53,26 @@ export default function Home() {
       >
         <Box
           flex={1}
-          bgcolor={"#eeeeee"}
+          bgcolor={theme.palette.background.paper}
           sx={{
             alignContent: "center",
           }}
         >
+          <IconButton
+            aria-label="switch mode"
+            onClick={toggleTheme}
+            sx={{
+              m: 1,
+              gap: 1,
+              color: `${theme.palette.primary.contrastText}`,
+              position: 'absolute',
+              top: 8,
+              left: 8,
+            }}
+            size="small"
+          >
+            <Brightness4Icon />
+          </IconButton>
           <Container
             sx={{
               height: "100%",
@@ -112,12 +130,11 @@ export default function Home() {
               </Box>
               <ModernButton query={inputValue}>Submit</ModernButton>
             </Stack>
-
           </Container>
         </Box>
-        <Divider />
+        <Divider sx={{ bgcolor: "secondary.contrastText" }} />
         <EventCarousel />
-        <Divider />
+        <Divider sx={{ bgcolor: "secondary.contrastText" }} />
         <Box sx={{ width: "100%", bgcolor: `${theme.palette.background.paper}` }}>
           <Container sx={{ py: 4 }}>
             <Typography
@@ -141,6 +158,8 @@ export default function Home() {
                   <Paper
                     variant="outlined"
                     style={{
+                      color: `${theme.palette.background.default}`,
+                      border: `1px solid ${theme.palette.secondary.contrastText}`,
                       height: "100%",
                       display: "flex",
                       flexDirection: "column",

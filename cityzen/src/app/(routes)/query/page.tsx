@@ -142,24 +142,24 @@ export default function ContentPage() {
             borderRight: `1px solid ${theme.palette.secondary.contrastText}`,
             boxSizing: "border-box",
             position: "fixed",
-            color: `${theme.palette.background.paper}`,
+            color: `${theme.palette.background.default}`,
           },
         }}
       >
         <Stack
           direction="row"
-          justifyContent="space-between"
+          justifyContent='space-between'
           alignItems="center"
           sx={{ width: "100%", backgroundColor: `${theme.palette.primary.main}` }}
         >
-          <Button
-            aria-label="back"
-            sx={{height: '100%', borderRadius: 0, color: `${theme.palette.primary.contrastText}`}}
-            // onClick={}
-            startIcon={<ArrowBackIcon />}
+          <Typography 
+            variant="h3"
+            paddingX={2}
+            paddingY={1}
+            className="jaro"
           >
-            <Typography>Back</Typography>
-          </Button>
+              Metrall
+          </Typography>
           <Button
             color={theme.palette.primary.contrastText}
             size='small'
@@ -174,9 +174,10 @@ export default function ContentPage() {
         >
           <ButtonGroup
             orientation="vertical"
+          
+            variant='text'
             fullWidth
-            variant="outlined"
-            sx={{ height: "100%", alignContent: "space-around", alignContent: 'center' }}
+            sx={{ height: "100%", justifyContent: 'center'}}
           >
             {menuItems.map((item, index) => (
               <Button
@@ -184,9 +185,11 @@ export default function ContentPage() {
                 size="large"
                 sx={{
                   borderRadius: 0,
-                  justifyContent: "flex-start",
+                  pl: 3,
+                  py: 2,
+                  justifyContent: "left",
                   width: '100%',
-                  color: selectedItem === item.name ? "primary" : `${theme.palette.primary.dark}`,
+                  color: selectedItem === item.name ?  `${theme.palette.primary.main}` : `${theme.palette.text.secondary}`,
                   backgroundColor:
                     selectedItem === item.name
                       ? "rgba(0, 0, 0, 0.05)"
@@ -200,6 +203,21 @@ export default function ContentPage() {
             ))}
           </ButtonGroup>
         </Stack>
+        <Stack>
+        <Button
+          size="large"
+          aria-label="back"
+          // onClick={}
+          startIcon={<ArrowBackIcon />}
+          sx={{
+            borderRadius: 0,
+            justifyContent: "center",
+            width: '100%',
+            height: '50px'
+          }}     
+          >
+            <Typography>Ask another question</Typography>
+        </Button>
         <Divider sx={{ bgcolor: "secondary.contrastText" }}  />
         <Stack
           direction="row"
@@ -225,9 +243,10 @@ export default function ContentPage() {
             <ArrowForwardIcon />
           </Button> */}
         </Stack>
+        </Stack>
         </Drawer>
     ) : (
-      <AppBar elevation={0} sx={{zIndex: 100,  opacity: 1, backgroundColor: "background.paper", borderBottom: `1px solid ${theme.palette.secondary.contrastText}`,    }} >
+      <AppBar elevation={0} sx={{zIndex: 100,  opacity: 1, backgroundColor: "background.paper", borderBottom: `1px solid ${theme.palette.secondary.contrastText}`, }} >
       <Toolbar>
         {menuItems.map((item, index) => (
           <Button
@@ -253,7 +272,6 @@ export default function ContentPage() {
         component="main"
         sx={{
           flexGrow: 1,
-          px: 3,
           backgroundColor: `${theme.palette.background.default}`,
           transition: "margin-left 0.3s",
           marginLeft: open ? 0 : `-${drawerWidth}px`,
@@ -262,17 +280,12 @@ export default function ContentPage() {
           minHeight: '100vh'
         }}
       >
-        <Container //can change to box
-          sx={{ width: "100%", height: "100vh"}}
-        >
-          <Paper
-            variant="outlined"
+          <Box
+            // variant="outlined"
             sx={{
-              backgroundColor: `${theme.palette.background.paper}`,
-              borderLeft: `1px solid ${theme.palette.secondary.contrastText}`,
-              borderRight: `1px solid ${theme.palette.secondary.contrastText}`,
+              // borderLeft: `1px solid ${theme.palette.secondary.contrastText}`,
+              // borderRight: `1px solid ${theme.palette.secondary.contrastText}`,
               width: "100%",
-              pt: 7,
               alignContent: "center",
               overflowY: 'hidden', 
               height: "100vh", // Adjust this value based on your layout
@@ -294,7 +307,9 @@ export default function ContentPage() {
                     ) : (
               <Box 
                 sx={{ 
-                  flexGrow: 1, 
+                  flexGrow: 1,
+                  width: '100%',
+                  pt: {xs: 6, sm: 6, md: 6}, 
                   overflow: 'auto',
                   '&::-webkit-scrollbar': {
                     width: '0.3em'
@@ -307,8 +322,7 @@ export default function ContentPage() {
               {renderContent()}
               </Box>
             )}
-          </Paper>
-        </Container>
+          </Box>
       </Box>
     </Box>
   );
