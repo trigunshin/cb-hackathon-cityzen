@@ -118,7 +118,7 @@ const baseTheme: ThemeOptions = {
     button: {
       textTransform: 'none',
       fontSize: '1.2rem',
-      fontWeight: 500,
+      fontWeight: 400,
     },
     caption: {
       fontSize: '.8rem',

@@ -19,7 +19,7 @@ const MainContentResult = ({ data }: any) => {
   const sourceslist = sources.data;
 
   return (
-    <Box padding={{lg: 4, xl: 4, md: 3, sm: 3, xs: 3}} alignContent={'center'} height={'100%'}>
+    <Box padding={{lg: 4, xl: 4, md: 3, sm: 2, xs: 2}} alignContent={'center'} height={'100%'}>
       <Typography variant="subtitle1" padding={2} color={theme.palette.text.secondary} gutterBottom>
         Here's a summary of the information we analyzed regarding your question...
       </Typography>

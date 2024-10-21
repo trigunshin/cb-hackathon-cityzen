@@ -47,7 +47,7 @@ const EventsResults = () => {
                 image={event.image || '/api/placeholder/400/200'}
                 alt={event.title}
               /> */}
-              <Divider />
+              {/* <Divider sx={{ bgcolor: "secondary.contrastText" }} /> */}
               <CardContent>
                 <Link href="#" underline="hover">
                   <Typography variant="subtitle1" color={theme.palette.text.primary} sx={{textDecoration: 'underline'}}>
@@ -68,7 +68,7 @@ const EventsResults = () => {
                       }
                       sx={{ borderColor: theme.palette.text.secondary}}
                     />
-                    <Divider orientation="vertical" flexItem />
+                    <Divider orientation="vertical" flexItem  sx={{ bgcolor: "secondary.contrastText" }} />
                     <Chip
                       variant="outlined"
                       label={

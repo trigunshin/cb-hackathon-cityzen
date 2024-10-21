@@ -16,6 +16,7 @@ import ModernButton from "./components/modernButton";
 import EventCarousel from "./components/eventCarousel";
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import { useCustomTheme } from "./styles/theme";
+
 import "./globals.css";
 
 const METRALL_INFO = {
@@ -98,29 +99,30 @@ export default function Home() {
                 label="Ask a question about your neighborhood"
                 value={inputValue}
                 variant="outlined"
+                multiline
                 onChange={handleInputChange}
                 fullWidth
                 sx={{
                   width: "75%",
                   "& .MuiOutlinedInput-root": {
                     "& fieldset": {
-                      borderColor: "#868686",
+                      borderColor: `${theme.palette.secondary.contrastText}`,
                     },
                     "&:hover fieldset": {
-                      borderColor: "#868686",
+                      borderColor: `${theme.palette.secondary.contrastText}`,
                     },
                     "&.Mui-focused fieldset": {
-                      borderColor: "#868686",
+                      borderColor: `${theme.palette.secondary.contrastText}`,
                     },
                   },
                   "& .MuiInputLabel-root": {
-                    color: "#868686", // Default color of the floating label text
+                    color: `${theme.palette.secondary.contrastText}`,
                   },
                   "& .MuiInputLabel-root:hover": {
-                    color: "#868686", // Color on hover
+                    color: `${theme.palette.secondary.contrastText}`,
                   },
                   "& .MuiInputLabel-root.Mui-focused": {
-                    color: "#868686", // Color when focused
+                    color: `${theme.palette.secondary.contrastText}`,
                   },
                 }}
               />
