@@ -208,24 +208,24 @@ export default function ContentPage() {
         sx={{ width: "100%", backgroundColor: `${theme.palette.primary.main}` }}
       >
         <Tooltip title="Toggle theme"  placement="right" arrow>
-        <IconButton
-          aria-label="switch mode"
-          onClick={toggleTheme}
-          sx={{ m: 1, gap: 1, color: `${theme.palette.primary.contrastText}` }}
-          size="small"
-        >
-          <Brightness4Icon /> 
-        </IconButton>
+          <IconButton
+            aria-label="switch mode"
+            onClick={toggleTheme}
+            sx={{ m: 1, gap: 1, color: `${theme.palette.primary.contrastText}` }}
+            size="small"
+          >
+            <Brightness4Icon /> 
+          </IconButton>
         </Tooltip>
         <Tooltip title="Share"  placement="right" arrow>
-        <IconButton
-          aria-label="share"
-          //onClick={}
-          sx={{ m: 1, gap: 1, color: `${theme.palette.primary.contrastText}` }}
-          size="small"
-          >
-            <ShareIcon />
-        </IconButton>
+          <IconButton
+            aria-label="share"
+            //onClick={}
+            sx={{ m: 1, gap: 1, color: `${theme.palette.primary.contrastText}` }}
+            size="small"
+            >
+              <ShareIcon />
+          </IconButton>
         </Tooltip>
       </Stack>
       </Stack>
