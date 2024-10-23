@@ -23,11 +23,17 @@ const METRALL_INFO = {
   left: {
     title:
       "What is Metrall?",
+    imagePlacement: "right",
+    button: true,
+    link: '/about',
     description:
       "Metrall empowers communities by offering easy access to the latest local news, events, and civic activities. With AI-driven insights, Metrall keeps you informed on important community matters, from city council meetings to public events, all in one intuitive platform. Stay connected to the pulse of your neighborhood and make informed decisions about your city.",
-  },
+    },
   right: {
     title: "How does Metrall work?",
+    imagePlacement: "left",
+    button: false,
+    link: null,
     description:
       "Metrall is more than just a news aggregator; it brings together real-time data, offering information based on your interests and location. Metrall connects to various public data APIs and scrapes city council meeting data, then uses artifical intelligence to summarize real data to make information more accessible. ",
   },
@@ -201,8 +207,12 @@ export default function Home() {
               {Object.entries(METRALL_INFO)
                 .filter(([key, section]) => key !== "questions")
                 .map(([key, section]) => (
-                  <Grid size={{xs: 16, sm: 8, md: 8}} key={key}>
-                    <GradientCard section={section} />
+                  <Grid size={{xs: 16, sm: 16, md: 16}} alignContent={'center'} key={key}>
+                    <GradientCard
+                      section={section}
+                      imagePlacement={section.imagePlacement} // Customizing imagePlacement per section
+                      button={section.button}
+                    />
                   </Grid>
               ))}
             </Grid>

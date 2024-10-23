@@ -22,12 +22,13 @@
 html, body {
   padding: 0;
   margin: 0;
-  height: 100%; 
+  min-height: 100%; 
   width: 100%;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
 }
+
 
 .jaro {
   font-family: "Jaro", sans-serif;
@@ -36,4 +37,12 @@ html, body {
   font-style: normal;
   color: white;
   animation: glow 2s ease-in-out infinite alternate;
+}
+
+.jaro-noshade {
+  font-family: "Jaro", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  color: #757575;
 }
