@@ -3,58 +3,93 @@ import * as dotenv from "dotenv";
 dotenv.config();
 import {
   Box,
-  Button,
   Divider,
-  Paper,
+  IconButton,
   TextField,
   Typography,
 } from "@mui/material";
-import { Container, Grid, Stack } from "@mui/system";
+import { Container, Grid, Stack, useTheme } from "@mui/system";
 import React, { useState } from "react";
 import FlexibleChipStack from "./components/flexibleChips";
 import ModernButton from "./components/modernButton";
-import "./globals.css";
 import EventCarousel from "./components/eventCarousel";
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import { useCustomTheme } from "./styles/theme";
+
+import "./globals.css";
+import GradientCard from "./components/gradientCard";
 
 const METRALL_INFO = {
   left: {
     title:
-      "Simplifying civic engagement in LA. Your city's pulse, at your fingertips.",
+      "What is Metrall?",
+    imagePlacement: "right",
+    button: true,
+    link: '/about',
     description:
-      "Metrall empowers residents of Los Angeles by offering easy access to the latest local news, events, and civic activities. With AI-driven insights, Metrall keeps you informed on important community matters, from city council meetings to public events, all in one intuitive platform. Stay connected to the pulse of your neighborhood and make informed decisions about your city.",
-  },
+      "Metrall empowers communities by offering easy access to the latest local news, events, and civic activities. With AI-driven insights, Metrall keeps you informed on important community matters, from city council meetings to public events, all in one intuitive platform. Stay connected to the pulse of your neighborhood and make informed decisions about your city.",
+    },
   right: {
-    title: "Empowering informed communities through AI-driven insights.",
+    title: "How does Metrall work?",
+    imagePlacement: "left",
+    button: false,
+    link: null,
     description:
-      "Metrall is more than just a news aggregator; it brings together real-time data from various sources, including city governance updates, local events, and social causes, offering personalized information based on your interests and location. Whether it's attending a neighborhood council meeting or learning about a new policy affecting your area, Metrall makes civic participation accessible for everyone.",
+      "Metrall is more than just a news aggregator; it brings together real-time data, offering information based on your interests and location. Metrall connects to various public data APIs and scrapes city council meeting data, then uses artifical intelligence to summarize real data to make information more accessible. ",
   },
+  questions: [
+    // City Government & Policy
+    'What were the key decisions from yesterday\'s LA City Council meeting?',
+    'How is LA spending its new infrastructure budget?',
+    'What are the proposed changes to local zoning laws in Downtown LA?',
+    'When is the next public hearing about the new transit project?',
+    
+    // Community & Neighborhoods
+    'What new businesses have opened in Highland Park this month?',
+    'Are there any upcoming neighborhood council meetings in Venice?',
+    'What\'s the status of the new community garden project in Boyle Heights?',
+    'Which streets will be closed for the upcoming CicLAvia event?',
+    
+    // Environment & Infrastructure
+    'What\'s being done about water conservation in LA right now?',
+    'When will the Metro Purple Line extension be completed?',
+    'Are there any e-waste collection events happening this month?',
+    'What\'s the air quality forecast for the San Fernando Valley today?',
+    
+    // Public Safety
+    'Has there been any progress on the Vision Zero traffic safety initiative?',
+    'What are the crime statistics for my neighborhood this quarter?',
+    'Where can I find information about emergency preparedness workshops?',
+    'Are there any active street repairs in Silver Lake?',
+    
+    // Culture & Events
+    'What free concerts are happening at Levitt Pavilion this summer?',
+    'Which museums are offering free admission this weekend?',
+    'What food festivals are coming up in the next month?',
+    'Are there any volunteer opportunities at local schools?',
+    
+    // Housing & Development
+    'What new affordable housing projects are being built in South LA?',
+    'How can I participate in the next community planning meeting?',
+    'What are the current rent control regulations in Los Angeles?',
+    'Which neighborhoods are seeing the most development activity?',
+    
+    // Education & Youth
+    'What summer programs are available for teens in LA?',
+    'When is the next LAUSD board meeting?',
+    'Which public libraries are hosting reading programs?',
+    'What after-school activities are available in my area?'
+  ]
 };
+
 
 export default function Home() {
   const [inputValue, setInputValue] = useState("");
+  const { theme, toggleTheme } = useCustomTheme();
+
 
   const handleInputChange = (event: any) => {
     setInputValue(event.target.value);
-  };
-
-  const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}query?query=${inputValue}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      const data = await res.json();
-      console.log(data);
-      return data;
-    } catch (error) {
-      console.error("Error during fetch:", error);
-    }
   };
 
   return (
@@ -69,11 +104,26 @@ export default function Home() {
       >
         <Box
           flex={1}
-          bgcolor={"#eeeeee"}
+          bgcolor={theme.palette.background.paper}
           sx={{
             alignContent: "center",
           }}
         >
+          <IconButton
+            aria-label="switch mode"
+            onClick={toggleTheme}
+            sx={{
+              m: 1,
+              gap: 1,
+              color: `${theme.palette.primary.contrastText}`,
+              position: 'absolute',
+              top: 8,
+              left: 8,
+            }}
+            size="small"
+          >
+            <Brightness4Icon />
+          </IconButton>
           <Container
             sx={{
               height: "100%",
@@ -99,29 +149,30 @@ export default function Home() {
                 label="Ask a question about your neighborhood"
                 value={inputValue}
                 variant="outlined"
+                multiline
                 onChange={handleInputChange}
                 fullWidth
                 sx={{
                   width: "75%",
                   "& .MuiOutlinedInput-root": {
                     "& fieldset": {
-                      borderColor: "#868686",
+                      borderColor: `${theme.palette.secondary.contrastText}`,
                     },
                     "&:hover fieldset": {
-                      borderColor: "#868686",
+                      borderColor: `${theme.palette.secondary.contrastText}`,
                     },
                     "&.Mui-focused fieldset": {
-                      borderColor: "#868686",
+                      borderColor: `${theme.palette.secondary.contrastText}`,
                     },
                   },
                   "& .MuiInputLabel-root": {
-                    color: "#868686", // Default color of the floating label text
+                    color: `${theme.palette.secondary.contrastText}`,
                   },
                   "& .MuiInputLabel-root:hover": {
-                    color: "#868686", // Color on hover
+                    color: `${theme.palette.secondary.contrastText}`,
                   },
                   "& .MuiInputLabel-root.Mui-focused": {
-                    color: "#868686", // Color when focused
+                    color: `${theme.palette.secondary.contrastText}`,
                   },
                 }}
               />
@@ -129,74 +180,61 @@ export default function Home() {
               <Box width="100%">
                 <FlexibleChipStack />
               </Box>
-              <ModernButton onClick={handleSubmit}>Submit</ModernButton>
+              <ModernButton query={inputValue}>Submit</ModernButton>
             </Stack>
           </Container>
         </Box>
-        <Divider />
+        <Divider sx={{ bgcolor: "secondary.contrastText" }} />
         <EventCarousel />
-        <Divider />
-        <Box sx={{ width: "100%", bgcolor: "white" }}>
+        <Divider sx={{ bgcolor: "secondary.contrastText" }} />
+        <Box sx={{ width: "100%", height: '100%', bgcolor: `${theme.palette.background.paper}` }}>
           <Container sx={{ py: 4 }}>
             <Typography
               paddingY={5}
-              variant="h4"
+              variant="h3"
               textAlign={"center"}
-              color="#72BAE3"
+              color={theme.palette.primary.main}
             >
               Simplifying civic engagement in LA. Your city's pulse, at your
               fingertips. Empowering informed communities through AI-driven
               insights.
             </Typography>
-            <Grid
-              container
-              spacing={3}
-              justifyContent="center"
-              alignItems="stretch"
-            >
-              {Object.entries(METRALL_INFO).map(([key, section], index) => (
-                <Grid size={{ xs: 12, sm: 10, md: 6 }} key={key}>
-                  <Paper
-                    variant="outlined"
-                    style={{
-                      height: "100%",
-                      display: "flex",
-                      flexDirection: "column",
-                      padding: "24px",
-                      backgroundColor: "#f7f7f7",
-                      borderRadius: "8px",
-                    }}
-                  >
-                    <Typography
-                      fontSize={"18px"}
-                      textAlign={"center"}
-                      gutterBottom
-                      style={{
-                        color: "#868686",
-                        marginBottom: "16px",
-                      }}
-                    >
-                      {section.title}
-                    </Typography>
-                    <Typography
-                      variant="body1"
-                      style={{
-                        flexGrow: 1,
-                        overflow: "auto",
-                        fontSize: "clamp(0.875rem, 2vw, 1rem)",
-                      }}
-                    >
-                      {section.description}
-                    </Typography>
-                  </Paper>
-                </Grid>
-              ))}
-            </Grid>
           </Container>
         </Box>
-        <Box sx={{ width: "100%", bgcolor: "white" }}>
-          <Container sx={{ py: 4 }}></Container>
-        </Box>
+        <Divider sx={{ bgcolor: "secondary.contrastText" }} />
+        <Box sx={{ position: 'relative', width: '100%' }}>
+            <Grid container columns={16}>
+              {Object.entries(METRALL_INFO)
+                .filter(([key, section]) => key !== "questions")
+                .map(([key, section]) => (
+                  <Grid size={{xs: 16, sm: 16, md: 16}} alignContent={'center'} key={key}>
+                    <GradientCard
+                      section={section}
+                      imagePlacement={section.imagePlacement} // Customizing imagePlacement per section
+                      button={section.button}
+                    />
+                  </Grid>
+              ))}
+            </Grid>
+            {/* <Box sx={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, display: 'flex', flexDirection: 'column', overflowY: 'hidden', justifyContent: 'center' }}>
+              {METRALL_INFO.questions.reduce((acc, question, index) => {
+                const row = Math.floor(index / 2);
+                if (!acc[row]) {
+                  acc[row] = [];
+                }
+                acc[row].push(
+                  <Box key={index} sx={{ margin: "4px", padding: '4px', fontSize: '20px', border: `1px solid ${theme.palette.secondary.contrastText}`, borderRadius: 15,}}>
+                    <Typography color={theme.palette.secondary.contrastText}>{question}</Typography>
+                  </Box>  
+                );
+                return acc;
+              }, []).map((chips, rowIndex) => (
+                <Box key={rowIndex} sx={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: '2px' }}>
+                  {chips}
+                </Box>
+              ))}
+            </Box> */}
+          </Box>
       </Box>
     </>
   );

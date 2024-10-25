@@ -1,41 +1,52 @@
-import { Box, Typography } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import { Box, Paper, Stack, Typography } from "@mui/material";
+import { useTheme } from "@mui/system";
+import React, { useState } from "react";
 
-const MainContentResult = () => {
-  const [text, setText] = useState('');
+const sources = {
+  data: {
+    sources: [
+      "Source 1?",
+      "Source 2?",
+      "Source 3?",
+    ]
+  }
+};
 
-  useEffect(() => {
-    fetch('https://api.example.com/text')
-      .then(response => response.json())
-      .then(data => setText(data.text))
-      .catch(error => {
-        console.error('Error fetching text:', error);
-        setText(loremipsum);
-      });
-  }, []);
+const MainContentResult = ({ data }: any) => {
+  const [text, setText] = useState("");
+  const theme = useTheme();
 
-  const loremipsum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ut lorem tellus. Pellentesque finibus justo ut orci malesuada varius. Morbi et augue a lorem pulvinar vestibulum ac eget lectus. Etiam eu sagittis leo. Nam dictum dui ac lacus luctus congue. Donec tincidunt nisi a eros efficitur luctus. Nulla accumsan mauris vel libero egestas, vestibulum dignissim sapien ultricies. Pellentesque sodales sollicitudin nisi. Cras sollicitudin nibh ac nibh commodo varius. Suspendisse maximus erat ac accumsan rhoncus. Nam odio augue, ultrices in finibus nec, efficitur ac arcu. \n Vivamus a enim ornare, auctor libero sed, hendrerit diam. Nullam et ex ac dolor dapibus pellentesque. Aenean porttitor dui ex, at interdum mauris sagittis eu. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Quisque vestibulum quam vitae est vestibulum, quis ullamcorper lectus molestie. Nam arcu tellus, malesuada at rhoncus eu, pulvinar volutpat enim. Morbi facilisis magna sapien, a finibus ipsum imperdiet non. Morbi ac feugiat ipsum. Nam cursus elit at lacus vestibulum vulputate. Pellentesque auctor sagittis arcu, feugiat elementum mi blandit ut. Curabitur dignissim imperdiet urna sit amet finibus. Praesent sagittis lorem orci, in tincidunt libero congue et. Vestibulum sit amet diam sed erat rhoncus euismod sed at risus. Nam et iaculis eros. Aenean in lorem auctor, efficitur ipsum at, rhoncus augue. Vestibulum volutpat orci at sem interdum, eu pharetra urna cursus. Mauris imperdiet lacus at auctor convallis. Fusce ac tortor ut orci lacinia porttitor. Interdum et malesuada fames ac ante ipsum primis in faucibus. Suspendisse imperdiet pulvinar ultricies. Integer efficitur risus et massa faucibus, quis rutrum orci malesuada. Sed id egestas libero, suscipit consectetur velit. Fusce suscipit hendrerit justo ac ultricies. Mauris finibus nisi vel pellentesque lacinia. \n Pellentesque accumsan nulla non ante commodo, nec tempus diam mollis. Maecenas a varius augue. Curabitur mollis tincidunt libero, id fringilla arcu lobortis a.";
+  const sourceslist = sources.data;
 
   return (
-    <>
-    <Typography fontSize={'18px'} paddingY={2} color='#868686' gutterBottom>
-        A summary of the information we analyzed relating to your question...
-    </Typography>
-    <Box sx={{ padding: 1}}>
-        {text ? text.split('\n').map((line, index) => (
-            <Typography key={index} variant="body1" component="p" sx={{ lineHeight: 2 }} color='#868686'>
-                {line}
-            </Typography>
-        )) : loremipsum.split('\n').map((line, index) => (
-            <Typography key={index} variant="body1" component="p" sx={{ lineHeight: 2 }} color='#868686'>
-                {line}
-            </Typography>
-        ))}
+    <Box padding={{lg: 4, xl: 4, md: 3, sm: 2, xs: 2}} alignContent={'center'} height={'100%'}>
+      <Typography variant="subtitle1" padding={2} color={theme.palette.text.secondary} gutterBottom>
+        Here's a summary of the information we analyzed regarding your question...
+      </Typography>
+      <Typography
+        padding={2}
+        variant="body2"
+        color={theme.palette.text.secondary}
+      >
+        {data}
+      </Typography>
+      <Paper variant="outlined" sx={{ p: 2, my: 2, borderRadius: 2, border: `1px solid ${theme.palette.primary.contrastText}` }}>
+        <Stack gap={1} p={2} direction={'column'}>
+          <Typography variant="body1" color={theme.palette.text.secondary} gutterBottom>
+            Information about this summary:
+          </Typography>
+          <Typography variant="caption"color={theme.palette.text.secondary} gutterBottom>
+            *some info here*
+          </Typography>
+          <Typography variant="caption" color={theme.palette.text.secondary}>
+            {sourceslist.sources.map((source: string, index: number) => (
+              <div key={index}>{source}</div>
+            ))}
+          </Typography>
+        </Stack>
+      </Paper>
     </Box>
-    </>
-
-  ); 
-}
+  );
+};
 
 export default MainContentResult;
-

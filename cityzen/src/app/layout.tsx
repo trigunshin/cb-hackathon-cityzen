@@ -1,8 +1,7 @@
-import { Inter } from "next/font/google";
 import "./globals.css";
 import { Metadata } from "next";
-
-const inter = Inter({ subsets: ['latin'] });
+import { ThemeWrapper } from "./styles/theme";
+import Footer from "./components/Footer";
 
 export const metadata: Metadata = {
   title: "Metrall",
@@ -20,10 +19,16 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Jaro:opsz@6..72&display=swap" rel="stylesheet" />
+        <link rel="preconnect" href="https://fonts.googleapis.com"/>
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
       </head>
-      <body className={inter.className}>
-        <main className="w-full h-[100vh]">{children}</main>
+      <ThemeWrapper>
+      <body>
+        <main className="w-full h-full">{children}</main>
+        <Footer />
       </body>
+      </ThemeWrapper>
     </html>
   );
 }

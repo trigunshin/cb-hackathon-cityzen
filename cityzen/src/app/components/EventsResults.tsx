@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Card, CardContent, Typography, CardMedia, CircularProgress, Box, Divider, Link, Stack, Chip } from '@mui/material';
-import { Grid } from '@mui/system';
+import { Grid, useTheme } from '@mui/system';
 import { AddToCalendarButton } from 'add-to-calendar-button-react';
 
 
@@ -13,6 +13,8 @@ const fetchEvents = async () => {
 const EventsResults = () => {
   const [events, setEvents] = useState<any[]>([])
   const [loading, setLoading] = useState(false);
+  const theme = useTheme();
+
   
   useEffect(() => {
     setLoading(true);
@@ -24,57 +26,57 @@ const EventsResults = () => {
 
   if (loading){
     return(
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+      <Box padding={3} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <CircularProgress />
       </Box>
     );
   }
 
   return (
-    <Box>
-      <Typography fontSize={'18px'} paddingY={2} color='#868686' gutterBottom>
+    <Box padding={{lg: 4, xl: 4, md: 3, sm: 2, xs: 2}}>
+      <Typography variant="subtitle1" padding={2} color={theme.palette.text.secondary} gutterBottom>
         Events we found for you based on your query:
       </Typography>
       <Grid container spacing={2}>
         {events.map((event) => (
-          <Grid size={{xs: 12, md: 6, sm: 4}} key={event.id}>
-            <Card variant="outlined" sx={{ height: '100%', width: '100%', overflow: 'visible'}}>
+          <Grid size={{xs: 12, md: 4, sm: 4}} key={event.id}>
+            <Card variant="outlined" sx={{ height: '100%', width: '100%', overflow: 'visible', border: `1px solid ${theme.palette.secondary.contrastText}`,}}>
               {/* <CardMedia
                 component="img"
                 height="140"
                 image={event.image || '/api/placeholder/400/200'}
                 alt={event.title}
               /> */}
-              <Divider />
+              {/* <Divider sx={{ bgcolor: "secondary.contrastText" }} /> */}
               <CardContent>
                 <Link href="#" underline="hover">
-                  <Typography gutterBottom fontSize="18px" color="#868686" sx={{textDecoration: 'underline'}} component="div">
+                  <Typography variant="subtitle1" color={theme.palette.text.primary} sx={{textDecoration: 'underline'}}>
                     {event.title}
                   </Typography>
                 </Link>
                 <Stack gap={2} direction="column" alignItems="left">
-                  <Typography variant="body2" color="text.secondary">
+                  <Typography variant="body1" color={theme.palette.text.secondary}>
                     {event.description?.slice(0, 100)}...
                   </Typography>
-                  <Stack gap={1} direction="row" alignItems="center">
+                  <Stack gap={1} flexDirection={'row'} flexWrap={'wrap'}>
                     <Chip
                       variant="outlined"
                       label={
-                        <Typography variant="body2" sx={{ color: 'inherit' }}>
+                        <Typography variant="body2" color={theme.palette.text.secondary}>
                           {event.start.toDateString()}
                         </Typography>
                       }
-                      sx={{ borderColor: '#B0B0B0', color: '#868686' }}
+                      sx={{ borderColor: theme.palette.text.secondary}}
                     />
-                    <Divider orientation="vertical" flexItem />
+                    <Divider orientation="vertical" flexItem  sx={{ bgcolor: "secondary.contrastText" }} />
                     <Chip
                       variant="outlined"
                       label={
-                        <Typography variant="body2" sx={{ color: 'inherit' }}>
+                        <Typography variant="body2" color={theme.palette.text.secondary}>
                           {event.start.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                         </Typography>
                       }
-                      sx={{ borderColor: '#B0B0B0', color: '#868686' }}
+                      sx={{ borderColor: theme.palette.text.secondary}}
                     />
                   </Stack>
                   <Box alignItems={'center'} width={"100%"}>
