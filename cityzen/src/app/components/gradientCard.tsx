@@ -145,7 +145,7 @@ const GradientCard: React.FC<GradientCardProps> = ({ section, imagePlacement = '
                 {section.description}
               </Typography>
               {button && (
-                <ReadMoreButton variant="contained" disableElevation href={section.link}>
+                <ReadMoreButton variant="contained" disableElevation href={section.link || ""}>
                   read more
                 </ReadMoreButton>
               )}

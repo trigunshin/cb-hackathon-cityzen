@@ -38,7 +38,7 @@ const Footer = () => {
   const [isVisible, setIsVisible] = useState(false);
 
   const toggleVisibility = () => {
-    // Check if the user has scrolled to the bottom of the document
+    //check if the user has scrolled to the bottom of the document
     if (window.innerHeight + document.documentElement.scrollTop >= document.documentElement.offsetHeight) {
       setIsVisible(true);
     } else {
@@ -94,7 +94,7 @@ const Footer = () => {
                 </Grid>
             ))}
         </Grid>
-        <Divider orientation="vertical" fullWidth flexItem sx={{ bgcolor: "secondary.contrastText" }} />
+        <Divider orientation="vertical" flexItem sx={{ bgcolor: "secondary.contrastText" }} />
       </Grid>
     </StyledFooter>
   );
