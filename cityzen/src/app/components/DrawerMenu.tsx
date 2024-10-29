@@ -55,15 +55,14 @@ export const DrawerMenu: React.FC<DrawerMenuProps> = ({
       sx={{
         width: drawerWidth,
         flexShrink: 0,
+        transition: theme.transitions.create('transform', {
+          easing: theme.transitions.easing.sharp,
+          duration: theme.transitions.duration.enteringScreen,
+        }),
         '& .MuiDrawer-paper': {
           width: drawerWidth,
           boxSizing: 'border-box',
           borderRight: `1px solid ${theme.palette.secondary.contrastText}`,
-          transition: theme.transitions.create('transform', {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.enteringScreen,
-          }),
-          transform: open ? 'translateX(0)' : `translateX(-${drawerWidth}px)`,
         },
       }}
     >
@@ -207,7 +206,7 @@ export const DrawerMenu: React.FC<DrawerMenuProps> = ({
               <IconButton
                 aria-label="Toggle mode"
                 onClick={toggleTheme}
-                sx={{ color: `${theme.palette.primary.contrastText}` }}
+                sx={{ color: theme.palette.primary.contrastText }}
                 size="small"
               >
                 <Brightness4Icon /> 

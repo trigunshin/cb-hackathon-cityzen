@@ -58,6 +58,7 @@ const QueryLayout: React.FC = ({  }) => {
                 top: 16,
                 zIndex: 1200,
                 visibility: open ? "hidden" : "visible",
+                color: theme.palette.primary.contrastText 
               }}
             >
               <MenuIcon />
@@ -76,13 +77,17 @@ const QueryLayout: React.FC = ({  }) => {
             sx={{
               flexGrow: 1,
               backgroundColor: theme.palette.background.default,
-              width: "100%",
+              width: 'auto',
               minHeight: "100vh",
-              transition: theme.transitions.create(["padding"], {
+              transition: theme.transitions.create(["margin", "width", "padding"], {
                 easing: theme.transitions.easing.sharp,
                 duration: theme.transitions.duration.enteringScreen,
               }),
               paddingTop: !isLargeScreen && open ? "200px" : 0, //only applies padding on mobile... broken
+              paddingLeft: isLargeScreen && open ? 0 : '-200px', //only applies padding on mobile... broken
+              marginTop: 0,
+              marginLeft: isLargeScreen && !open ? `-${drawerWidth}px` : 0,
+            
             }}
           >
             <Suspense fallback={<Loading content={selectedItem as LoadingProps["content"]} />}>
