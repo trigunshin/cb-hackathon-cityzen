@@ -27,8 +27,8 @@ const MainContentResult = ({ data, loading = false }: MainContentResultProps) =>
     return (
       <Box padding={{lg: 4, xl: 4, md: 3, sm: 2, xs: 2}} alignContent={'center'} height={'100%'}>
         <Skeleton variant="text" width="80%" height={40} sx={{ mb: 2 }} />
-        <Skeleton variant="rectangular" width="100%" height={100} sx={{ mb: 2 }} />
-        <Paper variant="outlined" sx={{ p: 2, my: 2, borderRadius: 2, border: `1px solid ${theme.palette.primary.contrastText}` }}>
+        <Skeleton variant="rectangular" width="100%" height={100} sx={{ mb: 4 }} />
+        <Paper variant="outlined" sx={{ p: 2, my: 2, borderRadius: theme.spacing(2), border: `1px solid ${theme.palette.primary.contrastText}` }}>
           <Stack gap={1} p={2} direction={'column'}>
             <Skeleton variant="text" width="60%" height={30} />
             <Skeleton variant="text" width="90%" height={20} />
@@ -53,7 +53,7 @@ const MainContentResult = ({ data, loading = false }: MainContentResultProps) =>
       >
         {data}
       </Typography>
-      <Paper variant="outlined" sx={{ p: 2, my: 2, borderRadius: 2, border: `1px solid ${theme.palette.primary.contrastText}` }}>
+      <Paper variant="outlined" sx={{ p: 2, my: 2, borderRadius: theme.spacing(2), border: `1px solid ${theme.palette.primary.contrastText}` }}>
         <Stack gap={1} p={2} direction={'column'}>
           <Typography variant="body1" color={theme.palette.text.secondary} gutterBottom>
             Information about this summary:

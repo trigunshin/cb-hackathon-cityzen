@@ -49,7 +49,7 @@ const CityHallResults: React.FC<CityHallResultsProps> = ({ loading = false }) =>
 
   const SkeletonCard = () => (
     <Grid size={{xs: 12, sm: 6, md: 4}}>
-      <Card variant="outlined" sx={{ height: '100%', border: `1px solid ${theme.palette.secondary.contrastText}` }}>
+      <Card variant="outlined" sx={{ height: '100%', border: `1px solid ${theme.palette.secondary.contrastText}`, borderRadius: theme.spacing(2) }}>
         <CardContent>
           <Skeleton variant="text" width="80%" height={32} sx={{ mb: 1 }} /> {/* Title */}
           <Skeleton variant="text" width="100%" /> {/* Description line 1 */}
@@ -74,7 +74,7 @@ const CityHallResults: React.FC<CityHallResultsProps> = ({ loading = false }) =>
           //show actual data when loaded
           data.map((item, index) => (
             <Grid size={{xs: 12, sm: 6, md: 4}} key={index}>
-              <Card variant="outlined" sx={{ height: '100%', border: `1px solid ${theme.palette.secondary.contrastText}` }}>
+              <Card variant="outlined" sx={{ height: '100%', border: `1px solid ${theme.palette.secondary.contrastText}`, borderRadius: theme.spacing(2) }}>
                 <CardContent>
                   <Typography variant="h5" color={theme.palette.text.primary} gutterBottom>
                     {item.title}

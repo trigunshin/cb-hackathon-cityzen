@@ -29,7 +29,7 @@ const EventsResults: React.FC<EventsResultsProps> = ({ loading: parentLoading })
 
   const SkeletonEvent = () => (
     <Grid size={{xs: 12, md: 4, sm: 4}}>
-      <Card variant="outlined" sx={{ height: '100%', width: '100%', overflow: 'visible', border: `1px solid ${theme.palette.secondary.contrastText}`}}>
+      <Card variant="outlined" sx={{ height: '100%', width: '100%', overflow: 'visible', border: `1px solid ${theme.palette.secondary.contrastText}`, borderRadius: theme.spacing(2)}}>
         <CardContent>
           <Stack gap={2}>
             {/* title skeleton */}
@@ -78,7 +78,7 @@ const EventsResults: React.FC<EventsResultsProps> = ({ loading: parentLoading })
           //show actual events when loaded
           events.map((event) => (
             <Grid size={{xs: 12, md: 4, sm: 4}} key={event.id}>
-              <Card variant="outlined" sx={{ height: '100%', width: '100%', overflow: 'visible', border: `1px solid ${theme.palette.secondary.contrastText}`}}>
+              <Card variant="outlined" sx={{ height: '100%', width: '100%', overflow: 'visible', border: `1px solid ${theme.palette.secondary.contrastText}`, borderRadius: theme.spacing(2)}}>
                 <CardContent>
                   <Link href="#" underline="hover">
                     <Typography variant="subtitle1" color={theme.palette.text.primary} sx={{textDecoration: 'underline'}}>

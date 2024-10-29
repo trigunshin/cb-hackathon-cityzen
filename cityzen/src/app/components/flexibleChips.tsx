@@ -14,8 +14,8 @@ const FlexibleChipContainer = styled(Box)(({ theme }) => ({
 }));
 
 const ClickableChip = styled(Button)(({ theme }) => ({
-  background: `${theme.palette.background.paper}`,
-  borderRadius: '20px',
+  background: theme.palette.background.paper,
+  borderRadius: theme.spacing(2),
   alignItems: 'center',
   alignContent: 'center',
   padding: theme.spacing(1.25, 2),
@@ -25,7 +25,7 @@ const ClickableChip = styled(Button)(({ theme }) => ({
   cursor: 'pointer',
   transition: 'background-color 0.3s',
   '&:hover': {
-    backgroundColor: `${theme.palette.background.default}`,
+    backgroundColor: theme.palette.background.default,
     boxShadow: '0px 2px 10px rgba(0,0,0,0.1)', //soft shadow for depth
   },
   '&:active': {

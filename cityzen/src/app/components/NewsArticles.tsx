@@ -14,7 +14,7 @@ const NewsArticles: React.FC<NewsArticlesProps> = ({ responseData, loading = fal
 
   const SkeletonArticle = () => (
     <Grid size={{xs: 12, md: 6, sm: 6}}>
-      <Card variant='outlined' sx={{ height: '100%', width: '100%', border: `1px solid ${theme.palette.secondary.contrastText}`}}>
+      <Card variant='outlined' sx={{ height: '100%', width: '100%', border: `1px solid ${theme.palette.secondary.contrastText}`, borderRadius: theme.spacing(2)}}>
         <Skeleton variant="rectangular" height={150} />
         <Divider />
         <Stack gap={1} sx={{alignContent: 'center', padding: 2, backgroundColor: `${theme.palette.background.paper}`}}>
@@ -44,7 +44,7 @@ const NewsArticles: React.FC<NewsArticlesProps> = ({ responseData, loading = fal
         ) : (
           responseData.map((article, index) => (
             <Grid size={{xs: 12, md: 6, sm: 6}} key={index}>
-              <Card variant='outlined' sx={{ height: '100%', width: '100%', border: `1px solid ${theme.palette.secondary.contrastText}`}}>
+              <Card variant='outlined' sx={{ height: '100%', width: '100%', border: `1px solid ${theme.palette.secondary.contrastText}`, borderRadius: theme.spacing(2)}}>
                 {<CardMedia
                   component="img"
                   height="70"

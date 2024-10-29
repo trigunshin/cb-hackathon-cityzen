@@ -25,7 +25,7 @@ export default function RootLayout({
       </head>
       <body>
         <ThemeWrapper>
-          <main className="w-full h-full">{children}</main>
+          <main className="w-full h-[100%]">{children}</main>
           <Footer />
         </ThemeWrapper>
       </body>
