@@ -1,6 +1,6 @@
 "use client"
 import React, { useEffect, useState } from 'react';
-import { Typography, Card, CardContent, Skeleton, Box } from '@mui/material';
+import { Typography, Card, CardContent, Skeleton, Stack } from '@mui/material';
 import { Grid } from '@mui/system';
 import { useTheme } from '@mui/material/styles';
 
@@ -51,17 +51,17 @@ const CityHallResults: React.FC<CityHallResultsProps> = ({ loading = false }) =>
     <Grid size={{xs: 12, sm: 6, md: 4}}>
       <Card variant="outlined" sx={{ height: '100%', border: `1px solid ${theme.palette.secondary.contrastText}`, borderRadius: theme.spacing(2) }}>
         <CardContent>
-          <Skeleton variant="text" width="80%" height={32} sx={{ mb: 1 }} /> {/* Title */}
-          <Skeleton variant="text" width="100%" /> {/* Description line 1 */}
-          <Skeleton variant="text" width="90%" /> {/* Description line 2 */}
+          <Skeleton variant="text" width="80%" height={32} sx={{ mb: 1 }} />
+          <Skeleton variant="text" width="100%" />
+          <Skeleton variant="text" width="90%" />
         </CardContent>
       </Card>
     </Grid>
   );
 
   return (
-    <Box padding={{lg: 4, xl: 4, md: 3, sm: 2, xs: 2}}>
-      <Typography variant="subtitle1" padding={2} color={theme.palette.text.secondary} gutterBottom>
+    <Stack gap={1} paddingY={{lg: 4, xl: 4, md: 3, sm: 2, xs: 2}}>
+      <Typography variant="subtitle1" padding={2} color={theme.palette.text.secondary}>
         Here are the relevant City Hall events...
       </Typography>
       <Grid container spacing={2} alignItems={'center'}>
@@ -76,10 +76,10 @@ const CityHallResults: React.FC<CityHallResultsProps> = ({ loading = false }) =>
             <Grid size={{xs: 12, sm: 6, md: 4}} key={index}>
               <Card variant="outlined" sx={{ height: '100%', border: `1px solid ${theme.palette.secondary.contrastText}`, borderRadius: theme.spacing(2) }}>
                 <CardContent>
-                  <Typography variant="h5" color={theme.palette.text.primary} gutterBottom>
+                  <Typography variant="body1" color={theme.palette.text.primary} gutterBottom>
                     {item.title}
                   </Typography>
-                  <Typography variant="body2" color={theme.palette.text.secondary}>
+                  <Typography variant="body1" color={theme.palette.text.secondary}>
                     {item.description}
                   </Typography>
                 </CardContent>
@@ -88,7 +88,7 @@ const CityHallResults: React.FC<CityHallResultsProps> = ({ loading = false }) =>
           ))
         )}
       </Grid>
-    </Box>
+    </Stack>
   );
 };
 

@@ -30,7 +30,7 @@ const StyledCard = styled(Card)(({ theme }) => ({
   width: '100%',
   maxWidth: 600,
   margin: 'auto',
-  zIndex: '2',
+  zIndex: 2,
   //marginTop: theme.spacing(5),
   border: `1px solid ${theme.palette.secondary.contrastText}`,
   borderRadius: theme.spacing(3),
@@ -60,7 +60,7 @@ const ImagePlaceholder = styled(Paper)<{ imageplacement?: string }>(({ theme, im
   borderRadius: theme.spacing(2),
   border: `1px solid ${theme.palette.secondary.contrastText}`,
   position: 'absolute',
-  zIndex: 10,
+  zIndex: 3,
 
   ...(imageplacement === 'left' && {
     height: 250,

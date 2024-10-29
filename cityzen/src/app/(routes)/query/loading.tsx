@@ -6,6 +6,7 @@ import {
   CityHallResults,
 } from "@/app/components";
 import { LoadingProps } from "@/app/utils/types";
+import { Container } from "@mui/material";
 
 
 const componentMap: Record<LoadingProps["content"], React.ReactNode> = {
@@ -17,7 +18,11 @@ const componentMap: Record<LoadingProps["content"], React.ReactNode> = {
 
 const Loading: React.FC<LoadingProps> = ({ content }) => {
   const loadingComponent = componentMap[content];
-  return loadingComponent ? loadingComponent : componentMap["Main Content"];
+  return (
+    <Container sx={{height: '100%', alignContent: 'center'}}>
+      {loadingComponent ? loadingComponent : componentMap["Main Content"]}
+    </Container>
+  )
 };
 
 export default Loading;

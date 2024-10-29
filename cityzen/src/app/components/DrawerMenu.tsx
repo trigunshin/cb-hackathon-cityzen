@@ -56,9 +56,9 @@ export const DrawerMenu: React.FC<DrawerMenuProps> = ({
         width: drawerWidth,
         flexShrink: 0,
         transition: theme.transitions.create('transform', {
-          easing: theme.transitions.easing.sharp,
-          duration: theme.transitions.duration.enteringScreen,
-        }),
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.enteringScreen,
+          }),
         '& .MuiDrawer-paper': {
           width: drawerWidth,
           boxSizing: 'border-box',

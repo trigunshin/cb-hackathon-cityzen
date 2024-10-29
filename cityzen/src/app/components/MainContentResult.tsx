@@ -25,7 +25,7 @@ const MainContentResult = ({ data, loading = false }: MainContentResultProps) =>
   
   if (loading) {
     return (
-      <Box padding={{lg: 4, xl: 4, md: 3, sm: 2, xs: 2}} alignContent={'center'} height={'100%'}>
+      <Stack gap={2} paddingY={{lg: 4, xl: 4, md: 3, sm: 2, xs: 2}} alignContent={'center'} height={'100%'}>
         <Skeleton variant="text" width="80%" height={40} sx={{ mb: 2 }} />
         <Skeleton variant="rectangular" width="100%" height={100} sx={{ mb: 4 }} />
         <Paper variant="outlined" sx={{ p: 2, my: 2, borderRadius: theme.spacing(2), border: `1px solid ${theme.palette.primary.contrastText}` }}>
@@ -37,23 +37,23 @@ const MainContentResult = ({ data, loading = false }: MainContentResultProps) =>
             ))}
           </Stack>
         </Paper>
-      </Box>
+      </Stack>
     );
   }
 
   return (
-    <Box padding={{lg: 4, xl: 4, md: 3, sm: 2, xs: 2}} alignContent={'center'} height={'100%'}>
-      <Typography variant="subtitle1" padding={2} color={theme.palette.text.secondary} gutterBottom>
+    <Stack gap={1} paddingY={{lg: 4, xl: 4, md: 3, sm: 2, xs: 2}} alignContent={'center'} height={'auto'}>
+      <Typography variant="subtitle1" padding={2} color={theme.palette.text.secondary}>
         Here's a summary of the information we analyzed regarding your question...
       </Typography>
+      <Stack gap={3}>
       <Typography
-        padding={2}
         variant="body2"
         color={theme.palette.text.secondary}
       >
         {data}
       </Typography>
-      <Paper variant="outlined" sx={{ p: 2, my: 2, borderRadius: theme.spacing(2), border: `1px solid ${theme.palette.primary.contrastText}` }}>
+      <Paper variant="outlined" sx={{ borderRadius: theme.spacing(2), border: `1px solid ${theme.palette.primary.contrastText}` }}>
         <Stack gap={1} p={2} direction={'column'}>
           <Typography variant="body1" color={theme.palette.text.secondary} gutterBottom>
             Information about this summary:
@@ -68,7 +68,8 @@ const MainContentResult = ({ data, loading = false }: MainContentResultProps) =>
           </Typography>
         </Stack>
       </Paper>
-    </Box>
+      </Stack>
+    </Stack>
   );
 };
 

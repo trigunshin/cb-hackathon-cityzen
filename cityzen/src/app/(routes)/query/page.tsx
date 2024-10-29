@@ -1,5 +1,5 @@
 import React from "react";
-import { Typography } from "@mui/material";
+import { Box, Container, Typography } from "@mui/material";
 import {
   NewsArticles,
   EventsResults,
@@ -31,10 +31,10 @@ const ContentPage: React.FC<ContentPageProps> = ({ selectedItem, content, loadin
   };
 
   return (
-    <>
+    <Container sx={{height: '100%', alignContent: 'center'}}>
       {renderContent()}
       <Footer />
-    </>
+    </Container>
   );
 };
 

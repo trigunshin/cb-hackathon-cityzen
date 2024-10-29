@@ -8,6 +8,7 @@ import ContentPage from "./page";
 import { LoadingProps, QueryResponse } from "@/app/utils/types";
 import Loading from "./loading";
 import { useTheme } from '@mui/system';
+import Footer from "@/app/components/Footer";
 
 const QueryLayout: React.FC = ({  }) => {
   const [open, setOpen] = useState(true);
@@ -56,9 +57,11 @@ const QueryLayout: React.FC = ({  }) => {
                 position: "fixed",
                 left: isLargeScreen ? (open ? drawerWidth : 16) : 16,
                 top: 16,
-                zIndex: 1200,
+                zIndex: 10,
                 visibility: open ? "hidden" : "visible",
-                color: theme.palette.primary.contrastText 
+                color: theme.palette.primary.contrastText,
+                backgroundColor: theme.palette.background.default,
+                "&:hover, &.Mui-focusVisible": { backgroundColor: theme.palette.primary.light }
               }}
             >
               <MenuIcon />
@@ -75,19 +78,16 @@ const QueryLayout: React.FC = ({  }) => {
           <Box
             component="main"
             sx={{
+              width: '100%',
+              minHeight: "100vh",
               flexGrow: 1,
               backgroundColor: theme.palette.background.default,
-              width: 'auto',
-              minHeight: "100vh",
               transition: theme.transitions.create(["margin", "width", "padding"], {
                 easing: theme.transitions.easing.sharp,
                 duration: theme.transitions.duration.enteringScreen,
               }),
-              paddingTop: !isLargeScreen && open ? "200px" : 0, //only applies padding on mobile... broken
-              paddingLeft: isLargeScreen && open ? 0 : '-200px', //only applies padding on mobile... broken
-              marginTop: 0,
+              paddingTop: !isLargeScreen && open ? "200px" : 0,
               marginLeft: isLargeScreen && !open ? `-${drawerWidth}px` : 0,
-            
             }}
           >
             <Suspense fallback={<Loading content={selectedItem as LoadingProps["content"]} />}>

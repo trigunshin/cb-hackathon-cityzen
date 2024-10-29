@@ -32,7 +32,7 @@ const NewsArticles: React.FC<NewsArticlesProps> = ({ responseData, loading = fal
   );
 
   return (
-    <Box padding={{lg: 4, xl: 4, md: 3, sm: 2, xs: 2}}>
+    <Stack gap={1} paddingY={{lg: 4, xl: 4, md: 3, sm: 2, xs: 2}}>
       <Typography variant="subtitle1" padding={2} color={theme.palette.text.secondary} gutterBottom>
         Here are some articles related to your search...
       </Typography>
@@ -94,7 +94,7 @@ const NewsArticles: React.FC<NewsArticlesProps> = ({ responseData, loading = fal
           ))
         )}
       </Grid>
-    </Box>
+    </Stack>
   );
 };
 
