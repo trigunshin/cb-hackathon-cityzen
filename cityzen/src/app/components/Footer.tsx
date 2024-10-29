@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Box, Divider, Stack, Typography } from '@mui/material';
 import { Grid, styled } from '@mui/system';
 import Link from 'next/link';
+import { useTheme } from "@mui/system";
 
 const StyledFooter = styled(Box)(({ theme }) => ({
   width: '100%',
@@ -36,6 +37,7 @@ const footerLinks = [
 
 const Footer = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const theme = useTheme();
 
   const toggleVisibility = () => {
     //check if the user has scrolled to the bottom of the document
@@ -58,44 +60,48 @@ const Footer = () => {
     <StyledFooter style={{ transform: isVisible ? 'translateY(0)' : 'translateY(100%)' }}>
       <Grid container columns={3}>
         <Grid size={{xs: 3, sm: 1}} alignContent={'center'}>
-          <Typography variant="h2" className='jaro-noshade' style={{ fontWeight: 'bold' }}>
+          <Typography paddingY={2} variant="h2" className='jaro-noshade' style={{ fontWeight: 'bold' }}>
             Metrall
           </Typography>
         </Grid>
-        <Divider orientation="vertical" flexItem sx={{ bgcolor: "secondary.contrastText" }} />
-        <Grid 
-            container 
-            size={{xs: 3, sm: 1}}
-            alignItems='center' 
-            padding={2}
-            >
-            {footerLinks.map((section, index) => (
-                <Grid size={{xs: 3, sm: 1}} key={section.section} sx={{
-                    display: 'flex',
-                    width: '100%',
-                    justifyContent: index === 0 ? 'flex-start' : 'flex-end'  // This ensures the Stack itself is positioned correctly
-                  }}>
-                <Stack
-                    direction="column"
-                    spacing={2}
-                    alignItems={index === 0 ? 'flex-start' : 'flex-end'}
-                >
-                    {section.links.map(link => (
-                    <Link 
-                        key={link.name} 
-                        href={link.url} 
-                        passHref 
-                        style={{ textDecoration: 'none' }}
-                    >
-                        <Typography variant="caption">{link.name}</Typography>
-                    </Link>
-                    ))}
-                </Stack>
-                </Grid>
-            ))}
-        </Grid>
-        <Divider orientation="vertical" flexItem sx={{ bgcolor: "secondary.contrastText" }} />
+      <Divider orientation="vertical" flexItem sx={{ bgcolor: "secondary.contrastText" }} />
+      <Grid 
+          size={{xs: 6, sm: 1}}
+          container
+          alignItems='center' 
+          justifyContent="space-around"
+          paddingY={3}
+        >
+          {footerLinks.map((section, index) => (
+              <Grid  
+                  size={{xs: 1}}
+                  key={section.section} 
+                  sx={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                    }}
+              >
+              <Stack
+                  direction="column"
+                  spacing={2}
+                  alignItems={index === 0 ? 'flex-start' : 'flex-end'}
+              >
+                  {section.links.map(link => (
+                  <Link 
+                      key={link.name} 
+                      href={link.url} 
+                      passHref 
+                      style={{ textAlign: 'left' }}
+                  >
+                      <Typography variant="caption" color={theme.palette.text.secondary}>{link.name}</Typography>
+                  </Link>
+                  ))}
+              </Stack>
+              </Grid>
+          ))}
       </Grid>
+      <Divider orientation="vertical" flexItem sx={{ bgcolor: "secondary.contrastText" }} />
+    </Grid>
     </StyledFooter>
   );
 };

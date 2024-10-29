@@ -9,6 +9,7 @@ import {
   ButtonGroup,
   Tooltip,
   useMediaQuery,
+  Link,
 } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
@@ -73,14 +74,16 @@ export const DrawerMenu: React.FC<DrawerMenuProps> = ({
         alignItems="center"
         sx={{ width: "100%", backgroundColor: `${theme.palette.primary.main}` }}
       >
-        <Typography 
+        <Link 
           variant="h3"
           paddingX={2}
           paddingY={1}
           className="jaro"
+          underline="none"
+          href='/'
         >
           Metrall
-        </Typography>
+        </Link>
         <Tooltip title="Hide menu" placement="right" arrow>
           <Button
             size='small'
@@ -197,9 +200,9 @@ export const DrawerMenu: React.FC<DrawerMenuProps> = ({
             padding: 1
           }}
         >
-          <Typography variant="h3" className="jaro" sx={{ paddingLeft: 1, color: theme.palette.primary.contrastText }}>
+          <Link href='/' underline='none' variant="h3" className="jaro" sx={{ paddingLeft: 1, color: theme.palette.primary.contrastText }}>
             Metrall
-          </Typography>
+          </Link>
           <Stack direction={'row'} spacing={1}>
             <Tooltip title="Toggle mode" placement="bottom" arrow>
               <IconButton

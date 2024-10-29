@@ -1,5 +1,5 @@
 "use client"
-import { Roboto_Slab } from 'next/font/google'
+import { Roboto_Slab, Roboto } from 'next/font/google'
 import { createTheme, ThemeOptions } from '@mui/material/styles';
 import React, { createContext, useState, useMemo, useContext, ReactNode } from 'react';
 import { ThemeProvider, useTheme } from '@mui/material/styles';
@@ -12,6 +12,13 @@ const robotoSlab = Roboto_Slab({
   weight: "variable",
   style: ['normal'],
   display: 'swap',
+});
+
+const roboto = Roboto({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-roboto',
+  weight: ["400", "500", "700"],
 });
 
 interface CustomThemeFields {
@@ -40,6 +47,7 @@ interface CustomThemeFields {
     };
     subtitle1: {
       fontSize: string;
+      fontFamily: string;
     };
     body1: {
       fontSize: string;
@@ -106,6 +114,8 @@ const baseTheme: ThemeOptions = {
     },
     subtitle1: {
       fontSize: '1.3rem',
+      fontFamily: roboto.style.fontFamily,
+      fontweight: 700,
     },
     body1: {
       fontSize: '1rem',

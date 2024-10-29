@@ -23,7 +23,7 @@ const ClickableChip = styled(Button)(({ theme }) => ({
   //width: '100%',
   border: `1px solid ${theme.palette.secondary.contrastText}`,
   cursor: 'pointer',
-  transition: 'background-color 0.3s', //smooth transition for background color change
+  transition: 'background-color 0.3s',
   '&:hover': {
     backgroundColor: `${theme.palette.background.default}`,
     boxShadow: '0px 2px 10px rgba(0,0,0,0.1)', //soft shadow for depth
