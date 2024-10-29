@@ -107,6 +107,7 @@ export default function EventCarousel() {
             display: 'flex',
             flexDirection: 'column',
             border:  `1px solid ${theme.palette.secondary.contrastText}`,
+            borderRadius: theme.spacing(2),
           }}
         >
          <CardContent  sx={{ p:2}}>
@@ -138,7 +139,7 @@ export default function EventCarousel() {
                <Chip
                  variant="outlined"
                  size="small"
-                 sx={{ borderColor: `${theme.palette.text.secondary}` }}
+                 sx={{ borderColor: theme.palette.text.secondary }}
                  label={
                    <Typography variant="caption" color={theme.palette.text.secondary}>
                      {card.date}
@@ -152,12 +153,12 @@ export default function EventCarousel() {
         ))}
       </div>
       <style jsx global>{`
-        /* Hide scrollbar for Chrome, Safari and Opera */
+        /*hide scrollbar for Chrome, Safari and Opera */
         .overflow-x-auto::-webkit-scrollbar {
           display: none;
         }
 
-        /* Hide scrollbar for IE, Edge and Firefox */
+        /*hide scrollbar for IE, Edge and Firefox */
         .overflow-x-auto {
           -ms-overflow-style: none;  /* IE and Edge */
           scrollbar-width: none;  /* Firefox */

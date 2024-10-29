@@ -30,8 +30,8 @@ const StyledCard = styled(Card)(({ theme }) => ({
   width: '100%',
   maxWidth: 600,
   margin: 'auto',
-  zIndex: '2',
-  marginTop: theme.spacing(5),
+  zIndex: 2,
+  //marginTop: theme.spacing(5),
   border: `1px solid ${theme.palette.secondary.contrastText}`,
   borderRadius: theme.spacing(3),
   overflow: 'visible',
@@ -60,7 +60,7 @@ const ImagePlaceholder = styled(Paper)<{ imageplacement?: string }>(({ theme, im
   borderRadius: theme.spacing(2),
   border: `1px solid ${theme.palette.secondary.contrastText}`,
   position: 'absolute',
-  zIndex: 10,
+  zIndex: 3,
 
   ...(imageplacement === 'left' && {
     height: 250,
@@ -93,7 +93,7 @@ const ImagePlaceholder = styled(Paper)<{ imageplacement?: string }>(({ theme, im
 const ReadMoreButton = styled(Button)(({ theme }) => ({
   background: `linear-gradient(45deg, ${theme.palette.primary.main} 30%, ${theme.palette.primary.light} 90%)`,
   color: `${theme.palette.text.primary}`,
-  borderRadius: 25,
+  borderRadius: theme.spacing(2),
   padding: '8px 8px',
   width: 'auto',
 }));
@@ -145,7 +145,7 @@ const GradientCard: React.FC<GradientCardProps> = ({ section, imagePlacement = '
                 {section.description}
               </Typography>
               {button && (
-                <ReadMoreButton variant="contained" disableElevation href={section.link}>
+                <ReadMoreButton variant="contained" disableElevation href={section.link || ""}>
                   read more
                 </ReadMoreButton>
               )}

@@ -116,7 +116,7 @@ export default function Home() {
               m: 1,
               gap: 1,
               color: `${theme.palette.primary.contrastText}`,
-              position: 'absolute',
+              position: 'fixed',
               top: 8,
               left: 8,
             }}
@@ -202,8 +202,8 @@ export default function Home() {
           </Container>
         </Box>
         <Divider sx={{ bgcolor: "secondary.contrastText" }} />
-        <Box sx={{ position: 'relative', width: '100%' }}>
-            <Grid container columns={16}>
+        <Box sx={{ position: 'relative', width: '100%', borderRadius: theme.spacing(4)}}>
+            <Grid container gap={10} columns={16} paddingY={10}>
               {Object.entries(METRALL_INFO)
                 .filter(([key, section]) => key !== "questions")
                 .map(([key, section]) => (
@@ -234,6 +234,19 @@ export default function Home() {
                 </Box>
               ))}
             </Box> */}
+            <Divider sx={{ bgcolor: "secondary.contrastText" }} />
+            <Box sx={{ width: "100%", height: '100%', bgcolor: `${theme.palette.background.paper}` }}>
+              <Container sx={{ py: 4 }}>
+                <Typography
+                  paddingY={5}
+                  variant="h3"
+                  textAlign={"center"}
+                  color={theme.palette.primary.main}
+                >
+                  *some text here*
+                </Typography>
+              </Container>
+            </Box>
           </Box>
       </Box>
     </>
