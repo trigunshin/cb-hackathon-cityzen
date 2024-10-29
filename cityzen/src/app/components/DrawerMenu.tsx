@@ -19,7 +19,8 @@ import FeedIcon from '@mui/icons-material/Feed';
 import NewspaperIcon from '@mui/icons-material/Newspaper';
 import LocationCityIcon from '@mui/icons-material/LocationCity';
 import ShareIcon from '@mui/icons-material/Share';
-import { Theme } from "@mui/material/styles";
+import { useCustomTheme } from "../styles/theme";
+
 
 const drawerWidth = 240;
 const menuItems = [
@@ -32,22 +33,20 @@ const menuItems = [
 interface DrawerMenuProps {
   open: boolean;
   selectedItem: string;
-  theme: Theme;
   handleDrawerToggle: () => void;
   handleDrawerItem: (item: string) => void;
-  toggleTheme: () => void;
 }
 
 export const DrawerMenu: React.FC<DrawerMenuProps> = ({
   open,
   selectedItem,
-  theme,
   handleDrawerToggle,
   handleDrawerItem,
-  toggleTheme,
 }) => {
-  const isLargeScreen = useMediaQuery(theme.breakpoints.up('md'));
 
+  const { theme, toggleTheme } = useCustomTheme();
+  const isLargeScreen = useMediaQuery(theme.breakpoints.up('md'));
+  
   const DesktopDrawer = () => (
     <Drawer
       variant="persistent"
@@ -150,16 +149,6 @@ export const DrawerMenu: React.FC<DrawerMenuProps> = ({
           alignItems="center"
           sx={{ width: "100%", backgroundColor: `${theme.palette.primary.main}` }}
         >
-          <Tooltip title="Toggle theme" placement="right" arrow>
-            <IconButton
-              aria-label="switch mode"
-              onClick={toggleTheme}
-              sx={{ m: 1, gap: 1, color: `${theme.palette.primary.contrastText}` }}
-              size="small"
-            >
-              <Brightness4Icon /> 
-            </IconButton>
-          </Tooltip>
           <Tooltip title="Share" placement="right" arrow>
             <IconButton
               aria-label="share"
@@ -169,6 +158,16 @@ export const DrawerMenu: React.FC<DrawerMenuProps> = ({
               <ShareIcon />
             </IconButton>
           </Tooltip>
+          <Tooltip title="Toggle mode" placement="right" arrow>
+              <IconButton
+                aria-label="Toggle mode"
+                onClick={toggleTheme}
+                sx={{ m: 1, gap: 1, color: `${theme.palette.primary.contrastText}` }}
+                size="small"
+              >
+                <Brightness4Icon /> 
+              </IconButton>
+            </Tooltip>
         </Stack>
       </Stack>
     </Drawer>

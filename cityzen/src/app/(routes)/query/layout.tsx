@@ -7,20 +7,16 @@ import { DrawerMenu, drawerWidth } from "@/app/components/DrawerMenu";
 import ContentPage from "./page";
 import { LoadingProps, QueryResponse } from "@/app/utils/types";
 import Loading from "./loading";
-import { useTheme } from "@mui/system";
+import { useTheme } from '@mui/system';
 
 const QueryLayout: React.FC = ({  }) => {
   const [open, setOpen] = useState(true);
-  const theme = useTheme();
   const [selectedItem, setSelectedItem] = useState("Main Content");
   const [content, setContent] = useState<QueryResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const searchParams = useSearchParams();
+  const theme = useTheme();
   const isLargeScreen = useMediaQuery(theme.breakpoints.up("md"));
-
-  const handleDrawerItem = (item: string) => {
-    setSelectedItem(item);
-  };
 
   useEffect(() => {
     const query = searchParams.get("question");
@@ -46,17 +42,11 @@ const QueryLayout: React.FC = ({  }) => {
       });
   }, [searchParams]);
 
+  const handleDrawerItem = (item: string) => {
+    setSelectedItem(item);
+  };
+
   return (
-    <html lang="en">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Jaro:opsz@6..72&display=swap" rel="stylesheet" />
-        <link rel="preconnect" href="https://fonts.googleapis.com"/>
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
-      </head>
-        <body>
         <Box sx={{ display: "flex", height: "100%", overflowY: "hidden",}}>
           <Tooltip title="Show menu" placement="right" arrow>
             <IconButton
@@ -77,10 +67,8 @@ const QueryLayout: React.FC = ({  }) => {
           <DrawerMenu
             open={open}
             selectedItem={selectedItem}
-            theme={theme}
             handleDrawerToggle={() => setOpen(!open)}
             handleDrawerItem={handleDrawerItem}
-            toggleTheme={() => {}}
           />
 
           <Box
@@ -102,8 +90,6 @@ const QueryLayout: React.FC = ({  }) => {
             </Suspense>
           </Box>
         </Box>
-    </body>
-    </html>
   );
 };
 

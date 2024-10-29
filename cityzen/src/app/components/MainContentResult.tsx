@@ -1,3 +1,4 @@
+"use client"
 import { Box, Paper, Skeleton, Stack, Typography } from "@mui/material";
 import { useTheme } from "@mui/system";
 import React from "react";
