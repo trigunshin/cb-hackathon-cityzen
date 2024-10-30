@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  -ms-overflow-style: none;
+} ::-webkit-scrollbar {
+  display: none;
+}
 
 @keyframes glow {
   from {
