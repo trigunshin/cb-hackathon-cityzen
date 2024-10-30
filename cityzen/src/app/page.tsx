@@ -18,6 +18,7 @@ import { useCustomTheme } from "./styles/theme";
 
 import "./globals.css";
 import GradientCard from "./components/gradientCard";
+import { styled } from '@mui/system';
 
 const METRALL_INFO = {
   left: {
@@ -87,46 +88,43 @@ export default function Home() {
   const [inputValue, setInputValue] = useState("");
   const { theme, toggleTheme } = useCustomTheme();
 
-
   const handleInputChange = (event: any) => {
     setInputValue(event.target.value);
   };
 
   return (
-    <>
       <Box
         sx={{
           width: "100%",
           display: "flex",
           flexDirection: "column",
-          color: "#868686",
         }}
       >
+      <IconButton
+          aria-label="switch mode"
+          onClick={toggleTheme}
+          sx={{
+            m: 1,
+            gap: 1,
+            color: `${theme.palette.primary.contrastText}`,
+            position: 'fixed',
+            top: 8,
+            left: 8,
+          }}
+          size="small"
+        >
+          <Brightness4Icon />
+        </IconButton>
         <Box
           flex={1}
-          bgcolor={theme.palette.background.paper}
           sx={{
             alignContent: "center",
+            background: `linear-gradient(180deg, ${theme.palette.background.default} 50%, ${theme.palette.primary.light + '80'} 100%)`, //CC = 80% opacity, 80 = 50% opacity
           }}
         >
-          <IconButton
-            aria-label="switch mode"
-            onClick={toggleTheme}
-            sx={{
-              m: 1,
-              gap: 1,
-              color: `${theme.palette.primary.contrastText}`,
-              position: 'fixed',
-              top: 8,
-              left: 8,
-            }}
-            size="small"
-          >
-            <Brightness4Icon />
-          </IconButton>
           <Container
             sx={{
-              height: "100%",
+              height: "100vh",
               py: { lg: 10, md: 4, sm: 4, xs: 4 },
               alignContent: "center",
             }}
@@ -145,42 +143,45 @@ export default function Home() {
               >
                 Metrall
               </Typography>
-              <TextField
-                label="Ask a question about your neighborhood"
-                value={inputValue}
-                variant="outlined"
-                multiline
-                onChange={handleInputChange}
-                fullWidth
-                sx={{
-                  width: "75%",
-                  "& .MuiOutlinedInput-root": {
-                    "& fieldset": {
-                      borderColor: `${theme.palette.secondary.contrastText}`,
+              <Stack spacing={2} sx={{ width: '75%' }}> {/* Ensures the TextField and FlexibleChipStack are aligned */}
+                <TextField
+                  label="Ask a question about your neighborhood"
+                  value={inputValue}
+                  variant="outlined"
+                  multiline
+                  onChange={handleInputChange}
+                  fullWidth
+                  sx={{
+                    width: '100%', // Take full width of the parent Box
+                    borderRadius: theme.spacing(2),
+                    background: theme.palette.background.paper,
+                    //background: `linear-gradient(180deg, ${theme.palette.background.default}, ${theme.palette.background.paper}) padding-box`,
+                    "& .MuiOutlinedInput-root": {
+                      "& fieldset": {
+                        borderColor: `${theme.palette.secondary.contrastText}`,
+                        borderRadius: theme.spacing(2),
+                      },
+                      "&:hover fieldset": {
+                        borderColor: `${theme.palette.secondary.contrastText}`,
+                      },
+                      "&.Mui-focused fieldset": {
+                        borderColor: `${theme.palette.secondary.contrastText}`,
+                      },
                     },
-                    "&:hover fieldset": {
-                      borderColor: `${theme.palette.secondary.contrastText}`,
+                    "& .MuiInputLabel-root": {
+                      color: `${theme.palette.primary.contrastText}`,
                     },
-                    "&.Mui-focused fieldset": {
-                      borderColor: `${theme.palette.secondary.contrastText}`,
+                    "& .MuiInputLabel-root:hover": {
+                      color: `${theme.palette.secondary.contrastText}`,
                     },
-                  },
-                  "& .MuiInputLabel-root": {
-                    color: `${theme.palette.secondary.contrastText}`,
-                  },
-                  "& .MuiInputLabel-root:hover": {
-                    color: `${theme.palette.secondary.contrastText}`,
-                  },
-                  "& .MuiInputLabel-root.Mui-focused": {
-                    color: `${theme.palette.secondary.contrastText}`,
-                  },
-                }}
-              />
-
-              <Box width="100%">
+                    "& .MuiInputLabel-root.Mui-focused": {
+                      color: `${theme.palette.secondary.contrastText}`,
+                    },
+                  }}
+                />
                 <FlexibleChipStack />
-              </Box>
-              <ModernButton query={inputValue}>Submit</ModernButton>
+              </Stack>
+              <ModernButton query={inputValue}>submit</ModernButton>
             </Stack>
           </Container>
         </Box>
@@ -249,6 +250,5 @@ export default function Home() {
             </Box>
           </Box>
       </Box>
-    </>
   );
 }

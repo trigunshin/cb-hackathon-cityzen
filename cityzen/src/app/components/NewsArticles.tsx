@@ -22,8 +22,8 @@ const NewsArticles: React.FC<NewsArticlesProps> = ({ responseData, loading = fal
           <Stack gap={2} direction={'column'} alignItems={'left'} alignContent={'space-between'}>
             <Skeleton variant="text" width="100%" height={60} />
             <Stack gap={1} direction={'row'} alignItems={'center'}>
-              <Skeleton variant="rectangular" width={100} height={32} />
-              <Skeleton variant="rectangular" width={100} height={32} />
+              <Skeleton variant="rectangular" width={100} height={24} />
+              <Skeleton variant="rectangular" width={100} height={24} />
             </Stack>
           </Stack>
         </Stack>

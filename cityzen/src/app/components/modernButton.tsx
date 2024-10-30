@@ -9,7 +9,7 @@ const GradientButton = styled(Button)(({ theme }) => ({
   //boxShadow: `0 3px 5px 2px ${theme.palette.primary.light}`,
   color: `${theme.palette.text.primary}`,
   height: 56,
-  padding: '0 30px',
+  padding: '0 70px',
   transition: 'all 0.3s ease-in-out',
   '&:hover': {
     //boxShadow: `0 6px 10px 2px ${theme.palette.primary.light}`,
