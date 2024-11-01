@@ -81,17 +81,18 @@ export default function Landing() {
         height='100%'
         width='100%'
         >
-        {/* Placeholder for Video/Image on the Left */}
+        {/* placeholder for component on the Left */}
         <Grid 
             size={{ xs: 12, md: 4 }}
             width="100%" 
             height="100%" 
-            bgcolor="grey.300" 
+            bgcolor={theme.palette.background.paper} 
             display="flex" 
             justifyContent="center" 
             alignItems="center"
         >
             <Box 
+                paddingX={1}
                 sx={{ 
                     width: '100%', 
                     height: '100%', 
@@ -112,12 +113,14 @@ export default function Landing() {
                             key={index} 
                             sx={{ 
                                 margin: 1, 
-                                padding: 1.5, 
+                                padding: 1, 
                                 border: `1px solid ${theme.palette.secondary.contrastText}`, 
                                 borderRadius: theme.spacing(3),
                                 display: 'flex', 
                                 justifyContent: 'center', 
-                                alignItems: 'center' 
+                                alignItems: 'center',
+                                bgcolor: `${theme.palette.background.paper}`,
+
                             }}
                         >
                             <Typography variant='caption' color="textSecondary" align="center">{question}</Typography>
@@ -142,9 +145,9 @@ export default function Landing() {
 
         </Grid>
 
-        {/* Text Content on the Right */}
-        <Grid size={{xs: 12, md: 8}} container direction="column" height='100vh' width="100%" height='100%'>
-            <Grid size={8} width={'100%'} px={5} py={5} px={7}>    
+        {/* text content on the right */}
+        <Grid size={{xs: 12, md: 8}} container direction='column' width='100%' height='100%'>
+            <Grid size={6} width={'100%'} px={7} py={4}>    
                 <Stack direction={'row'} gap={5} pb={3} alignContent={'center'}>
                     <Typography variant="h1" className="jaro" color="textPrimary">
                         Metrall
@@ -169,7 +172,7 @@ export default function Landing() {
             </Grid>
             <Divider sx={{ color: "secondary.contrastText" }} />
             {/* Form Section for Email Sign-Up */}
-            <Grid size={4} width={'100%'} py={5} px={7}>
+            <Grid size={6} width='100%' py={4} px={7}>
                 <Stack sx={{alignContent: 'center' }}>
                     <Typography variant="h6" color="textPrimary" gutterBottom>
                         Stay Informed
@@ -179,10 +182,9 @@ export default function Landing() {
                         Sign up to receive updates on Metrall’s launch, new features, and exclusive insights into how AI is transforming the way we interact with city data.
                     </Typography>
 
-                        
                     <Box display="flex" justifyContent="center">
                         <form>
-                            <FormGroup>
+                            <FormGroup sx={{ flexWrap: 'wrap', flexDirection:'row' }}>
                                 <FormControl fullWidth margin='dense'>
                                 <TextField
                                     type="email"
