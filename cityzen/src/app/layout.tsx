@@ -26,7 +26,7 @@ export default function RootLayout({
       <body>
         <ThemeWrapper>
           <main className="w-full h-[100%]">{children}</main>
-          <Footer />
+          {/* <Footer /> */}
         </ThemeWrapper>
       </body>
     </html>

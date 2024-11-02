@@ -1,7 +1,10 @@
 "use client"
 import ModernButton from "@/app/components/modernButton";
-import { Container, Typography, Box, TextField, Button, Stack, Divider, FormGroup, FormControl } from "@mui/material";
-import { Grid, useTheme, width } from "@mui/system";
+import { Typography, Box, TextField, Stack, Divider, FormGroup, FormControl, styled, IconButton } from "@mui/material";
+import { Grid, useMediaQuery } from "@mui/system";
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import { useCustomTheme } from "@/app/styles/theme";
+import { useEffect, useState } from "react";
 
 const METRALL_INFO = {
     left: {
@@ -68,25 +71,64 @@ const METRALL_INFO = {
 
 
 export default function Landing() {
-    const theme = useTheme();
+  const { theme, toggleTheme } = useCustomTheme();
+  const isMediumScreen = useMediaQuery(theme.breakpoints.down('md'));
+  const [medium, setMedium] = useState(true);
 
-    return (
-    <Box sx={{height: '100vh'}}>
+  useEffect(() => {
+    setMedium(!isMediumScreen);
+  }, [isMediumScreen]);
+
+  const getRandomAngle = () => `${Math.floor(Math.random() * 360)}deg`;
+
+  const GradientChip = styled(Box)(({ theme }) => `
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 12px;
+      border: 1px solid transparent;
+      border-radius: 12px;
+      background: linear-gradient(${theme.palette.background.paper}, ${theme.palette.background.paper}) padding-box, linear-gradient(
+              var(--angle),
+              ${theme.palette.background.default},
+              ${theme.palette.primary.main}
+          ) border-box;
+      animation: rotate 12s linear infinite;
+      --angle: ${getRandomAngle()}; /* Set a random initial angle */
+
+      @keyframes rotate {
+          to {
+              --angle: 360deg;
+          }
+      }
+
+      @property --angle {
+          syntax: "<angle>";
+          initial-value: 0deg;
+          inherits: false;
+      }
+  `);
+
+
+  return (
+    <Box
+        sx={{height: {xs: '100%', sm: '100%', md: '100vh'}}}
+    >
         <Grid 
         container 
         //spacing={2}
-        alignItems="center" 
-        direction="row" 
-        wrap="wrap"
+        alignItems='center'
+        direction='row' 
+        //wrap='wrap'
         height='100%'
-        width='100%'
+        //width='100%'
         >
         {/* placeholder for component on the Left */}
         <Grid 
             size={{ xs: 12, md: 4 }}
             width="100%" 
             height="100%" 
-            bgcolor={theme.palette.background.paper} 
+            bgcolor={theme.palette.background.default} 
             display="flex" 
             justifyContent="center" 
             alignItems="center"
@@ -98,7 +140,7 @@ export default function Landing() {
                     height: '100%', 
                     display: 'flex', 
                     flexDirection: 'column', 
-                    justifyContent: 'center', 
+                    justifyContent: 'flex-start', 
                     alignItems: 'center',
                     overflowY: 'auto',
                 }}
@@ -109,22 +151,20 @@ export default function Landing() {
                         acc[row] = [];
                     }
                     acc[row].push(
-                        <Box 
-                            key={index} 
-                            sx={{ 
-                                margin: 1, 
-                                padding: 1, 
-                                border: `1px solid ${theme.palette.secondary.contrastText}`, 
-                                borderRadius: theme.spacing(3),
-                                display: 'flex', 
-                                justifyContent: 'center', 
-                                alignItems: 'center',
-                                bgcolor: `${theme.palette.background.paper}`,
-
+                        <GradientChip
+                            key={index}
+                            sx={{
+                            margin: 1,
+                            padding: 1,
+                            //border: `1px solid ${theme.palette.secondary.contrastText}`,
+                            //borderRadius: theme.spacing(3),
+                            bgcolor: `${theme.palette.background.paper}`,
                             }}
                         >
-                            <Typography variant='caption' color="textSecondary" align="center">{question}</Typography>
-                        </Box>  
+                            <Typography variant='caption' color='textSecondary' align='right'>
+                            {question}
+                            </Typography>
+                        </GradientChip>
                     );
                     return acc;
                 }, []).map((chips, rowIndex) => (
@@ -132,7 +172,12 @@ export default function Landing() {
                         key={rowIndex} 
                         sx={{ 
                             display: 'flex', 
-                            justifyContent: 'center', 
+                            justifyContent: {
+                              xs: 'space-evenly',
+                              sm: 'space-evenly',
+                              md: 'space-evenly',
+                              lg: 'flex-end',
+                            },
                             width: '100%', 
                             flexWrap: 'wrap' 
                         }}
@@ -141,19 +186,37 @@ export default function Landing() {
                     </Box>
                 ))}
             </Box>
-            <Divider orientation="vertical" flexItem sx={{ bgcolor: "secondary.contrastText" }} />
-
+            {medium ? (
+              <Divider orientation="vertical" flexItem sx={{ bgcolor: "secondary.contrastText" }} />
+            ) : (
+              <Divider orientation="horizontal" flexItem sx={{ bgcolor: "secondary.contrastText" }} />
+            )}
         </Grid>
 
         {/* text content on the right */}
-        <Grid size={{xs: 12, md: 8}} container direction='column' width='100%' height='100%'>
+        <Grid size={{xs: 12, md: 8}} container direction='column' width='100%' height='100%' sx={{bgcolor: `${theme.palette.background.paper}`}}>
+        <IconButton
+            aria-label="switch mode"
+            onClick={toggleTheme}
+            sx={{
+              m: 1,
+              gap: 1,
+              color: `${theme.palette.primary.contrastText}`,
+              position: 'fixed',
+              top: 8,
+              right: 8,
+            }}
+            size="small"
+          >
+            <Brightness4Icon />
+          </IconButton>
             <Grid size={6} width={'100%'} px={7} py={4}>    
                 <Stack direction={'row'} gap={5} pb={3} alignContent={'center'}>
                     <Typography variant="h1" className="jaro" color="textPrimary">
                         Metrall
                     </Typography>
-                    <Divider orientation="vertical" flexItem variant='middle' sx={{ bgcolor: "secondary.contrastText" }} />
-                    <Typography variant="body1" color="textSecondary" alignContent='center'>tbd</Typography>
+                    {/* <Divider orientation="vertical" flexItem variant='middle' sx={{ bgcolor: "secondary.contrastText" }} />
+                    <Typography variant="body1" color="textSecondary" alignContent='center'>tbd</Typography> */}
                 </Stack>
                 
                 <Typography variant="h3" color="textSecondary" paragraph>
@@ -170,7 +233,7 @@ export default function Landing() {
                 Metrall brings this vision to life by analyzing complex city datasets and turning them into meaningful insights that you can access anytime.
                 </Typography>
             </Grid>
-            <Divider sx={{ color: "secondary.contrastText" }} />
+            <Divider sx={{ bgcolor: "secondary.contrastText" }} />
             {/* Form Section for Email Sign-Up */}
             <Grid size={6} width='100%' py={4} px={7}>
                 <Stack sx={{alignContent: 'center' }}>
@@ -191,6 +254,28 @@ export default function Landing() {
                                     label="Enter your email"
                                     placeholder="example@example.com"
                                     variant="outlined"
+                                    sx={{
+                                        "& .MuiOutlinedInput-root": {
+                                          "& fieldset": {
+                                            borderColor: `${theme.palette.secondary.contrastText}`,
+                                          },
+                                          "&:hover fieldset": {
+                                            borderColor: `${theme.palette.secondary.contrastText}`,
+                                          },
+                                          "&.Mui-focused fieldset": {
+                                            borderColor: `${theme.palette.secondary.contrastText}`,
+                                          },
+                                        },
+                                        "& .MuiInputLabel-root": {
+                                          color: `${theme.palette.secondary.contrastText}`,
+                                        },
+                                        "& .MuiInputLabel-root:hover": {
+                                          color: `${theme.palette.secondary.contrastText}`,
+                                        },
+                                        "& .MuiInputLabel-root.Mui-focused": {
+                                          color: `${theme.palette.secondary.contrastText}`,
+                                        },
+                                      }}
                                 />
                                 </FormControl>
                                 <FormControl fullWidth margin="dense">
@@ -204,6 +289,8 @@ export default function Landing() {
                 </Stack>
             </Grid>
         </Grid>
+
+        
         </Grid>
     </Box>
   );
