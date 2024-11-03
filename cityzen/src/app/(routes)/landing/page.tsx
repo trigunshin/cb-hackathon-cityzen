@@ -1,6 +1,6 @@
 "use client"
 import ModernButton from "@/app/components/modernButton";
-import { Typography, Box, TextField, Stack, Divider, FormGroup, FormControl, styled, IconButton } from "@mui/material";
+import { Typography, Box, TextField, Stack, Divider, FormGroup, FormControl, styled, IconButton, Link } from "@mui/material";
 import { Grid, useMediaQuery } from "@mui/system";
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import { useCustomTheme } from "@/app/styles/theme";
@@ -91,7 +91,8 @@ export default function Landing() {
       background: linear-gradient(${theme.palette.background.paper}, ${theme.palette.background.paper}) padding-box, linear-gradient(
               var(--angle),
               ${theme.palette.background.default},
-              ${theme.palette.primary.main}
+              ${theme.palette.primary.main},
+              ${theme.palette.secondary.light}
           ) border-box;
       animation: rotate 12s linear infinite;
       --angle: ${getRandomAngle()}; /* Set a random initial angle */
@@ -143,6 +144,7 @@ export default function Landing() {
                     justifyContent: 'flex-start', 
                     alignItems: 'center',
                     overflowY: 'auto',
+                    paddingBottom: 4,
                 }}
             >
                 {METRALL_INFO.questions.reduce((acc, question, index) => {
@@ -210,7 +212,7 @@ export default function Landing() {
           >
             <Brightness4Icon />
           </IconButton>
-            <Grid size={6} width={'100%'} px={7} py={4}>    
+            <Grid size={6} width={'100%'} px={7} py={3}>    
                 <Stack direction={'row'} gap={5} pb={3} alignContent={'center'}>
                     <Typography variant="h1" className="jaro" color="textPrimary">
                         Metrall
@@ -235,7 +237,7 @@ export default function Landing() {
             </Grid>
             <Divider sx={{ bgcolor: "secondary.contrastText" }} />
             {/* Form Section for Email Sign-Up */}
-            <Grid size={6} width='100%' py={4} px={7}>
+            <Grid size={6} width='100%' py={3} px={7}>
                 <Stack sx={{alignContent: 'center' }}>
                     <Typography variant="h6" color="textPrimary" gutterBottom>
                         Stay Informed
@@ -245,10 +247,11 @@ export default function Landing() {
                         Sign up to receive updates on Metrall’s launch, new features, and exclusive insights into how AI is transforming the way we interact with city data.
                     </Typography>
 
-                    <Box display="flex" justifyContent="center">
-                        <form>
-                            <FormGroup sx={{ flexWrap: 'wrap', flexDirection:'row' }}>
-                                <FormControl fullWidth margin='dense'>
+                    <Stack gap={2}>
+                    <Box display="flex" >
+                      <form>
+                        <FormGroup row={true} sx={{ display: 'flex', flexDirection: 'row', }}>
+                            <FormControl margin='dense' sx={{ flex: 1, marginRight: 2 }}>
                                 <TextField
                                     type="email"
                                     label="Enter your email"
@@ -256,36 +259,43 @@ export default function Landing() {
                                     variant="outlined"
                                     sx={{
                                         "& .MuiOutlinedInput-root": {
-                                          "& fieldset": {
-                                            borderColor: `${theme.palette.secondary.contrastText}`,
-                                          },
-                                          "&:hover fieldset": {
-                                            borderColor: `${theme.palette.secondary.contrastText}`,
-                                          },
-                                          "&.Mui-focused fieldset": {
-                                            borderColor: `${theme.palette.secondary.contrastText}`,
-                                          },
+                                            "& fieldset": {
+                                                borderColor: `${theme.palette.secondary.contrastText}`,
+                                                borderRadius: theme.spacing(2),
+                                            },
+                                            "&:hover fieldset": {
+                                                borderColor: `${theme.palette.secondary.contrastText}`,
+                                                borderRadius: theme.spacing(2),
+                                            },
+                                            "&.Mui-focused fieldset": {
+                                                borderColor: `${theme.palette.secondary.contrastText}`,
+                                                borderRadius: theme.spacing(2),
+                                            },
                                         },
                                         "& .MuiInputLabel-root": {
-                                          color: `${theme.palette.secondary.contrastText}`,
+                                            color: `${theme.palette.secondary.contrastText}`,
                                         },
                                         "& .MuiInputLabel-root:hover": {
-                                          color: `${theme.palette.secondary.contrastText}`,
+                                            color: `${theme.palette.secondary.contrastText}`,
                                         },
                                         "& .MuiInputLabel-root.Mui-focused": {
-                                          color: `${theme.palette.secondary.contrastText}`,
+                                            color: `${theme.palette.secondary.contrastText}`,
                                         },
-                                      }}
+                                    }}
                                 />
-                                </FormControl>
-                                <FormControl fullWidth margin="dense">
-                                <ModernButton query="" type="submit" fullWidth>
+                            </FormControl>
+                            <FormControl margin='dense' sx={{ flexShrink: 0 }}>
+                                <ModernButton query="" type="submit">
                                     Submit
                                 </ModernButton>
-                                </FormControl>
-                            </FormGroup>
-                        </form>
+                            </FormControl>
+                        </FormGroup>
+                    </form>
                     </Box>
+                    <Link href="/privacy" variant='body1' color="textSecondary" >
+                        Privacy Policy
+                    </Link>
+                    </Stack>
                 </Stack>
             </Grid>
         </Grid>

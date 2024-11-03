@@ -5,9 +5,10 @@ import Link from 'next/link';
 const GradientButton = styled(Button)(({ theme }) => ({
   background: `linear-gradient(45deg, ${theme.palette.primary.main} 30%, ${theme.palette.primary.light} 90%)`,
   borderRadius: theme.spacing(2),
-  border: `1px solid ${theme.palette.background.default}`,
+  border: `1px solid ${theme.palette.secondary.contrastText}`,
   //boxShadow: `0 3px 5px 2px ${theme.palette.primary.light}`,
   color: `${theme.palette.text.primary}`,
+  fontWeight: 700,
   height: 56,
   padding: '0 30px',
   transition: 'all 0.3s ease-in-out',
