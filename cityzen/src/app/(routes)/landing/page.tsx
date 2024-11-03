@@ -1,6 +1,6 @@
 "use client"
 import ModernButton from "@/app/components/modernButton";
-import { Typography, Box, TextField, Stack, Divider, FormGroup, FormControl, styled, IconButton, Link } from "@mui/material";
+import { Typography, Box, TextField, Stack, Divider, FormGroup, FormControl, styled, IconButton, Link, Container } from "@mui/material";
 import { Grid, useMediaQuery } from "@mui/system";
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import { useCustomTheme } from "@/app/styles/theme";
@@ -112,195 +112,197 @@ export default function Landing() {
 
 
   return (
-    <Box
-        sx={{height: {xs: '100%', sm: '100%', md: '100vh'}}}
-    >
+    <Box sx={{ height: { xs: '100%', sm: '100%', md: '100vh' }}}>
         <Grid 
-        container 
-        //spacing={2}
-        alignItems='center'
-        direction='row' 
-        //wrap='wrap'
-        height='100%'
-        //width='100%'
+            container 
+            //spacing={2}
+            alignItems='center'
+            direction='row' 
+            //wrap='wrap'
+            height='100%'
+            //width='100%'
         >
-        {/* placeholder for component on the Left */}
-        <Grid 
-            size={{ xs: 12, md: 4 }}
-            width="100%" 
-            height="100%" 
-            bgcolor={theme.palette.background.default} 
-            display="flex" 
-            justifyContent="center" 
-            alignItems="center"
-        >
-            <Box 
-                paddingX={1}
-                sx={{ 
-                    width: '100%', 
-                    height: '100%', 
-                    display: 'flex', 
-                    flexDirection: 'column', 
-                    justifyContent: 'flex-start', 
-                    alignItems: 'center',
-                    overflowY: 'auto',
-                    paddingBottom: 4,
-                }}
+            {/* left side */}
+            <Grid 
+                size={{ xs: 12, md: 4 }}
+                width="100%" 
+                height="100%" 
+                bgcolor={theme.palette.background.default} 
+                display="flex" 
+                justifyContent="center" 
+                alignItems="center"
             >
-                {METRALL_INFO.questions.reduce((acc, question, index) => {
-                    const row = Math.floor(index / 2);
-                    if (!acc[row]) {
-                        acc[row] = [];
-                    }
-                    acc[row].push(
-                        <GradientChip
-                            key={index}
-                            sx={{
-                            margin: 1,
-                            padding: 1,
-                            //border: `1px solid ${theme.palette.secondary.contrastText}`,
-                            //borderRadius: theme.spacing(3),
-                            bgcolor: `${theme.palette.background.paper}`,
+                <Box 
+                    paddingX={1}
+                    sx={{ 
+                        width: '100%', 
+                        height: '100%', 
+                        display: 'flex', 
+                        flexDirection: 'column', 
+                        justifyContent: 'flex-start', 
+                        alignItems: 'center',
+                        overflowY: 'auto',
+                        paddingBottom: 4,
+                    }}
+                >
+                    {METRALL_INFO.questions.reduce((acc, question, index) => {
+                        const row = Math.floor(index / 2);
+                        if (!acc[row]) {
+                            acc[row] = [];
+                        }
+                        acc[row].push(
+                            <GradientChip
+                                key={index}
+                                sx={{
+                                margin: 1,
+                                padding: 1,
+                                //border: `1px solid ${theme.palette.secondary.contrastText}`,
+                                //borderRadius: theme.spacing(3),
+                                bgcolor: `${theme.palette.background.paper}`,
+                                }}
+                            >
+                                <Typography variant='caption' color='textSecondary' align='right'>
+                                {question}
+                                </Typography>
+                            </GradientChip>
+                        );
+                        return acc;
+                    }, []).map((chips, rowIndex) => (
+                        <Box 
+                            key={rowIndex} 
+                            sx={{ 
+                                display: 'flex', 
+                                justifyContent: {
+                                xs: 'space-evenly',
+                                sm: 'space-evenly',
+                                md: 'space-evenly',
+                                lg: 'flex-end',
+                                },
+                                width: '100%', 
+                                flexWrap: 'wrap' 
                             }}
                         >
-                            <Typography variant='caption' color='textSecondary' align='right'>
-                            {question}
-                            </Typography>
-                        </GradientChip>
-                    );
-                    return acc;
-                }, []).map((chips, rowIndex) => (
-                    <Box 
-                        key={rowIndex} 
-                        sx={{ 
-                            display: 'flex', 
-                            justifyContent: {
-                              xs: 'space-evenly',
-                              sm: 'space-evenly',
-                              md: 'space-evenly',
-                              lg: 'flex-end',
-                            },
-                            width: '100%', 
-                            flexWrap: 'wrap' 
-                        }}
-                    >
-                        {chips}
-                    </Box>
-                ))}
-            </Box>
-            {medium ? (
-              <Divider orientation="vertical" flexItem sx={{ bgcolor: "secondary.contrastText" }} />
-            ) : (
-              <Divider orientation="horizontal" flexItem sx={{ bgcolor: "secondary.contrastText" }} />
-            )}
-        </Grid>
-
-        {/* text content on the right */}
-        <Grid size={{xs: 12, md: 8}} container direction='column' width='100%' height='100%' sx={{bgcolor: `${theme.palette.background.paper}`}}>
-        <IconButton
-            aria-label="switch mode"
-            onClick={toggleTheme}
-            sx={{
-              m: 1,
-              gap: 1,
-              color: `${theme.palette.primary.contrastText}`,
-              position: 'fixed',
-              top: 8,
-              right: 8,
-            }}
-            size="small"
-          >
-            <Brightness4Icon />
-          </IconButton>
-            <Grid size={6} width={'100%'} px={7} py={3}>    
-                <Stack direction={'row'} gap={5} pb={3} alignContent={'center'}>
-                    <Typography variant="h1" className="jaro" color="textPrimary">
-                        Metrall
-                    </Typography>
-                    {/* <Divider orientation="vertical" flexItem variant='middle' sx={{ bgcolor: "secondary.contrastText" }} />
-                    <Typography variant="body1" color="textSecondary" alignContent='center'>tbd</Typography> */}
-                </Stack>
-                
-                <Typography variant="h3" color="textSecondary" paragraph>
-                Making City Data Accessible with AI
-                </Typography>
-
-                <Typography variant="body1" color="textSecondary" paragraph>
-                Metrall is a product designed to empower citizens, developers, and businesses by providing streamlined access to city data.
-                With the power of artificial intelligence, we help you discover insights, visualize trends, and make data-driven decisions for a smarter city experience.
-                </Typography>
-                
-                <Typography variant="body1" color="textSecondary" paragraph>
-                Imagine a world where all the information you need about your city is easily accessible and presented in a way that's simple to understand.
-                Metrall brings this vision to life by analyzing complex city datasets and turning them into meaningful insights that you can access anytime.
-                </Typography>
+                            {chips}
+                        </Box>
+                    ))}
+                </Box>
+                {medium ? (
+                <Divider orientation="vertical" flexItem sx={{ bgcolor: "secondary.contrastText" }} />
+                ) : (
+                <Divider orientation="horizontal" flexItem sx={{ bgcolor: "secondary.contrastText" }} />
+                )}
             </Grid>
-            <Divider sx={{ bgcolor: "secondary.contrastText" }} />
-            {/* Form Section for Email Sign-Up */}
-            <Grid size={6} width='100%' py={3} px={7}>
-                <Stack sx={{alignContent: 'center' }}>
-                    <Typography variant="h6" color="textPrimary" gutterBottom>
-                        Stay Informed
+
+            {/* right side */}
+            <Grid size={{xs: 12, md: 8}} container direction='column' width='100%' height='100%' sx={{bgcolor: `${theme.palette.background.paper}`,  position: 'relative'}}>
+                <IconButton
+                aria-label="switch mode"
+                onClick={toggleTheme}
+                sx={{
+                    m: 1,
+                    gap: 1,
+                    color: `${theme.palette.primary.contrastText}`,
+                    position: 'fixed',
+                    top: 8,
+                    right: 8,
+                }}
+                size="small"
+                >
+                <Brightness4Icon />
+                </IconButton>
+                <Grid size={6} width={'100%'} px={7} py={3}>    
+                    <Stack direction={'row'} gap={5} pb={3} alignContent={'center'}>
+                        <Typography variant="h1" className="jaro" color="textPrimary">
+                            Metrall
+                        </Typography>
+                        {/* <Divider orientation="vertical" flexItem variant='middle' sx={{ bgcolor: "secondary.contrastText" }} />
+                        <Typography variant="body1" color="textSecondary" alignContent='center'>tbd</Typography> */}
+                    </Stack>
+                    
+                    <Typography variant="h3" color="textSecondary" paragraph>
+                    Making City Data Accessible with AI
+                    </Typography>
+
+                    <Typography variant="body1" color="textSecondary" paragraph>
+                    Metrall is a product designed to empower citizens, developers, and businesses by providing streamlined access to city data.
+                    With the power of artificial intelligence, we help you discover insights, visualize trends, and make data-driven decisions for a smarter city experience.
                     </Typography>
                     
                     <Typography variant="body1" color="textSecondary" paragraph>
-                        Sign up to receive updates on Metrall’s launch, new features, and exclusive insights into how AI is transforming the way we interact with city data.
+                    Imagine a world where all the information you need about your city is easily accessible and presented in a way that's simple to understand.
+                    Metrall brings this vision to life by analyzing complex city datasets and turning them into meaningful insights that you can access anytime.
                     </Typography>
+                </Grid>
+                <Divider sx={{ bgcolor: "secondary.contrastText" }} />
+                {/* Form Section for Email Sign-Up */}
+                <Grid size={6} width='100%' py={5} px={7}>
+                    <Stack sx={{alignContent: 'center' }}>
+                        <Typography variant="h6" color="textPrimary" gutterBottom>
+                            Stay Informed
+                        </Typography>
+                        
+                        <Typography variant="body1" color="textSecondary" paragraph>
+                            Sign up to receive updates on Metrall’s launch, new features, and exclusive insights into how AI is transforming the way we interact with city data.
+                        </Typography>
 
-                    <Stack gap={2}>
-                    <Box display="flex" >
-                      <form>
-                        <FormGroup row={true} sx={{ display: 'flex', flexDirection: 'row', }}>
-                            <FormControl margin='dense' sx={{ flex: 1, marginRight: 2 }}>
-                                <TextField
-                                    type="email"
-                                    label="Enter your email"
-                                    placeholder="example@example.com"
-                                    variant="outlined"
-                                    sx={{
-                                        "& .MuiOutlinedInput-root": {
-                                            "& fieldset": {
-                                                borderColor: `${theme.palette.secondary.contrastText}`,
-                                                borderRadius: theme.spacing(2),
+                        <Box display="flex" >
+                        <form>
+                            <FormGroup row={true} sx={{ display: 'flex', flexDirection: 'row', }}>
+                                <FormControl margin='dense' sx={{ flex: 1, marginRight: 2 }}>
+                                    <TextField
+                                        type="email"
+                                        label="Enter your email"
+                                        placeholder="example@example.com"
+                                        variant="outlined"
+                                        sx={{
+                                            "& .MuiOutlinedInput-root": {
+                                                "& fieldset": {
+                                                    borderColor: `${theme.palette.secondary.contrastText}`,
+                                                    borderRadius: theme.spacing(2),
+                                                },
+                                                "&:hover fieldset": {
+                                                    borderColor: `${theme.palette.secondary.contrastText}`,
+                                                    borderRadius: theme.spacing(2),
+                                                },
+                                                "&.Mui-focused fieldset": {
+                                                    borderColor: `${theme.palette.secondary.contrastText}`,
+                                                    borderRadius: theme.spacing(2),
+                                                },
                                             },
-                                            "&:hover fieldset": {
-                                                borderColor: `${theme.palette.secondary.contrastText}`,
-                                                borderRadius: theme.spacing(2),
+                                            "& .MuiInputLabel-root": {
+                                                color: `${theme.palette.secondary.contrastText}`,
                                             },
-                                            "&.Mui-focused fieldset": {
-                                                borderColor: `${theme.palette.secondary.contrastText}`,
-                                                borderRadius: theme.spacing(2),
+                                            "& .MuiInputLabel-root:hover": {
+                                                color: `${theme.palette.secondary.contrastText}`,
                                             },
-                                        },
-                                        "& .MuiInputLabel-root": {
-                                            color: `${theme.palette.secondary.contrastText}`,
-                                        },
-                                        "& .MuiInputLabel-root:hover": {
-                                            color: `${theme.palette.secondary.contrastText}`,
-                                        },
-                                        "& .MuiInputLabel-root.Mui-focused": {
-                                            color: `${theme.palette.secondary.contrastText}`,
-                                        },
-                                    }}
-                                />
-                            </FormControl>
-                            <FormControl margin='dense' sx={{ flexShrink: 0 }}>
-                                <ModernButton query="" type="submit">
-                                    Submit
-                                </ModernButton>
-                            </FormControl>
-                        </FormGroup>
-                    </form>
-                    </Box>
-                    <Link href="/privacy" variant='body1' color="textSecondary" >
-                        Privacy Policy
-                    </Link>
+                                            "& .MuiInputLabel-root.Mui-focused": {
+                                                color: `${theme.palette.secondary.contrastText}`,
+                                            },
+                                        }}
+                                    />
+                                </FormControl>
+                                <FormControl margin='dense' sx={{ flexShrink: 0 }}>
+                                    <ModernButton query="" type="submit">
+                                        Submit
+                                    </ModernButton>
+                                </FormControl>
+                            </FormGroup>
+                        </form>
+                        </Box>
                     </Stack>
-                </Stack>
+                    
+                </Grid>
+                <Container sx={{ position: 'absolute', bottom: 0, right: 0, py: 1, bgcolor: theme.palette.secondary.contrastText}}>
+                    <Stack gap={2} justifyContent='center' direction='row' flexWrap='wrap'>
+                        <Link href="/privacy" variant='body1' color={theme.palette.background.paper}>
+                            Privacy Policy
+                        </Link>
+                        <Link href="/privacy" variant='body1' color={theme.palette.background.paper}>
+                            Terms of Service
+                        </Link>
+                    </Stack>
+                </Container>
             </Grid>
-        </Grid>
-
-        
         </Grid>
     </Box>
   );
