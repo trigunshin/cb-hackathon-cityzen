@@ -179,23 +179,23 @@ const lightPalette = {
 const darkPalette = {
   primary: {
     main: '#486383',
-    light: '#7B97B8',
+    light: '#7eb3c4',
     dark: '#42648c',
     contrastText: '#c7cbcd',
   },
   secondary: {
     main: '#5a8ab7',
-    light: '#6B8AA6',
-    dark: '#334D6E',
-    contrastText: '#d1d1d1',
+    light: '#4f7da6',
+    dark: '#283e5b',
+    contrastText: '#b9c8dd',
   },
   background: {
-    default: '#1C2633',
-    paper: '#2A3847',
+    default: '#1a2c36',
+    paper: '#395867',
   },
   text: {
-    primary: '#FFFFFF',
-    secondary: '#B0BEC5',
+    primary: '#f3f3f3',
+    secondary: '#bfcbd2',
   },
 };
 

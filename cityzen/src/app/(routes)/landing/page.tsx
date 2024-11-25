@@ -1,12 +1,14 @@
 "use client"
 import ModernButton from "@/app/components/modernButton";
-import { Typography, Box, TextField, Stack, Divider, FormGroup, FormControl, styled, IconButton, Link, Container, Button } from "@mui/material";
+import { Typography, Box, TextField, Stack, Divider, FormGroup, FormControl, styled, IconButton, Container, Button } from "@mui/material";
 import { Grid, useMediaQuery } from "@mui/system";
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import { useCustomTheme } from "@/app/styles/theme";
 import { useEffect, useState } from "react";
 import PublicIcon from '@mui/icons-material/Public';
 import AnimatedBox from "@/app/components/AnimatedBox";
+import Link from 'next/link';
+
 
 const METRALL_INFO = {
     left: {
@@ -83,6 +85,23 @@ const sections = [
     },
 ];  
 
+const footerLinks = [
+    {
+      section: 'Learn More',
+      links: [
+        { name: 'Terms of Service', url: '/terms' },
+        { name: 'Privacy Policy', url: '/privacy' },
+
+      ],
+    },
+    {
+      section: 'Other Links',
+      links: [
+        { name: 'About Us', url: '/about' },
+        { name: 'Contact', url: '/contact' },
+      ],
+    },
+  ];
 
 export default function Landing() {
   const { theme, toggleTheme } = useCustomTheme();
@@ -306,7 +325,6 @@ export default function Landing() {
             </Grid>
         </Box>
         <Divider orientation="horizontal" flexItem sx={{ bgcolor: "secondary.contrastText" }} />
-
         <Box sx={{height: 'auto', bgcolor: theme.palette.primary.light}}>
             <Box sx={{height: { xs: '100%', sm: '100%', md: '100vh' }, paddingY: {xs: 6, md: 6}, background: `linear-gradient(${theme.palette.background.default}, ${theme.palette.background.paper}) padding-box`, borderBottomRightRadius: {sm: theme.spacing(4), md: theme.spacing(10)}, borderBottomLeftRadius: {sm: theme.spacing(4), md: theme.spacing(10)}, borderBottom: `1px solid ${theme.palette.secondary.contrastText}`}}>
                 <Container sx={{ height: '100%', alignContent: 'center' }}>
@@ -331,13 +349,13 @@ export default function Landing() {
                                         border: `1px solid ${theme.palette.secondary.contrastText}`,
                                     }}
                                 >
-                                <Typography>GIF / Demo</Typography>
+                                <Typography variant="body1" color="textSecondary">GIF / Demo</Typography>
                                 </AnimatedBox>
                             </Grid>
                             )}
                             <Grid size={{xs: 12, md: 6}} alignContent={'center'}>
-                            <Typography variant="h6">Text</Typography>
-                            <Typography variant="body1">{section.text}</Typography>
+                            <Typography variant="h3" color="textPrimary" gutterBottom>Text</Typography>
+                            <Typography variant="body1" color="textSecondary">{section.text}</Typography>
                             </Grid>
                             {section.gifPosition === 'right' && (
                             <Grid size={{xs: 12, md: 6}}>
@@ -357,7 +375,7 @@ export default function Landing() {
                                         border: `1px solid ${theme.palette.secondary.contrastText}`,
                                     }}
                                     >
-                                    <Typography>GIF / Demo</Typography>
+                                    <Typography variant="body1" color="textSecondary">GIF / Demo</Typography>
                                 </AnimatedBox>
                             </Grid>
                             )}
@@ -485,7 +503,7 @@ export default function Landing() {
                 </Container>
             </Box>
             
-            <Box paddingY={{xs: 4, sm: 4, md: 4}} sx={{height: { xs: '100%', sm: '100%', md:'50vh'}, bgcolor: theme.palette.background.paper, borderTop: `1px solid ${theme.palette.secondary.contrastText}`}}>
+            <Box paddingY={{xs: 4, sm: 4, md: 4}} sx={{height: { xs: '100%', sm: '100%', md:'50vh'}, bgcolor: theme.palette.background.paper, borderBottomRightRadius: theme.spacing(10), borderBottomLeftRadius: theme.spacing(10), borderTop: `1px solid ${theme.palette.secondary.contrastText}`, borderBottom: `1px solid ${theme.palette.secondary.contrastText}`}}>
                 <Container sx={{ height: '100%', alignContent: 'center' }} >
                     <Grid container spacing={4} paddingX={{xs: 3, sm: 3, md: 3}}>
                         <Grid size={{xs: 12, md: 6}}>
@@ -531,17 +549,59 @@ export default function Landing() {
             </Box>
         </Box>
 
-        {/* Footer */}
-        <Box sx={{ width: '100%', position: 'absolute', bottom: 0, right: 0, py: 1, bgcolor: theme.palette.primary.light, borderTop: `1px solid ${theme.palette.secondary.contrastText}`,}}>
-            <Stack gap={2} justifyContent="center" direction="row" flexWrap="wrap">
-                <Link href="/privacy" variant="body1" color={theme.palette.text.primary}>
-                    Privacy Policy
-                </Link>
-                <Link href="/terms" variant="body1" color={theme.palette.text.primary}>
-                    Terms of Service
-                </Link>
-            </Stack>
+        {/* Content + Footer */}
+        <Box sx={{height: { xs: '100%', sm: '100%', md:'50vh'}, bgcolor: `${theme.palette.primary.light}`}}>
+            <Typography textAlign={'center'} paddingTop='50px' variant='h2' color={theme.palette.background.paper}>
+                Text here?
+            </Typography>
+            <Box sx={{ height: '100%', alignContent: 'end', bottom: 0, left: 0, width: '100%', }}>
+                <Grid container columns={3} sx={{ bgcolor: "background.default", borderTop: `1px solid ${theme.palette.secondary.contrastText}`}}>
+                    <Grid size={{xs: 3, sm: 1}} alignContent={'center'}>
+                        <Typography paddingY={2} variant="h2" className='jaro' style={{ fontWeight: 'bold', textAlign: 'center' }}>
+                            Metrall
+                        </Typography>
+                    </Grid>
+                    <Divider orientation="vertical" flexItem sx={{ bgcolor: "secondary.contrastText" }} />
+                    <Grid 
+                        size={{xs: 6, sm: 1}}
+                        container
+                        alignItems='center' 
+                        justifyContent="space-around"
+                        paddingY={3}
+                        >
+                        {footerLinks.map((section, index) => (
+                            <Grid  
+                                size={{xs: 1}}
+                                key={section.section} 
+                                sx={{
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    }}
+                            >
+                            <Stack
+                                direction="column"
+                                spacing={2}
+                                alignItems={index === 0 ? 'flex-start' : 'flex-end'}
+                            >
+                                {section.links.map(link => (
+                                <Link 
+                                    key={link.name} 
+                                    href={link.url} 
+                                    passHref 
+                                    style={{ textAlign: 'left' }}
+                                >
+                                    <Typography variant="caption" color={theme.palette.primary.contrastText}>{link.name}</Typography>
+                                </Link>
+                                ))}
+                            </Stack>
+                            </Grid>
+                        ))}
+                    </Grid>
+                <Divider orientation="vertical" flexItem sx={{ bgcolor: "secondary.contrastText" }} />
+                </Grid>
+            </Box>
         </Box>
+
     </Box>
   );
 }
