@@ -77,11 +77,13 @@ const METRALL_INFO = {
 const sections = [
     {
         gifPosition: 'left',
-        text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+        title: 'Get Total Local!',
+        text: 'See all the local news, aggregated and unbiased, from sources such as Local News, NextDoor, Meetup, City Council Meetings, Public Safety Data, end beyond in a quick news article format.',
     },
     {
         gifPosition: 'right',
-        text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+        title: 'Search & Find All Things Local',
+        text: 'Want to know if any events are happening nearby? Any meetups? Protests? Safety issues? Hot deals or a new tasty place? Metrall gathers all the local news and apps together so you can search and know what`s going on at all times whenever you want. It`s all there, just search for it!',
     },
 ];  
 
@@ -156,10 +158,10 @@ export default function Landing() {
                     size={{ xs: 12, md: 4 }}
                     width="100%" 
                     height="100%" 
-                    bgcolor={theme.palette.background.default} 
                     display="flex" 
                     justifyContent="center" 
                     alignItems="center"
+                    sx={{background: `linear-gradient(180deg, ${theme.palette.background.default} 60%, ${theme.palette.primary.light}) 40%`}}
                 >
                     <Box 
                         paddingX={1}
@@ -248,8 +250,8 @@ export default function Landing() {
                             <Typography variant="body1" color="textSecondary" alignContent='center'>tbd</Typography> */}
                         </Stack>
                         
-                        <Typography variant="h3" color="textSecondary" paragraph>
-                        Making City Data Accessible with AI
+                        <Typography variant="h3" color="textPrimary" paragraph>
+                        Making City Data Accessible with AI 🏙️
                         </Typography>
 
                         <Typography variant="body1" color="textSecondary" paragraph>
@@ -285,27 +287,29 @@ export default function Landing() {
                                             variant="outlined"
                                             sx={{
                                                 "& .MuiOutlinedInput-root": {
+                                                    bgcolor: theme.palette.background.default,
+                                                    borderRadius: theme.spacing(2),
                                                     "& fieldset": {
-                                                        borderColor: `${theme.palette.secondary.contrastText}`,
+                                                        borderColor: `${theme.palette.primary.contrastText}`,
                                                         borderRadius: theme.spacing(2),
                                                     },
                                                     "&:hover fieldset": {
-                                                        borderColor: `${theme.palette.secondary.contrastText}`,
+                                                        borderColor: `${theme.palette.primary.contrastText}`,
                                                         borderRadius: theme.spacing(2),
                                                     },
                                                     "&.Mui-focused fieldset": {
-                                                        borderColor: `${theme.palette.secondary.contrastText}`,
+                                                        borderColor: `${theme.palette.primary.contrastText}`,
                                                         borderRadius: theme.spacing(2),
                                                     },
                                                 },
                                                 "& .MuiInputLabel-root": {
-                                                    color: `${theme.palette.secondary.contrastText}`,
+                                                    color: `${theme.palette.primary.contrastText}`,
                                                 },
                                                 "& .MuiInputLabel-root:hover": {
-                                                    color: `${theme.palette.secondary.contrastText}`,
+                                                    color: `${theme.palette.primary.contrastText}`,
                                                 },
                                                 "& .MuiInputLabel-root.Mui-focused": {
-                                                    color: `${theme.palette.secondary.contrastText}`,
+                                                    color: `${theme.palette.primary.contrastText}`,
                                                 },
                                             }}
                                         />
@@ -354,7 +358,7 @@ export default function Landing() {
                             </Grid>
                             )}
                             <Grid size={{xs: 12, md: 6}} alignContent={'center'}>
-                            <Typography variant="h3" color="textPrimary" gutterBottom>Text</Typography>
+                            <Typography variant="h3" color="textPrimary" gutterBottom>{section.title}</Typography>
                             <Typography variant="body1" color="textSecondary">{section.text}</Typography>
                             </Grid>
                             {section.gifPosition === 'right' && (
@@ -389,7 +393,7 @@ export default function Landing() {
                 <Container sx={{ height: '100%', alignContent: 'center', width: '100%',  paddingY: {xs: 6, md: 0}, }}>
                     <Stack direction={'column'} gap={4}>
                         <Typography textAlign={'center'} variant='h2' color={theme.palette.background.paper} gutterBottom>
-                            Text here
+                            The Next Gen Approach to Local News & Information
                         </Typography>
                         <Grid container spacing={2} justifyContent="center">
                             {[1, 2, 3, 4].map((item, index) => (
