@@ -12,11 +12,14 @@ Python
 
 `pipx install poetry`
 
-`pipx install fastapi uvicorn`
+We are using poetry to manage dependencies 
+`pipx install`
 
+Start virtual environment
 `poetry shell`
 
-`main.py`i
+Run backend 
+`python main.py`
 
 ## Script Pull Steps:
 `python3 fetch_la_video_metadata.py -o fetchable_videos/2024.json -y 2024`
