@@ -20,7 +20,7 @@ def gen_query_eng(name):
     # configure retriever
     retriever = VectorIndexRetriever(
         index=index,
-        similarity_top_k=10,
+        similarity_top_k=5,
     )
 
     # configure response synthesizer
